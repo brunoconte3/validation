@@ -1,0 +1,21 @@
+{
+    "name": "creedphp/validation",
+    "description": "Uma classe de validação baseada em PHP, permite validar quaisquer dados",
+    "keywords": ["validation", "validator", "validacao", "php", "class", "classe"],
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Maurício de Souza Porfírio",
+        "email": "mauriciosporfirio@gmail.com"
+      }
+    ],
+    "require": {
+        "php": ">=5.6.4"
+    },
+    "autoload": {
+        "psr-4": {
+           "Creed\\": "src/" 
+        }
+    }
+}
+ 
