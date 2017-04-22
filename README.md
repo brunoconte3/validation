@@ -7,7 +7,7 @@ O Validator é uma classe autônoma de validação de dados do PHP que torna a v
 ``` json
 {
     "require": {
-        "creedphp/validation": "1.1"
+        "creedphp/validation": "^1.0"
     }
 }
 ```
