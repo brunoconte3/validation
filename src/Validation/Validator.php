@@ -116,18 +116,18 @@ class Validator {
      * @param array $datas
      */
     
-    private function verifyFields(array $datas) {
+    private function verifyFields(array $datas) : array {
         $set_rules = $this->validationRules();
         $mismatch = array_diff_key($datas, $set_rules);
         $fields = array_keys($mismatch);
 
         foreach ($fields as $field) {
-            $this->errors[] = array(
+            $this->errors[] = [
                 'field' => $field,
                 'value' => $datas[$field],
                 'rule'  => 'mismatch',
                 'param' => NULL,
-            );
+            ];
         }
     }
 
@@ -146,7 +146,7 @@ class Validator {
 
     private function validate(array $input, array $set_rules) {
 
-        $look_for = array('required', 'required_file');
+        $look_for = ['required', 'required_file'];
         
         foreach ($set_rules as $field => $rules):
 
@@ -173,7 +173,7 @@ class Validator {
      * @param type $param
      */
     
-    private function callFunc($method, $field, $input, $param){
+    private function callFunc($method, $field, $input, $param) {
         $result = $this->$method($field, $input, $param);
 
         if (is_array($result)) :
@@ -192,16 +192,16 @@ class Validator {
     * @param type $param
     */ 
     
-    private function useValidation_methods($field, $input, $param) {
+    private function useValidation_methods($field, $input, $param) : array {
         $result = call_user_func(self::$validation_methods[$rule], $field, $input, $param);
 
             if($result === FALSE):
-              $this->errors[] = array(
+              $this->errors[] = [
                 'field' => $field,
                 'value' => $input,
                 'rule'  => self::$validation_methods[$rule],
                 'param' => $param,
-              );
+              ];
             endif;
 
     }
@@ -257,15 +257,11 @@ class Validator {
      * @return type
      */
     
-    private function fails($convert_to_string = NULL) {
-        if (empty($this->errors)):
-            return ($convert_to_string) ? NULL : array();
-        endif;
-
+    private function fails() : array {
         $message = array();
 
         foreach ($this->errors as $erro):
-            $field = ucwords(str_replace(array('_', '-'), chr(32), $erro['field']));
+            $field = str_replace(['_', '-'], chr(32), $erro['field']);
             $param = $erro['param'];
 
             // Busca por nomes de campo explícitas, se eles existirem.
@@ -273,7 +269,7 @@ class Validator {
                 $field = self::$fields[$erro['field']];
             endif;
 
-            switch ($erro['rule']) {
+            switch ($erro['rule']) :
                 case 'mismatch' :
                     $message[$field] = "Não existe uma regra de validação para $field";
                     break;
@@ -354,7 +350,7 @@ class Validator {
                     break;
                 default:
                     $message[$field] = "O campo $field é inválido";
-            }
+            endswitch;
         endforeach;
 
         return $message;
@@ -384,12 +380,12 @@ class Validator {
             return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => NULL,
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
     
@@ -412,12 +408,12 @@ class Validator {
             return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
     
@@ -446,12 +442,12 @@ class Validator {
 
                 self::verifyExtension($extension, $allowed_extensions);
                 
-                return array(
+                return [
                     'field' => $field,
                     'value' => $input[$field],
                     'rule'  => __FUNCTION__,
                     'param' => $param,
-                );
+                ];
             else:
                 return;
             endif;
@@ -510,12 +506,12 @@ class Validator {
         endif;
         
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
     
@@ -550,12 +546,12 @@ class Validator {
         endif;
         
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
 
@@ -583,12 +579,12 @@ class Validator {
             return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
  
@@ -616,12 +612,12 @@ class Validator {
             return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
 
@@ -645,12 +641,12 @@ class Validator {
         endif;
 
         if (!filter_var($input[$field], FILTER_VALIDATE_EMAIL)):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -675,12 +671,12 @@ class Validator {
         endif;
 
         if (!filter_var($input[$field], FILTER_VALIDATE_URL)):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -705,12 +701,12 @@ class Validator {
         endif;
 
         if (!is_numeric($input[$field])):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
 
@@ -735,12 +731,12 @@ class Validator {
         endif;
 
         if (filter_var($input[$field], FILTER_VALIDATE_INT) === FALSE):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -765,12 +761,12 @@ class Validator {
         endif;
 
         if (filter_var($input[$field], FILTER_VALIDATE_FLOAT) === FALSE):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -795,12 +791,12 @@ class Validator {
         endif;
 
         if (!is_string($input[$field])):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
 
@@ -827,12 +823,12 @@ class Validator {
           return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
 
 
@@ -859,12 +855,12 @@ class Validator {
           return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
     
     
@@ -892,12 +888,12 @@ class Validator {
           return;
         endif;
 
-        return array(
+        return [
             'field' => $field,
             'value' => $input[$field],
             'rule'  => __FUNCTION__,
             'param' => $param,
-        );
+        ];
     }
 
     
@@ -924,12 +920,12 @@ class Validator {
         $date_2 = date('Y-m-d H:i:s', strtotime($input[$field]));
 
         if ($date_1 != $input[$field] && $date_2 != $input[$field]):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
   
@@ -954,12 +950,12 @@ class Validator {
         endif;
 
         if (!preg_match('/^([a-zÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ\s])+$/i', $input[$field]) !== FALSE):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -984,12 +980,12 @@ class Validator {
         endif;
 
         if (!preg_match('/^([a-z0-9ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ])+$/i', $input[$field]) !== FALSE):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -1014,12 +1010,12 @@ class Validator {
         }
 
         if (!preg_match('/^(\(0?\d{2}\)\s?|0?\d{2}[\s.-]?)\d{4,5}[\s.-]?\d{4}$/', $input[$field])) :
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
 
@@ -1044,12 +1040,12 @@ class Validator {
         endif;
 
         if (!filter_var($input[$field], FILTER_VALIDATE_IP) !== FALSE):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -1074,12 +1070,12 @@ class Validator {
         endif;
 
         if (!filter_var($input[$field], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
 
@@ -1104,12 +1100,12 @@ class Validator {
         endif;
 
         if (!filter_var($input[$field], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)):
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
     
@@ -1134,12 +1130,12 @@ class Validator {
         }
 
         if (!preg_match('/^[0-9]{5}-[0-9]{3}$/', $input[$field])) :
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
   
@@ -1164,12 +1160,12 @@ class Validator {
         }
 
         if (!preg_match('/^[A-Z]{3}\-[0-9]{4}$/', $input[$field])) :
-            return array(
+            return [
                 'field' => $field,
                 'value' => $input[$field],
                 'rule'  => __FUNCTION__,
                 'param' => $param,
-            );
+            ];
         endif;
     }
       
