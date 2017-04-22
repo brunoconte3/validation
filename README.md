@@ -7,7 +7,7 @@ O Validator é uma classe autônoma de validação de dados do PHP que torna a v
 ``` json
 {
     "require": {
-        "mauricio-msp/validation": "1.0"
+        "creedphp/validation": "1.0"
     }
 }
 ```
@@ -21,7 +21,7 @@ composer install
 ###### Instalando via terminal 
 
 ```
-composer require mauricio-msp/validation: 1.0
+composer require creedphp/validation: 1.0
 ```
 Antes abra o terminal no diretório do projeto e execute o comando acima. 
 
@@ -29,7 +29,7 @@ Antes abra o terminal no diretório do projeto e execute o comando acima.
 # Chamando a classe Validator
 
 ``` php
-use MSP\Validation\Validator;
+use Creed\Validation\Validator;
 ```
 
 # Exemplo de Validação dos dados
@@ -80,7 +80,7 @@ $rules = [
  
   require 'vendor/autoload.php';
  
-  use MSP\Validation\Validator;
+  use Creed\Validation\Validator;
  
   //Dados
   $dados = [
