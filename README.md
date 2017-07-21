@@ -2,28 +2,13 @@
 
 O Validator é uma classe de validação baseada em PHP que permite validar quaisquer dados.
 
-###### Instalando via composer.json
+# Instalação
 
-``` json
-{
-    "require": {
-        "mammoth-php/validation": "^2.0"
-    }
-}
+via composer.
+
 ```
-
-Em seguida, abra o terminal no diretório do projeto e execute:
-
+$ composer require mammoth-php/validation
 ``` 
-composer install
-```
-
-###### Instalando via terminal 
-
-```
-composer require mammoth-php/validation
-```
-Antes abra o terminal no diretório do projeto e execute o comando acima. 
 
 # Exemplo de Validação dos dados
 
