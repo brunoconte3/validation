@@ -6,8 +6,23 @@ namespace Mammoth\Validation;
 class Validator {
     
     
+    /**
+     * @var type 
+     */
+    
+    
     private $erros = FALSE;
 
+    
+    /**
+     * -------------------------------------------------------------------------
+     * Setando/Definindo regras para determinados dados.
+     * -------------------------------------------------------------------------
+     * 
+     * @param array $datas
+     * @param array $rules
+     */
+    
     
     public function set(array $datas, array $rules) {
         foreach($rules as $ruleKey => $ruleValue){
@@ -18,6 +33,17 @@ class Validator {
     }
     
     
+    /**
+     * -------------------------------------------------------------------------
+     * Definindo mais de uma regra para um determinado dado.
+     * -------------------------------------------------------------------------
+     * 
+     * @param type $data
+     * @param type $ruleKey
+     * @param type $ruleValue
+     */
+    
+    
     private function rules($data, $ruleKey, $ruleValue) {
         $conditions = explode('|', $ruleValue);
         
@@ -25,6 +51,17 @@ class Validator {
             $this->validate($condition, $data, $ruleKey);
         }
     }
+    
+    
+    /**
+     * -------------------------------------------------------------------------
+     * Regras de validação para os dados.
+     * ------------------------------------------------------------------------- 
+     * 
+     * @param type $condition
+     * @param type $data
+     * @param type $ruleKey
+     */
     
     
     private function validate($condition, $data, $ruleKey) {
@@ -79,6 +116,15 @@ class Validator {
         }
     }
 
+    
+    /**
+     * -------------------------------------------------------------------------
+     * Retorna todos os erros possivéis.
+     * -------------------------------------------------------------------------
+     * 
+     * @return type
+     */
+    
     
     public function getErros() {
         return $this->erros;
