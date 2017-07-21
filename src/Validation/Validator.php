@@ -9,10 +9,10 @@ class Validator {
     private $erros = FALSE;
 
     
-    public function set(array $data, array $rules) {
+    public function set(array $datas, array $rules) {
         foreach($rules as $ruleKey => $ruleValue){
-            if(isset($data[$ruleKey])){
-                $this->rules($data[$ruleKey], $ruleKey, $ruleValue);
+            if(isset($datas[$ruleKey])){
+                $this->rules($datas[$ruleKey], $ruleKey, $ruleValue);
             }
         }
     }
