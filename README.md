@@ -47,16 +47,13 @@ $rules = [
     }
  ```
  
- # Realize você mesmo um teste!
- 
- ###### index.php
+ # Usando
  
  ``` php
  <?php
  
     require 'vendor/autoload.php';
-    
-    
+   
     $validator = new Mammoth\Validation\Validator();
     
     $datas = [
@@ -91,3 +88,7 @@ $rules = [
 - int                   // Tipo inteiro
 - regex                 // Define uma regra através de uma expressão regular
 ```
+
+# Licença
+
+O validator é uma aplicação open-source licenciado sob a [licença MIT](https://opensource.org/licenses/MIT).
