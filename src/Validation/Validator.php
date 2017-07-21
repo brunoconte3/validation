@@ -7,78 +7,71 @@ class Validator {
     
     
     private $erros = false;
-    
-    private $data, $rules;
 
     public function set(array $data, array $rules){
-        $this->data  = $data;
-        $this->rules = $rules; 
-    }
-
-    public function validate(){
-        foreach($this->rules as $ruleKey => $ruleValue){
-            if(isset($this->data[$ruleKey])){
-                $this->rules($ruleKey, $ruleValue);
+        foreach($rules as $ruleKey => $ruleValue){
+            if(isset($data[$ruleKey])){
+                $this->rules($data[[$ruleKey]], $ruleKey, $ruleValue);
             }
         }
     }
     
     
-    private function rules($ruleKey, $ruleValue){
+    private function rules($ruleKey, $data, $ruleValue){
         $conditions = explode('|', $ruleValue);
         
         foreach($conditions as $condition){
-            $this->run($condition, $ruleKey);
+            $this->run($condition, $data, $ruleKey);
         }
     }
     
     
-    private function run($condition, $ruleKey){
+    private function validate($condition, $data, $ruleKey){
         $subitem = explode(':', $condition);
         
         switch($subitem[0]){
             case 'required':
-                if(empty($this->data[$ruleKey]) || $this->data[$ruleKey] == '' || $this->data[$ruleKey] == ' '){
+                if(empty($data) || $data == '' || $data == ' '){
                     $this->erros[] = "O campo {$ruleKey} é obrigatório.";
                 }
             break;
             case 'max':
-                if(strlen($this->data[$ruleKey]) > $subitem[1]){
+                if(strlen($data) > $subitem[1]){
                     $this->erros[] = "O campo {$ruleKey} precisa conter no máximo {$subitem[1]} caracteres.";
                 }
             break;
             case 'min':
-                if(strlen($this->data[$ruleKey]) < $subitem[1]){
+                if(strlen($data) < $subitem[1]){
                     $this->erros[] = "O campo {$ruleKey} precisa conter no mínimo {$subitem[1]} caracteres.";
                 }
             break;
             case 'email':
-                if(!filter_var($this->data[$ruleKey], FILTER_VALIDATE_EMAIL)){
+                if(!filter_var($data, FILTER_VALIDATE_EMAIL)){
                     $this->erros[] = "O campo {$ruleKey} é necessário que seja um email válido.";
                 }
             break;
             case 'url':
-                if(!filter_var($this->data[$ruleKey], FILTER_VALIDATE_URL)){
+                if(!filter_var($data, FILTER_VALIDATE_URL)){
                     $this->erros[] = "O campo {$ruleKey} é necessário que seja uma URL válido.";
                 }
             break;
             case 'numeric':
-                if(!is_numeric($this->data[$ruleKey])){
+                if(!is_numeric($data)){
                     $this->erros[] = "O campo {$ruleKey} só pode conter valores numéricos.";
                 }
             break;
             case 'float':
-                if(!filter_var($this->data[$ruleKey], FILTER_VALIDATE_FLOAT)){
+                if(!filter_var($data, FILTER_VALIDATE_FLOAT)){
                     $this->erros[] = "O campo {$ruleKey} deve ser do tipo real.";
                 }
             break;
             case 'int':
-                if(!filter_var($this->data[$ruleKey], FILTER_VALIDATE_INT)){
+                if(!filter_var($data, FILTER_VALIDATE_INT)){
                     $this->erros[] = "O campo {$ruleKey} deve ser do tipo inteiro.";
                 }
             break;
             case 'regex':
-                if(preg_match($subitem[1], $this->data[$ruleKey]) !== FALSE){
+                if(preg_match($subitem[1], $data) !== FALSE){
                     $this->erros[] = "O campo {$ruleKey} deve corresponder com as expecificações requisitadas.";
                 }
             break;
