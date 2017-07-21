@@ -1,6 +1,6 @@
 <?php
 
-namespace Mammoth\Validator;
+namespace Mammoth\Validation;
 
 
 class Validator {
