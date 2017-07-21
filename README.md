@@ -31,10 +31,9 @@ Antes abra o terminal no diretório do projeto e execute o comando acima.
 
 ``` php
 $datas = [
-   'nome'    => 'Mauricio',
-   'email'   => 'mauricio.msp@mail.com',
-   'senha'   => '123456',
-   'c_senha' => '12345678'
+   'nome'  => 'Mauricio',
+   'email' => 'mauricio.msp@mail.com',
+   'senha' => '123456'
 ];
 ```
 
