@@ -1,6 +1,6 @@
 {
     "name": "mammoth-php/validation",
-    "description": "Uma classe de validação baseada em PHP, permite validar quaisquer dados.",
+    "description": "Uma classe de validação baseada em PHP que permite validar quaisquer dados.",
     "keywords": ["php", "validation", "validator", "validacao"],
     "authors": [
       {
