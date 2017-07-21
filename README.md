@@ -62,9 +62,7 @@ $rules = [
     }
  ```
  
- ***
- 
- # Realize você mesmo um teste
+ # Realize você mesmo um teste!
  
  ###### index.php
  
@@ -94,8 +92,6 @@ $rules = [
         var_dump($validator->getErros());
     }
 ```
-
-***
 
 # Tipos de validação
 
