@@ -119,7 +119,7 @@ class Validator {
     
     /**
      * -------------------------------------------------------------------------
-     * Retorna todos os erros possivéis.
+     * Retorna todos os erros possíveis.
      * -------------------------------------------------------------------------
      * 
      * @return type
