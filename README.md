@@ -71,9 +71,8 @@ $rules = [
  ``` php
  <?php
  
-  require 'vendor/autoload.php';
- 
-  require 'vendor/autoload.php';
+    require 'vendor/autoload.php';
+    
     
     $validator = new Mammoth\Validation\Validator();
     
