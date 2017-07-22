@@ -5,13 +5,13 @@
     $validator = new Mammoth\Validation\Validator();
     
     $datas = [
-        'nome'  => 'mauricio',
-        'email' => 'mauricio.web@gmail.com',
-        'senha' => '12345678'
+        'nome'  => '',
+        'email' => '',
+        'senha' => ''
     ];
     
     $validator->set($datas, [
-        'nome'  => 'required|regex:/^[a-zA-Z]+$/',
+        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/',
         'email' => 'required|email|max:50',
         'senha' => 'required|min:8|max:12'
     ]);
