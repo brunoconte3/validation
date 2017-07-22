@@ -22,7 +22,7 @@ $datas = [
 ];
 ```
 
-###### Regras (rules)
+###### Regras
 
 ``` php
 $rules = [
