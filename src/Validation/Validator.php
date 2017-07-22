@@ -75,58 +75,58 @@ class Validator {
             break;
             case 'max':
                 if(strlen($data) > $subitem[1]){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} precisa conter no máximo {$subitem[1]} caracteres.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey precisa conter no máximo $subitem[1] caracteres.";
                 }
             break;
             case 'min':
                 if(strlen($data) < $subitem[1]){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} precisa conter no mínimo {$subitem[1]} caracteres.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey precisa conter no mínimo $subitem[1] caracteres.";
                 }
             break;
             case 'bool':
                 if(!filter_var($data, FILTER_VALIDATE_BOOLEAN)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} só pode conter valores lógicos. (true|false, 1|0, yes|no).";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey só pode conter valores lógicos. (true|false, 1|0, yes|no).";
                 }
             break;
             case 'email':
                 if(!filter_var($data, FILTER_VALIDATE_EMAIL)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} é necessário que seja um email válido.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey é necessário que seja um email válido.";
                 }
             break;
             case 'float':
                 if(!filter_var($data, FILTER_VALIDATE_FLOAT)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} deve ser do tipo real.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey deve ser do tipo real.";
                 }
             break;
             case 'int':
                 if(!filter_var($data, FILTER_VALIDATE_INT)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} deve ser do tipo inteiro.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey deve ser do tipo inteiro.";
                 }
             break;
             case 'ip':
                 if(!filter_var($data, FILTER_VALIDATE_IP)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} deve ser um IP válido.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey deve ser um IP válido.";
                 }
             break;
              case 'mac':
                 if(!filter_var($data, FILTER_VALIDATE_MAC)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} deve ser um MAC válido.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey deve ser um MAC válido.";
                 }
             break;
             case 'regex':
                 if(!preg_match($subitem[1], $data) !== FALSE){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} deve corresponder com as expecificações requisitadas.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey deve corresponder com as expecificações requisitadas.";
                 }
             break;
             case 'url':
                 if(!filter_var($data, FILTER_VALIDATE_URL)){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} é necessário que seja uma URL válida.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey é necessário que seja uma URL válida.";
                 }
             break;
         }
     }
 
-    
+
     /**
      * -------------------------------------------------------------------------
      * Retorna todos os erros possíveis.
