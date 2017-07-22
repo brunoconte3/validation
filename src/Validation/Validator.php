@@ -70,7 +70,7 @@ class Validator {
         switch($subitem[0]){
             case 'required':
                 if(empty($data) || $data == '' || $data == ' '){
-                    $this->erros["$ruleKey"] = "O campo {$ruleKey} é obrigatório.";
+                    $this->erros["$ruleKey"] = "O campo $ruleKey é obrigatório.";
                 }
             break;
             case 'max':
