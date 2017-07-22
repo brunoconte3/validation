@@ -81,12 +81,14 @@ $rules = [
 - required              // Campo obrigatório
 - min                   // Tamanho mínimo
 - max                   // Tamanho máximo
-- email                 // E-mail
-- url                   // Url
-- numeric               // Tipo numérico
+- bool                  // Tipo lógico
+- email                 // E-mail válido
 - float                 // Tipo flutuante(valor real)
 - int                   // Tipo inteiro
+- ip                    // Endereço de IP válido
+- mac                   // Endereço de MAC válido
 - regex                 // Define uma regra através de uma expressão regular
+- url                   // Endereço de URL válida
 ```
 
 # Licença
