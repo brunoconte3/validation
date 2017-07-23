@@ -5,9 +5,9 @@
     $validator = new Mammoth\Validation\Validator();
     
     $datas = [
-        'nome'  => '',
-        'email' => '',
-        'senha' => ''
+        'nome'  => 'mammoth',
+        'email' => 'mammoth.support@web.com',
+        'senha' => 'mammoth.web@2017'
     ];
     
     $validator->set($datas, [
@@ -17,7 +17,7 @@
     ]);
     
     if(!$validator->getErros()){
-        echo 'OK';
+        echo 'Dados validados com sucesso!';
     } else {
         var_dump($validator->getErros());
     }
