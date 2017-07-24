@@ -77,19 +77,17 @@ $rules = [
 
 # Tipos de validação
 
-``` php
-- required              // Campo obrigatório
-- min                   // Tamanho mínimo
-- max                   // Tamanho máximo
-- bool                  // Tipo lógico
-- email                 // E-mail válido
-- float                 // Tipo flutuante(valor real)
-- int                   // Tipo inteiro
-- ip                    // Endereço de IP válido
-- mac                   // Endereço de MAC válido
-- regex                 // Define uma regra através de uma expressão regular
-- url                   // Endereço de URL válida
-```
+* required:              ` Define o campo como obrigatório. `
+* min:                   ` Define o tamanho mínimo do valor. `
+* max:                   ` Define o tamanho mínimo do valor. `
+* bool:                  ` Valores do tipo lógico. ` `Ex: true ou false, 1 ou 0, yes ou no.`
+* email:                 ` Verfica se é um e-mail válido. `
+* float:                 ` Define o valor como tipo flutuante(valor real). `
+* int:                   ` Define o valor como tipo inteiro. `
+* ip:                    ` Verifica se o valor é um endereço de IP válido. `
+* mac:                   ` Verifica se o valor é um endereço de MAC válido. `
+* regex:                 ` Define uma regra para o valor através de uma expressão regular. `
+* url:                   ` Verifica se o valor é um endereço de URL válida. `
 
 # Licença
 
