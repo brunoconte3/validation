@@ -104,7 +104,7 @@ Após definir algumas de nossas regras aos dados você também pode adicionar um
         'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.'
     ]);
 ```
-Recomendamos uso quando se define uma regra através de uma expressão. 
+Recomendamos o uso quando se define uma regra através de uma expressão regular. 
 
 # Licença
 
