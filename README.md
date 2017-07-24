@@ -63,7 +63,7 @@ $rules = [
     ];
     
     $validator->set($datas, [
-        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/ @ O campo nome só deve conter caracteres alfabéticos.',
+        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/, O campo nome só deve conter caracteres alfabéticos.',
         'email' => 'required|email|max:50',
         'senha' => 'required|min:8|max:12'
     ]);
@@ -88,6 +88,23 @@ $rules = [
 * mac:                   ` Verifica se o valor é um endereço de MAC válido. `
 * regex:                 ` Define uma regra para o valor através de uma expressão regular. `
 * url:                   ` Verifica se o valor é um endereço de URL válida. `
+
+# Definindo mensagem personalizada
+
+Após definir algumas de nossas regras aos dados você também pode adicionar uma mensagem personalizada usando o delimitador ',' em alguma regra específica ou usar a mensagem padrão.
+
+`Exemplo:`
+
+``` php 
+<?php
+
+    $validator->set($datas, [
+        'nome'  => 'required, O campo nome não pode ser vazio.',
+        'email' => 'email, O campo email esta incorreto.|max:50',
+        'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.'
+    ]);
+```
+Recomendamos uso quando se define uma regra através de uma expressão. 
 
 # Licença
 
