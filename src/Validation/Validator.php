@@ -119,7 +119,7 @@ class Validator {
             break;
             case 'regex':
                 if(!preg_match($item[1], $data) !== FALSE){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve corresponder com as expecificações requisitadas.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve corresponder as expecificações exigidas.";
                 }
             break;
             case 'url':
