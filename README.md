@@ -26,7 +26,7 @@ $datas = [
 
 ``` php
 $rules = [
-   'nome'  => 'required|regex:/^[a-zA-Z]+$/',
+   'nome'  => 'required|regex:/^[a-zA-Z\s]+$/',
    'email' => 'required|email|max:50',
    'senha' => 'required|min:8|max:12'
 ];
@@ -63,7 +63,7 @@ $rules = [
     ];
     
     $validator->set($datas, [
-        'nome'  => 'required|regex:/^[a-zA-Z]+$/',
+        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/ @ O campo nome só deve conter caracteres alfabéticos.',
         'email' => 'required|email|max:50',
         'senha' => 'required|min:8|max:12'
     ]);
