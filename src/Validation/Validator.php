@@ -68,7 +68,7 @@ class Validator {
     
     
     private function validate($condition, $data, $ruleKey) {
-        $message = explode('@', $condition);
+        $message = explode(',', $condition);
         $item    = explode(':', $message[0]);
         
         switch($item[0]):

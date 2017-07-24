@@ -11,9 +11,9 @@
     ];
     
     $validator->set($datas, [
-        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/ @ O campo nome só deve conter caracteres alfabéticos.',
+        'nome'  => 'required|regex:/^[a-zA-Z\s]+$/, O campo nome só deve conter caracteres alfabéticos.',
         'email' => 'required|email|max:50',
-        'senha' => 'required|min:8|max:12'
+        'senha' => 'required|min:8, no mínimo 8.|max:12, no máximo 12.'
     ]);
     
     if(!$validator->getErros()){
