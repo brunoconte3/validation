@@ -12,7 +12,7 @@ $ composer require mammoth-php/validation
 
 # Exemplo de Validação dos dados
 
-###### Dados
+`Dados`
 
 ``` php
 $datas = [
@@ -22,7 +22,7 @@ $datas = [
 ];
 ```
 
-###### Regras
+`Regras`
 
 ``` php
 $rules = [
@@ -32,7 +32,7 @@ $rules = [
 ];
  ```
  
- ###### Validando os dados de acordo com as regras
+ `Validando os dados de acordo com as regras`
  
  ``` php
    $validator = new Mammoth\Validation\Validator();
