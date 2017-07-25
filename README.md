@@ -16,9 +16,9 @@ $ composer require mammoth-php/validation
 
 ``` php
 $datas = [
-   'nome'  => 'Mauricio',
-   'email' => 'mauricio.msp@mail.com',
-   'senha' => '123456'
+   'nome'  => 'Mammoth',
+   'email' => 'mammoth.support@web.com',
+   'senha' => 'mammoth.web'
 ];
 ```
 
@@ -57,9 +57,9 @@ $rules = [
     $validator = new Mammoth\Validation\Validator();
     
     $datas = [
-        'nome'  => 'mauricio',
-        'email' => 'mauricio.web@gmail.com',
-        'senha' => '12345678'
+        'nome'  => 'Mammoth',
+        'email' => 'mammoth.support@web.com',
+        'senha' => 'mammoth.web'
     ];
     
     $validator->set($datas, [
