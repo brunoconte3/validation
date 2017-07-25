@@ -48,10 +48,9 @@ class Validator {
         $conditions = explode('|', $ruleValue);
         
         foreach($conditions as $condition){
-            if(!isset($this->erros[$ruleKey])):
+            if(!isset($this->erros[$ruleKey])){
                 $this->validate($condition, $data, $ruleKey);
-            endif;
-            
+            }
         }
     }
     
@@ -71,7 +70,7 @@ class Validator {
         $message = explode(',', $condition);
         $item    = explode(':', $message[0]);
         
-        switch($item[0]):
+        switch($item[0]){
             case 'required':
                 if(empty($data) || $data == '' || $data == ' '){
                     $this->erros["$ruleKey"] = $message[1] ?? "O campo $ruleKey é obrigatório.";
@@ -127,7 +126,7 @@ class Validator {
                     $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey é necessário que seja uma URL válida.";
                 }
             break;
-        endswitch;
+        }
     }
 
 
