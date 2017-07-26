@@ -79,9 +79,9 @@ $rules = [
 
 * required:              ` Define o campo como obrigatório. `
 * min:                   ` Define o tamanho mínimo do valor. `
-* max:                   ` Define o tamanho mínimo do valor. `
+* max:                   ` Define o tamanho máximo do valor. `
 * bool:                  ` Valores do tipo lógico. ` `Ex: true ou false, 1 ou 0, yes ou no.`
-* email:                 ` Verfica se é um e-mail válido. `
+* email:                 ` Verfica se é um email válido. `
 * float:                 ` Define o valor como tipo flutuante(valor real). `
 * int:                   ` Define o valor como tipo inteiro. `
 * ip:                    ` Verifica se o valor é um endereço de IP válido. `
