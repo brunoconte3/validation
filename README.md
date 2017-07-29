@@ -1,6 +1,6 @@
 # Validator
 
-O Validator é uma classe de validação baseada em PHP que permite validar quaisquer dados.
+O Validator é uma classe de validação baseada em PHP-7 que permite validar quaisquer dados.
 
 # Instalação
 
