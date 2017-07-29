@@ -98,7 +98,7 @@ class Validator {
             break;
             case 'float':
                 if(!filter_var($data, FILTER_VALIDATE_FLOAT)){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser do tipo real.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser do tipo real(flutuante).";
                 }
             break;
             case 'int':
@@ -108,22 +108,27 @@ class Validator {
             break;
             case 'ip':
                 if(!filter_var($data, FILTER_VALIDATE_IP)){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser um IP válido.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser um endereço de IP válido.";
                 }
             break;
-             case 'mac':
+            case 'mac':
                 if(!filter_var($data, FILTER_VALIDATE_MAC)){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser um MAC válido.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser um endereço de MAC válido.";
+                }
+            break;
+            case 'numeric':
+                if(!is_numeric($data)){
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey só pode conter valores numéricos.";
                 }
             break;
             case 'regex':
                 if(!preg_match($item[1], $data) !== FALSE){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve corresponder as expecificações exigidas.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey precisa conter um valor com formato válido.";
                 }
             break;
             case 'url':
                 if(!filter_var($data, FILTER_VALIDATE_URL)){
-                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey é necessário que seja uma URL válida.";
+                    $this->erros["$ruleKey"] = $message[1] ??  "O campo $ruleKey deve ser um endereço de URL válida.";
                 }
             break;
         }
