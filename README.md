@@ -82,10 +82,11 @@ $rules = [
 * max:                   ` Define o tamanho máximo do valor. `
 * bool:                  ` Valores do tipo lógico. ` `Ex: true ou false, 1 ou 0, yes ou no.`
 * email:                 ` Verfica se é um email válido. `
-* float:                 ` Define o valor como tipo flutuante(valor real). `
-* int:                   ` Define o valor como tipo inteiro. `
+* float:                 ` Verifica se o valor é do tipo flutuante(valor real). `
+* int:                   ` Verifica se o valor é do tipo inteiro. `
 * ip:                    ` Verifica se o valor é um endereço de IP válido. `
 * mac:                   ` Verifica se o valor é um endereço de MAC válido. `
+* numeric:               ` Verifica se o valor contém apenas valores numéricos. `
 * regex:                 ` Define uma regra para o valor através de uma expressão regular. `
 * url:                   ` Verifica se o valor é um endereço de URL válida. `
 
