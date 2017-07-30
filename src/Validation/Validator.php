@@ -24,6 +24,12 @@ class Validator {
         
     }
     
+    private function msnMake($key, $field, $value = NULL) {
+        $msn = str_replace('{$field}', $field, $this->msns[$key]);
+        return str_replace('{$value}', $value, $msn);
+    }
+
+
     /**
      * -------------------------------------------------------------------------
      * Setando/Definindo regras para determinados dados.
@@ -83,62 +89,62 @@ class Validator {
         switch($item[0]){
             case 'required':
                 if(empty($data) || $data == '' || $data == ' '){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['required']; //"O campo $ruleKey é obrigatório.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey é obrigatório.";
                 }
             break;
             case 'max':
                 if(strlen($data) > $item[1]){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['max']; //"O campo $ruleKey precisa conter no máximo $item[1] caracteres.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey, $item[1]); //"O campo $ruleKey precisa conter no máximo $item[1] caracteres.";
                 }
             break;
             case 'min':
                 if(strlen($data) < $item[1]){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['min']; //"O campo $ruleKey precisa conter no mínimo $item[1] caracteres.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey, $item[1]); //"O campo $ruleKey precisa conter no mínimo $item[1] caracteres.";
                 }
             break;
             case 'bool':
                 if(!filter_var($data, FILTER_VALIDATE_BOOLEAN)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['bool']; //"O campo $ruleKey só pode conter valores lógicos. (true|false, 1|0, yes|no).";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey só pode conter valores lógicos. (true|false, 1|0, yes|no).";
                 }
             break;
             case 'email':
                 if(!filter_var($data, FILTER_VALIDATE_EMAIL)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['email']; //"O campo $ruleKey é necessário que seja um email válido.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey é necessário que seja um email válido.";
                 }
             break;
             case 'float':
                 if(!filter_var($data, FILTER_VALIDATE_FLOAT)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['float']; //"O campo $ruleKey deve ser do tipo real(flutuante).";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey deve ser do tipo real(flutuante).";
                 }
             break;
             case 'int':
                 if(!filter_var($data, FILTER_VALIDATE_INT)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['int']; //"O campo $ruleKey deve ser do tipo inteiro.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey deve ser do tipo inteiro.";
                 }
             break;
             case 'ip':
                 if(!filter_var($data, FILTER_VALIDATE_IP)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['ip']; //"O campo $ruleKey deve ser um endereço de IP válido.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey deve ser um endereço de IP válido.";
                 }
             break;
             case 'mac':
                 if(!filter_var($data, FILTER_VALIDATE_MAC)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['mac']; //"O campo $ruleKey deve ser um endereço de MAC válido.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey deve ser um endereço de MAC válido.";
                 }
             break;
             case 'numeric':
                 if(!is_numeric($data)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['numeric']; //"O campo $ruleKey só pode conter valores numéricos.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey só pode conter valores numéricos.";
                 }
             break;
             case 'regex':
                 if(!preg_match($item[1], $data) !== FALSE){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['regex']; //"O campo $ruleKey precisa conter um valor com formato válido.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey precisa conter um valor com formato válido.";
                 }
             break;
             case 'url':
                 if(!filter_var($data, FILTER_VALIDATE_URL)){
-                    $this->erros["$ruleKey"] = $message[1] ?? $this->msns['url']; //"O campo $ruleKey deve ser um endereço de URL válida.";
+                    $this->erros["$ruleKey"] = $message[1] ?? $this->msnMake('required', $ruleKey); //"O campo $ruleKey deve ser um endereço de URL válida.";
                 }
             break;
         }
