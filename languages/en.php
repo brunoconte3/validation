@@ -1,5 +1,7 @@
 <?php
 
+// Inglês|English
+
 return [
     
     'required' => 'The {$field} field is required.',
