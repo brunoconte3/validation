@@ -12,36 +12,6 @@ class Validator {
     
     
     private $erros = FALSE;
-    
-    
-    /**
-     * @var type 
-     */
-    
-    
-    private $lang  = [];
-    
-    
-    /**
-     * -------------------------------------------------------------------------
-     * Define a lingua para tradução das mensagens
-     * -------------------------------------------------------------------------
-     * 
-     * @param type $lang
-     * @throws \Exception
-     */
-    
-    
-    public function __construct($lang = 'pt-br') {
-        $lang_file = __DIR__ . '/../../languages/' . $lang . '.php';
-        
-        if(file_exists($lang_file)) {
-            $this->lang = require $lang_file;
-        } else {
-            throw new \Exception("Language with key $lang doesn't exist");
-        }
-        
-    }
 
 
     /**
@@ -103,84 +73,65 @@ class Validator {
         switch($item[0]){
             case 'required':
                 if(empty($data_value) || $data_value == '' || $data_value == ' '){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('required', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key é obrigatório.";
                 }
             break;
             case 'max':
                 if(strlen($data_value) > $item[1]){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('max', $rule_key, $item[1]);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key precisa conter no máximo $item[1] caracteres.";
                 }
             break;
             case 'min':
                 if(strlen($data_value) < $item[1]){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('min', $rule_key, $item[1]); 
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key precisa conter no mínimo $item[1] caracteres."; 
                 }
             break;
             case 'bool':
                 if(!filter_var($data_value, FILTER_VALIDATE_BOOLEAN)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('bool', $rule_key); 
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key só pode conter valores lógicos. (true|false, 1|0, yes|no)."; 
                 }
             break;
             case 'email':
                 if(!filter_var($data_value, FILTER_VALIDATE_EMAIL)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('email', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser um endereço de email válido.";
                 }
             break;
             case 'float':
                 if(!filter_var($data_value, FILTER_VALIDATE_FLOAT)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('float', $rule_key); 
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser do tipo real(flutuante)."; 
                 }
             break;
             case 'int':
                 if(!filter_var($data_value, FILTER_VALIDATE_INT)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('int', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser do tipo inteiro.";
                 }
             break;
             case 'ip':
                 if(!filter_var($data_value, FILTER_VALIDATE_IP)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('ip', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser um endereço de IP válido.";
                 }
             break;
             case 'mac':
                 if(!filter_var($data_value, FILTER_VALIDATE_MAC)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('mac', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser um endereço de MAC válido.";
                 }
             break;
             case 'numeric':
                 if(!is_numeric($data_value)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('numeric', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key só pode conter valores numéricos.";
                 }
             break;
             case 'regex':
                 if(!preg_match($item[1], $data_value) !== FALSE){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('regex', $rule_key);
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key precisa conter um valor com formato válido.";
                 }
             break;
             case 'url':
                 if(!filter_var($data_value, FILTER_VALIDATE_URL)){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('url', $rule_key); 
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser um endereço de URL válida."; 
                 }
             break;
         }
-    }
-
-    
-    /**
-     * -------------------------------------------------------------------------
-     * Traduz as mensagens de cada regra para o idioma informado.
-     * -------------------------------------------------------------------------
-     * 
-     * @param type $rule
-     * @param type $field
-     * @param type $value
-     * @return type
-     */
-    
-    
-    private function messageTranslated($rule, $field, $value = NULL) {
-        $message = str_replace('{$field}', $field, $this->lang[$rule]);
-        
-        return str_replace('{$value}', $value, $message);
     }
 
     
