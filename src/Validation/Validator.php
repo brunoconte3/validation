@@ -103,7 +103,7 @@ class Validator {
         switch($item[0]){
             case 'required':
                 if(empty($data_value) || $data_value == '' || $data_value == ' '){
-                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('required', $rule_key); //"O campo $rule_key é obrigatório.";
+                    $this->erros[$rule_key] = $message[1] ?? $this->messageTranslated('required', $rule_key);
                 }
             break;
             case 'max':
