@@ -1,6 +1,6 @@
 <?php
 
-// Inglês|English
+// Inglês | English
 
 return [
     
