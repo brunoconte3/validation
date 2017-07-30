@@ -35,11 +35,11 @@ class Validator {
     public function __construct($lang = 'pt-br') {
         $lang_file = __DIR__ . '/../../languages/' . $lang . '.php';
         
-        if(file_exists($lang_file)):
+        if(file_exists($lang_file)) {
             $this->lang = require $lang_file;
-        else:
-            throw new \Exception("Language with key $lang does not exist");
-        endif;
+        } else {
+            throw new \Exception("Language with key $lang doesn't exist");
+        }
         
     }
 
