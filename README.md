@@ -75,20 +75,26 @@ $rules = [
     }
 ```
 
-# Tipos de validação
+# Tipos de validação (validators)
 
 * required:              ` Define o campo como obrigatório. `
 * min:                   ` Define o tamanho mínimo do valor. `
 * max:                   ` Define o tamanho máximo do valor. `
+* alpha:                 ` Verifica se o campo contém somentes caracteres alfabéticos. `
+* alnum:                 ` Verifica se o campo contém caracteres alfanumérico. `
 * bool:                  ` Valores do tipo lógico. ` `Ex: true ou false, 1 ou 0, yes ou no.`
 * email:                 ` Verifica se é um email válido. `
 * float:                 ` Verifica se o valor é do tipo flutuante(valor real). `
+* identifier:            ` Verifica se o valor corresponde ao formato de um CPF. `
 * int:                   ` Verifica se o valor é do tipo inteiro. `
 * ip:                    ` Verifica se o valor é um endereço de IP válido. `
 * mac:                   ` Verifica se o valor é um endereço de MAC válido. `
 * numeric:               ` Verifica se o valor contém apenas valores numéricos. `
+* phone:                 ` Verifica se o valor corresponde ao formato de um telefone/celular. `
+* plate:                 ` Verifica se o valor corresponde ao formato de uma placa de carro. `
 * regex:                 ` Define uma regra para o valor através de uma expressão regular. `
 * url:                   ` Verifica se o valor é um endereço de URL válida. `
+* zip_code:              ` Verifica se o valor corresponde ao formato de um CEP. `
 
 # Definindo mensagem personalizada
 
