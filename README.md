@@ -81,7 +81,7 @@ $rules = [
 * min:                   ` Define o tamanho mínimo do valor. `
 * max:                   ` Define o tamanho máximo do valor. `
 * alpha:                 ` Verifica se o campo contém somentes caracteres alfabéticos. `
-* alnum:                 ` Verifica se o campo contém caracteres alfanumérico. `
+* alnum:                 ` Verifica se o campo contém caracteres alfanuméricos. `
 * bool:                  ` Valores do tipo lógico. ` `Ex: true ou false, 1 ou 0, yes ou no.`
 * email:                 ` Verifica se é um email válido. `
 * float:                 ` Verifica se o valor é do tipo flutuante(valor real). `
