@@ -86,6 +86,16 @@ class Validator {
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key precisa conter no mínimo $item[1] caracteres."; 
                 }
             break;
+            case 'alpha':
+                if(!preg_match('/^([a-zÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ\s])+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key só pode conter caracteres alfabéticos.";
+                }
+            break;
+            case 'alnum':
+                if(!preg_match('/^([a-z0-9ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ\s])+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve conter caracteres alfa-numéricos.";
+                }
+            break;
             case 'bool':
                 if(!filter_var($data_value, FILTER_VALIDATE_BOOLEAN)){
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key só pode conter valores lógicos. (true|false, 1|0, yes|no)."; 
@@ -99,6 +109,11 @@ class Validator {
             case 'float':
                 if(!filter_var($data_value, FILTER_VALIDATE_FLOAT)){
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser do tipo real(flutuante)."; 
+                }
+            break;
+            case 'identifier':
+                if(!preg_match('/^([0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2})+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve corresponder ao formato 000.000.000-00.";
                 }
             break;
             case 'int':
@@ -121,6 +136,16 @@ class Validator {
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key só pode conter valores numéricos.";
                 }
             break;
+            case 'phone':
+                if(!preg_match('/^(\([0-9]{2}\)[0-9]{4}-[0-9]{4})+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve corresponder ao formato (00)0000-0000.";
+                }
+            break;
+            case 'plate':
+                if(!preg_match('/^[A-Z]{3}-[0-9]{4}+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve corresponder ao formato AAA-0000.";
+                }
+            break;
             case 'regex':
                 if(!preg_match($item[1], $data_value) !== FALSE){
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key precisa conter um valor com formato válido.";
@@ -129,6 +154,11 @@ class Validator {
             case 'url':
                 if(!filter_var($data_value, FILTER_VALIDATE_URL)){
                     $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve ser um endereço de URL válida."; 
+                }
+            break;
+            case 'zip_code':
+                if(!preg_match('/^([0-9]{2}\.[0-9]{3}-[0-9]{3})+$/', $data_value) !== FALSE){
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve corresponder ao formato 00.000-000";
                 }
             break;
         }
