@@ -93,7 +93,7 @@ class Validator {
             break;
             case 'alnum':
                 if(!preg_match('/^([a-z0-9ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ\s])+$/', $data_value) !== FALSE){
-                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve conter caracteres alfa-numéricos.";
+                    $this->erros[$rule_key] = $message[1] ?? "O campo $rule_key deve conter caracteres alfanuméricos.";
                 }
             break;
             case 'bool':
