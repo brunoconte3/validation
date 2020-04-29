@@ -2,6 +2,8 @@
 
 O Validator é uma classe de validação baseada em PHP-7 que permite validar vários tipos de dados.
 
+Aplicado padrão da PSR-12
+
 # Instalação
 
 
