@@ -18,7 +18,7 @@ $ composer require brunoconte3/validation
 $datas = [
    'nome'  => 'brunoconte3',
    'email' => 'brunoconte3@gmail.com',
-   'senha' => 'mammoth.web'
+   'senha' => 'brunoconte3.web'
 ];
 ```
 
