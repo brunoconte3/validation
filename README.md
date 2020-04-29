@@ -7,7 +7,7 @@ O Validator é uma classe de validação baseada em PHP-7 que permite validar qu
 via composer.
 
 ```
-$ composer require mammoth-php/validation
+$ composer require brunoconte3/validation
 ``` 
 
 # Exemplo de Validação dos dados
@@ -16,8 +16,8 @@ $ composer require mammoth-php/validation
 
 ``` php
 $datas = [
-   'nome'  => 'Mammoth',
-   'email' => 'mammoth.support@web.com',
+   'nome'  => 'brunoconte3',
+   'email' => 'brunoconte3@gmail.com',
    'senha' => 'mammoth.web'
 ];
 ```
