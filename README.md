@@ -19,7 +19,7 @@ $ composer require brunoconte3/validation
 $datas = [
    'nome'  => 'brunoconte3',
    'email' => 'brunoconte3@gmail.com',
-   'senha' => 'brunoconte3.web'
+   'senha' => 'brunoconte3.web',
 ];
 ```
 
@@ -29,7 +29,7 @@ $datas = [
 $rules = [
    'nome'  => 'required|regex:/^[a-zA-Z\s]+$/',
    'email' => 'required|email|max:50',
-   'senha' => 'required|min:8|max:12'
+   'senha' => 'required|min:8|max:12',
 ];
  ```
  
@@ -60,19 +60,20 @@ $rules = [
     $datas = [
         'nome'  => 'brunoconte3',
         'email' => 'brunoconte3@gmail.com',
-        'senha' => 'brunoconte3.web'
+        'senha' => 'brunoconte3.web',
     ];
     
     $validator->set($datas, [
         'nome'  => 'required|regex:/^[a-zA-Z\s]+$/, O campo nome só deve conter caracteres alfabéticos.',
         'email' => 'required|email|max:50',
-        'senha' => 'required|min:8|max:12'
+        'senha' => 'required|min:8|max:12',
     ]);
     
     if(!$validator->getErros()){
         echo 'Dados válidados com sucesso!';
     } else {
-        var_dump($validator->getErros());
+       echo '<pre>';
+       print_r($validator->getErros());
     }
 ```
 
