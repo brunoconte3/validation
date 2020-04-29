@@ -4,7 +4,6 @@ O Validator é uma classe de validação baseada em PHP-7 que permite validar qu
 
 # Instalação
 
-```Créditos a mammoth-php/validation que foi fork de lá```
 
 via composer.
 
@@ -118,3 +117,5 @@ Recomendamos o uso quando se define uma regra através de uma expressão regular
 # Licença
 
 O validator é uma aplicação open-source licenciado sob a [licença MIT](https://opensource.org/licenses/MIT).
+
+```Créditos a mammoth-php/validation que foi fork de lá```
