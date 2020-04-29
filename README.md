@@ -35,7 +35,7 @@ $rules = [
  `Validando os dados de acordo com as regras`
  
  ``` php
-   $validator = new Mammoth\Validation\Validator();
+   $validator = new brunoconte3\Validation\Validator();
 
    $validator->set($datas, $rules);
    
@@ -54,12 +54,12 @@ $rules = [
  
     require 'vendor/autoload.php';
    
-    $validator = new Mammoth\Validation\Validator();
+    $validator = new brunoconte3\Validation\Validator();
     
     $datas = [
-        'nome'  => 'Mammoth',
-        'email' => 'mammoth.support@web.com',
-        'senha' => 'mammoth.web'
+        'nome'  => 'brunoconte3',
+        'email' => 'brunoconte3@gmail.com',
+        'senha' => 'brunoconte3.web'
     ];
     
     $validator->set($datas, [
