@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ValidationArray\\": "src/"
+            "brunoconte3\\": "src/"
         }
     }
 }
