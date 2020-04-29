@@ -4,6 +4,8 @@ O Validator é uma classe de validação baseada em PHP-7 que permite validar qu
 
 # Instalação
 
+```Créditos a mammoth-php/validation que foi fork de lá```
+
 via composer.
 
 ```
