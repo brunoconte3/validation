@@ -110,7 +110,7 @@ Após definir algumas de nossas regras aos dados você também pode adicionar um
     $validator->set($datas, [
         'nome'  => 'required, O campo nome não pode ser vazio.',
         'email' => 'email, O campo email esta incorreto.|max:50',
-        'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.'
+        'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.',
     ]);
 ```
 Recomendamos o uso quando se define uma regra através de uma expressão regular. 
