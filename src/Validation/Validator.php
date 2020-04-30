@@ -75,7 +75,7 @@ class Validator
             case 'bool':
                 if (!filter_var($dataValue, FILTER_VALIDATE_BOOLEAN)) {
                     $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey só pode conter valores lógicos. (true|false, 1|0, yes|no)!";
+                        "O campo $ruleKey só pode conter valores lógicos. (true, 1, yes)!";
                 }
                 break;
             case 'email':
@@ -132,12 +132,6 @@ class Validator
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey só pode conter valores numéricos!";
                 }
                 break;
-            case 'phone':
-                if (!preg_match('/^(\([0-9]{2}\)[0-9]{4}-[0-9]{4})+$/', $dataValue) !== false) {
-                    $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey deve corresponder ao formato (00)0000-0000!";
-                }
-                break;
             case 'plate':
                 if (!preg_match('/^[A-Z]{3}-[0-9]{4}+$/', $dataValue) !== false) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato AAA-0000!";
@@ -155,8 +149,8 @@ class Validator
                 }
                 break;
             case 'zip_code':
-                if (!preg_match('/^([0-9]{2}\.[0-9]{3}-[0-9]{3})+$/', $dataValue) !== false) {
-                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato 00.000-000";
+                if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $dataValue) !== false) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato 00000-000";
                 }
                 break;
         }

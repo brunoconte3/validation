@@ -104,7 +104,6 @@ $rules = [
 - ip: `Verifica se o valor é um endereço de IP válido.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
-- phone: `Verifica se o valor corresponde ao formato de um telefone/celular.`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - url: `Verifica se o valor é um endereço de URL válida.`
