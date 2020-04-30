@@ -5,6 +5,7 @@ namespace brunoconte3\Validation;
 class Validator
 {
     use TraitCpf;
+    use TraitCnpj;
 
     private $erros = false;
 
@@ -88,13 +89,25 @@ class Validator
                 }
                 break;
             case 'identifier':
-                if (!$this->validateCpf($dataValue)) {
+                if (!$this->validateCpf($dataValue, false)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
                 break;
             case 'identifierMask':
-                if (!$this->validateCpf($dataValue, true)) {
+                if (!$this->validateCpf($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey é inválido!";
+                }
+                break;
+            case 'companyIdentification':
+                if (!$this->validateCnpj($dataValue, false)) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey é inválido!";
+                }
+                break;
+            case 'companyIdentificationMask':
+                if (!$this->validateCnpj($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }

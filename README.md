@@ -63,14 +63,19 @@ $rules = [
         'email' => 'brunogmail.com',
         'senha' => 'aaa',
         'cpf' => '61736037056',
-        'cpfComMask' => '824.449.980-06',
+        'cpfComMascara' => '824.449.980-06',
+        'cnpj' => '66565516000120',
+        'cnpjComMascara' => '83.452.731/0001-59',
     ];
 
     $validator->set($datas, [
         'idade'  => 'required|int',
         'email' => 'required|email|max:50',
         'senha' => 'required|min:8|max:12',
-        'cpfComMask' => 'required|min:14|max:14|identifierMask',
+        'cpf' => 'required|min:11|max:11|identifier',
+        'cpfComMascara' => 'required|min:14|max:14|identifierMask',
+        'cnpj' => 'required|min:14|max:14|companyIdentification',
+        'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
     ]);
 
     if(!$validator->getErros()){
@@ -93,6 +98,8 @@ $rules = [
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
 - identifier: `Valida se o CPF é válido, passando CPF sem mascara`
 - identifierMask: `Valida se o CPF é válido, passando CPF com mascara`
+- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
+- companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
