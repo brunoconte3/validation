@@ -4,6 +4,8 @@ namespace brunoconte3\Validation;
 
 class Validator
 {
+    use TraitCpf;
+
     private $erros = false;
 
     public function set(array $datas, array $rules)
@@ -86,9 +88,15 @@ class Validator
                 }
                 break;
             case 'identifier':
-                if (!preg_match('/^([0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2})+$/', $dataValue) !== false) {
+                if (!$this->validateCpf($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey deve corresponder ao formato 000.000.000-00!";
+                        "O campo $ruleKey é inválido!";
+                }
+                break;
+            case 'identifierMask':
+                if (!$this->validateCpf($dataValue, true)) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey é inválido!";
                 }
                 break;
             case 'int':
