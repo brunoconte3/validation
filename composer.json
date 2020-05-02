@@ -1,7 +1,7 @@
 {
     "name": "brunoconte3/validation",
-    "description": "O Validator é baseado em PHP 7 que permite validar vários tipos de dados.",
-    "keywords": ["validation", "validator", "validate", "array"],
+    "description": "Validação e Formatação de dados. Excelente para validar arrays",
+    "keywords": ["validation", "validator", "validate", "array", "format"],
     "license": "MIT",
     "authors": [{
             "name": "Bruno Conte",

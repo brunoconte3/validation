@@ -42,11 +42,6 @@ class ValidateCnpj
         return $newCnpj;
     }
 
-    public static function formatCnpj(string $cnpj): string
-    {
-        return preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '\$1.\$2.\$3/\$4-\$5', $cnpj);
-    }
-
     public static function validateCnpj(string $cnpj, bool $mask = true): bool
     {
         if (empty($cnpj)) {

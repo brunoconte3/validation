@@ -4,6 +4,7 @@ O Validator é baseado em PHP 7 que permite validar vários tipos de dados.
 
 Aplicado padrão da PSR-12.
 Possui Validates com assuntos específicos, onde pode validar isoladamente alguns itens que desejar.
+Classe de Formatação, onde contempla opções de formatação para seus dados.
 
 # Instalação
 
@@ -127,7 +128,20 @@ Após definir algumas de nossas regras aos dados você também pode adicionar um
     ]);
 ```
 
-Recomendamos o uso quando se define uma regra através de uma expressão regular.
+# Formatação Exemplos
+
+```php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Format;
+
+echo Format::formatTelephone('44999998888') . '<br>';  //(44) 99999-8888
+echo Format::formatCpf('73381209000') . '<br>';  //733.812.090-00
+echo Format::formatCnpj('39678379000129') . '<br>'; //39.678.379/0001-29
+echo Format::formatCep('87030585'); //87030-585
+
+```
 
 # Licença
 
