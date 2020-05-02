@@ -2,9 +2,9 @@
 
 namespace brunoconte3\Validation;
 
-trait TraitCnpj
+class ValidateCnpj
 {
-    private function validateCnpjSequenceInvalidate(string $cnpj): bool
+    private static function validateCnpjSequenceInvalidate(string $cnpj): bool
     {
         $cnpjInvalidate = [
             '00000000000000', '11111111111111', '22222222222222', '33333333333333', '44444444444444',
@@ -16,7 +16,7 @@ trait TraitCnpj
         return true;
     }
 
-    private function validateRuleCnpj(string $cnpj): bool
+    private static function validateRuleCnpj(string $cnpj): bool
     {
         for ($i = 0, $j = 5, $sum = 0; $i < 12; $i++) {
             $sum += $cnpj[$i] * $j;
@@ -35,25 +35,25 @@ trait TraitCnpj
         return $res;
     }
 
-    private function dealCnpj(string $cnpj): string
+    private static function dealCnpj(string $cnpj): string
     {
         $newCnpj = preg_match('/[0-9]/', $cnpj) ?
             str_replace(['-', '.', '/'], '', str_pad($cnpj, 14, '0', STR_PAD_LEFT), $cnpj) : 0;
         return $newCnpj;
     }
 
-    public function formatCnpj(string $cnpj): string
+    public static function formatCnpj(string $cnpj): string
     {
         return preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '\$1.\$2.\$3/\$4-\$5', $cnpj);
     }
 
-    public function validateCnpj(string $cnpj, bool $mask = true): bool
+    public static function validateCnpj(string $cnpj, bool $mask = true): bool
     {
         if (empty($cnpj)) {
             return false;
         }
         if ($mask) {
-            $cnpj = $this->dealCnpj($cnpj);
+            $cnpj = self::dealCnpj($cnpj);
         }
 
         if (!self::validateCnpjSequenceInvalidate($cnpj)) {

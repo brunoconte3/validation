@@ -2,7 +2,8 @@
 
 O Validator é uma classe de validação baseada em PHP 7 que permite validar vários tipos de dados.
 
-Aplicado padrão da PSR-12
+Aplicado padrão da PSR-12.
+Possui Validates com assuntos específicos, onde pode validar isoladamente alguns itens que desejar.
 
 # Instalação
 
@@ -104,6 +105,7 @@ $rules = [
 - ip: `Verifica se o valor é um endereço de IP válido.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
+- phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - url: `Verifica se o valor é um endereço de URL válida.`

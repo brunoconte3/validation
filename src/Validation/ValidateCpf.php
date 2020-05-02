@@ -2,9 +2,9 @@
 
 namespace brunoconte3\Validation;
 
-trait TraitCpf
+class ValidateCpf
 {
-    private function validateRuleCpf(string $cpf): bool
+    private static function validateRuleCpf(string $cpf): bool
     {
         $cpf = preg_replace('/[^0-9]/', '', (string) $cpf);
         if (strlen($cpf) != 11) {
@@ -26,7 +26,7 @@ trait TraitCpf
         return $res;
     }
 
-    private function validateCpfSequenceInvalidate(string $cpf): bool
+    private static function validateCpfSequenceInvalidate(string $cpf): bool
     {
         $cpfInvalidate = [
             '00000000000', '11111111111', '22222222222', '33333333333', '44444444444', '55555555555',
@@ -38,34 +38,34 @@ trait TraitCpf
         return true;
     }
 
-    private function dealCpf(string $cpf): string
+    private static function dealCpf(string $cpf): string
     {
         $newCpf = preg_match('/[0-9]/', $cpf) ?
             str_replace('-', '', str_replace('.', '', str_pad($cpf, 11, '0', STR_PAD_LEFT), $cpf), $cpf) : 0;
         return $newCpf;
     }
 
-    public function validateCpf(string $cpf, bool $mask = true): bool
+    public static function validateCpf(string $cpf, bool $mask = true): bool
     {
         if (empty($cpf)) {
             return false;
         }
 
         if ($mask) {
-            $cpf = $this->dealCpf($cpf);
+            $cpf = self::dealCpf($cpf);
         }
 
         if (strlen($cpf) != 11) {
             return false;
         }
 
-        if ($this->validateCpfSequenceInvalidate($cpf)) {
-            return $this->validateRuleCpf($cpf);
+        if (self::validateCpfSequenceInvalidate($cpf)) {
+            return self::validateRuleCpf($cpf);
         }
         return false;
     }
 
-    public function formatCpf(string $cpf): string
+    public static function formatCpf(string $cpf): string
     {
         return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '\$1.\$2.\$3-\$4', $cpf);
     }

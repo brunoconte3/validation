@@ -2,11 +2,14 @@
 
 namespace brunoconte3\Validation;
 
+use brunoconte3\Validation\{
+    ValidateCpf,
+    ValidateCnpj,
+    ValidatePhone,
+};
+
 class Validator
 {
-    use TraitCpf;
-    use TraitCnpj;
-
     private $erros = false;
 
     public function set(array $datas, array $rules)
@@ -89,25 +92,25 @@ class Validator
                 }
                 break;
             case 'identifier':
-                if (!$this->validateCpf($dataValue, false)) {
+                if (!ValidateCpf::validateCpf($dataValue, false)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
                 break;
             case 'identifierMask':
-                if (!$this->validateCpf($dataValue)) {
+                if (!ValidateCpf::validateCpf($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
                 break;
             case 'companyIdentification':
-                if (!$this->validateCnpj($dataValue, false)) {
+                if (!ValidateCnpj::validateCnpj($dataValue, false)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
                 break;
             case 'companyIdentificationMask':
-                if (!$this->validateCnpj($dataValue)) {
+                if (!ValidateCnpj::validateCnpj($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
@@ -150,7 +153,12 @@ class Validator
                 break;
             case 'zip_code':
                 if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $dataValue) !== false) {
-                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato 00000-000";
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato 00000-000!";
+                }
+                break;
+            case 'phone':
+                if (!ValidatePhone::validate($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é um telefone válido!";
                 }
                 break;
         }
