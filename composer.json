@@ -1,6 +1,6 @@
 {
     "name": "brunoconte3/validation",
-    "description": "Uma classe de validação baseada em PHP 7 voltada para validação de Arrays",
+    "description": "O Validator é baseado em PHP 7 que permite validar vários tipos de dados.",
     "keywords": ["validation", "validator", "validate", "array"],
     "license": "MIT",
     "authors": [{
