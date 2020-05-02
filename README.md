@@ -68,6 +68,7 @@ $rules = [
         'cpfComMascara' => '824.449.980-06',
         'cnpj' => '66565516000120',
         'cnpjComMascara' => '83.452.731/0001-59',
+        'date' => '31/04/1989',
     ];
 
     $validator->set($datas, [
@@ -78,6 +79,7 @@ $rules = [
         'cpfComMascara' => 'required|min:14|max:14|identifierMask',
         'cnpj' => 'required|min:14|max:14|companyIdentification',
         'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
+        'date' => 'dateBrazil',
     ]);
 
     if(!$validator->getErros()){
@@ -96,6 +98,7 @@ $rules = [
 - alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
 - alnum: `Verifica se o campo contém caracteres alfanuméricos.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
+- dateBrazil `Valida se a data brasileira é valida.`
 - email: `Verifica se é um email válido.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
 - identifier: `Valida se o CPF é válido, passando CPF sem mascara`

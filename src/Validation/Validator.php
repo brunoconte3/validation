@@ -161,6 +161,11 @@ class Validator
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é um telefone válido!";
                 }
                 break;
+            case 'dateBrazil':
+                if (!ValidateDate::validateDateBrazil($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma data válida!";
+                }
+                break;
         }
     }
 
