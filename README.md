@@ -136,10 +136,10 @@ require 'vendor/autoload.php';
 
 use brunoconte3\Validation\Format;
 
-echo Format::formatTelephone('44999998888') . '<br>';  //(44) 99999-8888
-echo Format::formatCpf('73381209000') . '<br>';  //733.812.090-00
-echo Format::formatCnpj('39678379000129') . '<br>'; //39.678.379/0001-29
-echo Format::formatCep('87030585'); //87030-585
+echo Format::formatTelephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
+echo Format::formatIdentifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
+echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
+echo Format::formatZipCode('87030585'); //Formata CEP ==>  87030-585
 
 ```
 
