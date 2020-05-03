@@ -6,6 +6,7 @@ use brunoconte3\Validation\{
     ValidateCpf,
     ValidateCnpj,
     ValidatePhone,
+    ValidateHour,
 };
 
 class Validator
@@ -164,6 +165,11 @@ class Validator
             case 'dateBrazil':
                 if (!ValidateDate::validateDateBrazil($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma data válida!";
+                }
+                break;
+            case 'hour':
+                if (!ValidateHour::validateHour($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma hora válida!";
                 }
                 break;
         }

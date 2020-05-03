@@ -69,6 +69,7 @@ $rules = [
         'cnpj' => '66565516000120',
         'cnpjComMascara' => '83.452.731/0001-59',
         'date' => '31/04/1989',
+        'hora' => '23:50',
     ];
 
     $validator->set($datas, [
@@ -80,6 +81,7 @@ $rules = [
         'cnpj' => 'required|min:14|max:14|companyIdentification',
         'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
         'date' => 'dateBrazil',
+        'hora' => 'hour',
     ]);
 
     if(!$validator->getErros()){
@@ -98,13 +100,14 @@ $rules = [
 - alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
 - alnum: `Verifica se o campo contém caracteres alfanuméricos.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
+- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
+- companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
 - dateBrazil `Valida se a data brasileira é valida.`
 - email: `Verifica se é um email válido.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
 - identifier: `Valida se o CPF é válido, passando CPF sem mascara`
 - identifierMask: `Valida se o CPF é válido, passando CPF com mascara`
-- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
-- companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
+- hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
