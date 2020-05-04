@@ -15,10 +15,35 @@ class Validator
 
     public function set(array $datas, array $rules)
     {
+        $ruleOrdemBase = [
+            'required',
+            'alpha',
+            'alnum',
+            'bool',
+            'companyIdentification',
+            'dateBrazil',
+            'email',
+            'float',
+            'hour',
+            'identifier',
+            'identifierMask',
+            'int',
+            'ip',
+            'mac',
+            'max',
+            'min',
+            'numeric',
+            'phone',
+            'plate',
+            'regex',
+            'url',
+            'zip_code',
+        ];
         foreach ($rules as $ruleKey => $ruleValue) {
-            if (isset($datas[$ruleKey])) {
-                $this->rules($datas[$ruleKey], $ruleKey, $ruleValue);
-            }
+            $ruleArray = explode('|', $ruleValue);
+            $ruleOrdemBase = array_merge($ruleOrdemBase, $ruleArray);
+            $ruleOrdenada = array_unique(array_uintersect($ruleOrdemBase, $ruleArray, "strcasecmp"));
+            $this->rules($datas[$ruleKey] ?? null, $ruleKey, implode('|', $ruleOrdenada));
         }
     }
 
@@ -40,20 +65,8 @@ class Validator
 
         switch ($item[0]) {
             case 'required':
-                if (empty($dataValue) || $dataValue == '' || $dataValue == ' ') {
+                if (empty(trim($dataValue))) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey é obrigatório!";
-                }
-                break;
-            case 'max':
-                if (strlen($dataValue) > $item[1]) {
-                    $this->erros[$ruleKey] = $message[1]
-                        ?? "O campo $ruleKey precisa conter no máximo $item[1] caracteres!";
-                }
-                break;
-            case 'min':
-                if (strlen($dataValue) < $item[1]) {
-                    $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey precisa conter no mínimo $item[1] caracteres!";
                 }
                 break;
             case 'alpha':
@@ -82,6 +95,23 @@ class Validator
                         "O campo $ruleKey só pode conter valores lógicos. (true, 1, yes)!";
                 }
                 break;
+            case 'companyIdentification':
+                if (!ValidateCnpj::validateCnpj($dataValue, false)) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey é inválido!";
+                }
+                break;
+            case 'companyIdentificationMask':
+                if (!ValidateCnpj::validateCnpj($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey é inválido!";
+                }
+                break;
+            case 'dateBrazil':
+                if (!ValidateDate::validateDateBrazil($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma data válida!";
+                }
+                break;
             case 'email':
                 if (!filter_var($dataValue, FILTER_VALIDATE_EMAIL)) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve ser um endereço de email válido!";
@@ -92,6 +122,11 @@ class Validator
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve ser do tipo real(flutuante)!";
                 }
                 break;
+            case 'hour':
+                if (!ValidateHour::validateHour($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma hora válida!";
+                }
+                break;
             case 'identifier':
                 if (!ValidateCpf::validateCpf($dataValue, false)) {
                     $this->erros[$ruleKey] = $message[1] ??
@@ -100,18 +135,6 @@ class Validator
                 break;
             case 'identifierMask':
                 if (!ValidateCpf::validateCpf($dataValue)) {
-                    $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey é inválido!";
-                }
-                break;
-            case 'companyIdentification':
-                if (!ValidateCnpj::validateCnpj($dataValue, false)) {
-                    $this->erros[$ruleKey] = $message[1] ??
-                        "O campo $ruleKey é inválido!";
-                }
-                break;
-            case 'companyIdentificationMask':
-                if (!ValidateCnpj::validateCnpj($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ??
                         "O campo $ruleKey é inválido!";
                 }
@@ -131,9 +154,26 @@ class Validator
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve ser um endereço de MAC válido!";
                 }
                 break;
+            case 'max':
+                if (strlen($dataValue) > $item[1]) {
+                    $this->erros[$ruleKey] = $message[1]
+                        ?? "O campo $ruleKey precisa conter no máximo $item[1] caracteres!";
+                }
+                break;
+            case 'min':
+                if (strlen($dataValue) < $item[1]) {
+                    $this->erros[$ruleKey] = $message[1] ??
+                        "O campo $ruleKey precisa conter no mínimo $item[1] caracteres!";
+                }
+                break;
             case 'numeric':
                 if (!is_numeric($dataValue)) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey só pode conter valores numéricos!";
+                }
+                break;
+            case 'phone':
+                if (!ValidatePhone::validate($dataValue)) {
+                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é um telefone válido!";
                 }
                 break;
             case 'plate':
@@ -155,21 +195,6 @@ class Validator
             case 'zip_code':
                 if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $dataValue) !== false) {
                     $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey deve corresponder ao formato 00000-000!";
-                }
-                break;
-            case 'phone':
-                if (!ValidatePhone::validate($dataValue)) {
-                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é um telefone válido!";
-                }
-                break;
-            case 'dateBrazil':
-                if (!ValidateDate::validateDateBrazil($dataValue)) {
-                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma data válida!";
-                }
-                break;
-            case 'hour':
-                if (!ValidateHour::validateHour($dataValue)) {
-                    $this->erros[$ruleKey] = $message[1] ?? "O campo $ruleKey não é uma hora válida!";
                 }
                 break;
         }
