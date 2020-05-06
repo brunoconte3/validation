@@ -22,7 +22,7 @@ $ composer require brunoconte3/validation
 $datas = [
    'nome'  => 'brunoconte3',
    'email' => 'brunoconte3@gmail.com',
-   'senha' => 'brunoconte3.web',
+   'validarPassandoJson' => '@&451',
 ];
 ```
 
@@ -32,7 +32,7 @@ $datas = [
 $rules = [
    'nome'  => 'required|regex:/^[a-zA-Z\s]+$/',
    'email' => 'required|email|max:50',
-   'senha' => 'required|min:8|max:12',
+   'validarPassandoJson' => '{"required":"true","type":"alpha"}',
 ];
 ```
 
@@ -56,40 +56,43 @@ $rules = [
 ```php
 <?php
 
-   require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-   $validator = new brunoconte3\Validation\Validator();
+use brunoconte3\Validation\Validator;
 
-   $datas = [
-        'idade' => '011',
-        'email' => 'brunogmail.com',
-        'senha' => 'aaa',
-        'cpf' => '61736037056',
-        'cpfComMascara' => '824.449.980-06',
-        'cnpj' => '66565516000120',
-        'cnpjComMascara' => '83.452.731/0001-59',
-        'date' => '31/04/1989',
-        'hora' => '23:50',
-    ];
+ $datas = [
+    'sexo' => '',
+    'cnpjComMascara' => '33.452.731/0001-59',
+    'telefone' => '44999696',
+    'cpf' => '12547845874',
+    'nome' => 'a',
+    'numero' => 12345678,
+    'email' => 'bruno.com',
+    'msgCustom' => 'abc',
+    'validarPassandoJson' => '@&451',
+];
 
-    $validator->set($datas, [
-        'idade'  => 'required|int',
-        'email' => 'required|email|max:50',
-        'senha' => 'required|min:8|max:12',
-        'cpf' => 'required|min:11|max:11|identifier',
-        'cpfComMascara' => 'required|min:14|max:14|identifierMask',
-        'cnpj' => 'required|min:14|max:14|companyIdentification',
-        'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
-        'date' => 'dateBrazil',
-        'hora' => 'hour',
-    ]);
+$rules = [
+    'sexo' => 'required',
+    'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
+    'telefone' => 'required|phone',
+    'cpf' => 'required|identifier',
+    'nome' => 'required|min:2',
+    'numero' => 'max:5',
+    'email' => 'email',
+    'msgCustom' => 'required|min:5, Mensagem customizada aqui|max:20',
+    'validarPassandoJson' => '{"required":"true","type":"alpha"}',
+];
 
-    if(!$validator->getErros()){
-        echo 'Dados válidados com sucesso!';
-   } else {
-        echo '<pre>';
-        print_r($validator->getErros());
-   }
+$validator = new Validator();
+$validator->set($datas, $rules);
+
+if (!$validator->getErros()) {
+    echo 'Dados válidados com sucesso!';
+} else {
+    echo '<pre>';
+    print_r($validator->getErros());
+}
 ```
 
 # Tipos de validação (validators)
