@@ -15,6 +15,7 @@ $datas = [
     'msgCustom' => 'abc',
     'validarPassandoJson' => '@&451',
     'idade' => 'a',
+    'senha' => '11111111',
 ];
 
 $rules = [
@@ -28,6 +29,7 @@ $rules = [
     'msgCustom' => 'required|min:5, Mensagem customizada aqui|max:20',
     'validarPassandoJson' => '{"required":"true","type":"alpha"}',
     'idade' => 'numeric',
+    'senha' => 'float, O campo senha deve ser do tipo Inteiro!|required|max:8',
 ];
 
 $validator = new Validator();

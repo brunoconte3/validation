@@ -41,13 +41,21 @@ class Validator
 
     public function set(array $dates, array $rules)
     {
-        try { //prepara os dados, gera um json uniforme
-            $dates = json_decode($this->levelSubLevelsArrayReturnJson($dates), true);
-            //valida json
-            return $this->validateSubLevelData($dates, $rules);
-        } catch (\Throwable $e) {
-            $this->errors['ERRO'] = 'Há errors na classe de validação!';
+        //prepara dados para validação
+        $dates = json_decode($this->levelSubLevelsArrayReturnJson($dates), true);
+        if (empty($dates)) {
+            $this->errors['erro'] = "informe os dados!";
+            return false;
         }
+        //se for uma lista, valida a lista de objetos
+        if (count(array_filter(array_keys($dates), 'is_numeric')) == count($dates)) {
+            foreach ($dates as $val) {
+                $this->validateSubLevelData($val, $rules, true);
+            }
+        } else {
+            $this->validateSubLevelData($dates, $rules, true);
+        }
+        return true;
     }
 
     public function getErros()
@@ -85,31 +93,25 @@ class Validator
 
     private function validateSubLevelData(
         array $data,
-        array $rules,
-        bool $recursive = false
+        array $rules
     ) {
         //precorre o array de validação para não rodar recurssivamente atoa
         foreach ($rules as $key => $val) {
             //se for um objeto no primeiro nivel, valida recurssivo
             if ((array_key_exists($key, $data) && is_array($data[$key])) && is_array($val)) {
-                $this->validateSubLevelData($data[$key], $rules[$key], true);
-            } elseif (
-                (count(array_filter(array_values($data), 'is_array')) > 0)
-                &&
-                !$recursive
+                $this->validateSubLevelData($data[$key], $rules[$key]);
+            }
+            //valida campos filhos required, porém não existe no array de dados
+            if (
+                empty($data) && is_array($val) &&
+                (strpos(trim(strtolower(json_encode($val))), 'required') !== false)
             ) {
-                //se for uma lista de objetos no primeiro niveil, irá testar todos
-                foreach ($data as $valData) {
-                    if (is_array($valData) && is_array($rules) && !$recursive) {
-                        $this->validateSubLevelData($valData, $rules, true);
-                    }
-                }
-            } else {
-                foreach ($rules as $field => $rule) {
-                    if (!is_array($rule)) {
-                        $this->validateRuleField($field, ($data[$field] ?? null), $rule, isset($data[$field]));
-                    }
-                }
+                $this->errors[$key] = "Não foi encontrado o indice $key, campos filhos são obrigatórios!";
+                return false;
+            }
+            //validação camo a campo
+            if (is_string($val)) {
+                $this->validateRuleField($key, ($data[$key] ?? null), $val, array_key_exists($key, $data));
             }
         }
         return $rules;
@@ -130,7 +132,9 @@ class Validator
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
                     foreach ($rulesConf as $valueRuleConf) {
-                        $ruleArrayConf =  explode(':', trim($valueRuleConf));
+                        $ruleArrayConf = explode(':', trim($valueRuleConf));
+                        $msgCustomized = explode(',', trim($valueRuleConf));
+                        $rulesArray['mensagem'] = $msgCustomized[1] ?? $rulesArray['mensagem'] ?? null;
                         if (!empty($ruleArrayConf)) {
                             $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                         }
@@ -143,12 +147,12 @@ class Validator
             }
             $rulesArray = !empty($rulesArray) && is_array($rulesArray) ? $rulesArray : [];
             //irá chamar uma função para cada validação no json de validação, passando o valor para a função
-            $msgCustomized = ($rulesArray['mensagem'] ?? null);
-            if (isset($rulesArray['mensagem'])) {
+            $msgCustomized = $rulesArray['mensagem'] ?? null;
+            if (array_key_exists('mensagem', $rulesArray)) {
                 unset($rulesArray['mensagem']);
             }
             foreach ($rulesArray as $key => $val) {
-                $method = trim(self::FUNCTIONS[trim(strtolower($key))] ?? 'invalidRule');
+                $method = trim(self::FUNCTIONS[trim($key)] ?? 'invalidRule');
                 $call = [$this, $method];
                 //chama há função de validação, de cada parametro json
                 if (is_callable($call, true, $method)) {
@@ -184,15 +188,8 @@ class Validator
             }
             $rulesArray = is_array($rulesArray) ? $rulesArray : [];
             $jsonRules = $this->levelSubLevelsArrayReturnJson($rulesArray);
-            $compareA = strpos(trim(strtolower($jsonRules)), '"required":"true"');
-            $compareB = strpos(trim(strtolower($jsonRules)), '"required":true');
-            $compareC = strpos(trim(strtolower($jsonRules)), '"required":"1"');
-            $compareD = strpos(trim(strtolower($jsonRules)), '"required":1');
-            $compareE = strpos(trim(strtolower($jsonRules)), '"required":"yes"');
-            if (
-                $compareA  !== false || $compareB  !== false ||
-                $compareC !== false || $compareD  !== false || $compareE  !== false
-            ) {
+            $compareA = strpos(trim(strtolower($jsonRules)), 'required');
+            if ($compareA !== false) {
                 $msg = "O campo $field não foi encontrado nos dados de entrada, indices filhos são obrigatórios!";
                 if (count(array_filter(array_values(json_decode($jsonRules, true)), 'is_array')) == 0) {
                     $msg = "O campo obrigátorio $field não foi encontrado nos dados de entrada!";
@@ -305,7 +302,7 @@ class Validator
     }
     private function validateCompanyIdentificationMask($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!ValidateCnpj::validateCnpj($value, false)) {
+        if (!ValidateCnpj::validateCnpj($value, true)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
