@@ -48,7 +48,11 @@ class Validator
             return false;
         }
         //se for uma lista, valida a lista de objetos
-        if (count(array_filter(array_keys($dates), 'is_numeric')) == count($dates)) {
+        if (
+            count(array_filter(array_keys($dates), 'is_numeric')) == count($dates)
+            &&
+            count(array_filter(array_values($dates), 'is_array')) == count($dates)
+        ) {
             foreach ($dates as $val) {
                 $this->validateSubLevelData($val, $rules, true);
             }
@@ -66,7 +70,7 @@ class Validator
     private function levelSubLevelsArrayReturnJson(array $data, bool $recursive = false)
     {
         //funcao recurssiva para tratar array e retornar json valido
-        //essa funcação server para validar dados com json_encode multiplos, e indicesquebrados na estrutura
+        //essa função serve para validar dados com json_encode multiplos, e indices quebrados na estrutura
         foreach ($data as $key => $val) {
             if (is_string($val) && !empty($val)) {
                 $arr = json_decode($val, true);
@@ -81,7 +85,6 @@ class Validator
             }
         }
         if ($recursive) {
-            //se for recurssivo retorna array
             return $data;
         }
         //se for raiz retorna json
@@ -95,7 +98,7 @@ class Validator
         array $data,
         array $rules
     ) {
-        //precorre o array de validação para não rodar recurssivamente atoa
+        //percorre o array de validação para não rodar recurssivamente atoa
         foreach ($rules as $key => $val) {
             //se for um objeto no primeiro nivel, valida recurssivo
             if ((array_key_exists($key, $data) && is_array($data[$key])) && is_array($val)) {
@@ -109,7 +112,7 @@ class Validator
                 $this->errors[$key] = "Não foi encontrado o indice $key, campos filhos são obrigatórios!";
                 return false;
             }
-            //validação camo a campo
+            //validação campo a campo
             if (is_string($val)) {
                 $this->validateRuleField($key, ($data[$key] ?? null), $val, array_key_exists($key, $data));
             }
@@ -119,7 +122,7 @@ class Validator
 
     private function validateRuleField($field, $value, $rules, $valid = false)
     {
-        //se o campo é valido, ele exite no json de dados, no mesmo nivel que a regra
+        //se o campo é valido, ele existe no json de dados, no mesmo nivel que a regra
         if ($valid) {
             //transforma a string json de validação em array para validação
             $rulesArray = is_array($rules) ? $rules : [];
@@ -127,8 +130,7 @@ class Validator
                 $rulesArray = json_decode($rules, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $rulesArray = [];
-                    //--------------------------------------------------
-                    //suporte ao padrão antigo
+                    //suporte ao padrão PIPE
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
                     foreach ($rulesConf as $valueRuleConf) {
@@ -154,7 +156,7 @@ class Validator
             foreach ($rulesArray as $key => $val) {
                 $method = trim(self::FUNCTIONS[trim($key)] ?? 'invalidRule');
                 $call = [$this, $method];
-                //chama há função de validação, de cada parametro json
+                //chama a função de validação, de cada parametro json
                 if (is_callable($call, true, $method)) {
                     call_user_func_array($call, [$val, $field, $value, $msgCustomized]);
                 } else {
@@ -162,15 +164,14 @@ class Validator
                 }
             }
         } else {
-            //se o campo é invalido, ele não exite no json de dados no mesmo nivel que a regra
+            //se o campo é invalido, ele não existe no json de dados no mesmo nivel que a regra
             //aqui valida se na regra há filhos obrigatorios para esse campo
             $rulesArray = is_array($rules) ? $rules : [];
             if (is_string($rules) && !empty($rules)) {
                 $rulesArray = json_decode($rules, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $rulesArray = [];
-                    //--------------------------------------------------
-                    //suporte ao padrão antigo
+                    //suporte ao padrão PIPE
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
                     foreach ($rulesConf as $valueRuleConf) {
@@ -179,7 +180,7 @@ class Validator
                             $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                         }
                     }
-                    //--------------------------------------------------
+
                     if (empty($rulesArray)) {
                         $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
                     }
@@ -218,6 +219,7 @@ class Validator
             $this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
         }
     }
+
     private function validateMinimumField($rule = '', $field = '', $value = null, $message = null)
     {
         if (strlen($value) < $rule) {
@@ -225,6 +227,7 @@ class Validator
                 $message : "O campo $field precisa conter no mínimo $rule caracteres!";
         }
     }
+
     private function validateMaximumField($rule = '', $field = '', $value = null, $message = null)
     {
         if (strlen($value) > $rule) {
@@ -232,6 +235,7 @@ class Validator
                 $message : "O campo $field precisa conter no máximo $rule caracteres!";
         };
     }
+
     private function validateAlphabets($rule = '', $field = '', $value = null, $message = null)
     {
         if (
@@ -244,6 +248,7 @@ class Validator
                 $message : "O campo $field só pode conter caracteres alfabéticos!";
         }
     }
+
     private function validateAlphaNumerics($rule = '', $field = '', $value = null, $message = null)
     {
         if (
@@ -264,6 +269,7 @@ class Validator
                 $message : "O campo $field só pode conter valores lógicos. (true, 1, yes)!";
         }
     }
+
     private function validateEmail($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -271,6 +277,7 @@ class Validator
                 $message : "O campo $field deve ser um endereço de email válido!";
         }
     }
+
     private function validateFloating($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_FLOAT)) {
@@ -278,6 +285,7 @@ class Validator
                 $message : "O campo $field deve ser do tipo real(flutuante)!";
         }
     }
+
     private function validateIdentifier($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateCpf::validateCpf($value, false)) {
@@ -285,6 +293,7 @@ class Validator
                 $message : "O campo $field é inválido!";
         }
     }
+
     private function validateIdentifierMask($rule = '', $field = '', $value = null, $message = null)
     {
 
@@ -293,6 +302,7 @@ class Validator
                 $message : "O campo $field é inválido!";
         }
     }
+
     private function validateCompanyIdentification($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateCnpj::validateCnpj($value, false)) {
@@ -300,6 +310,7 @@ class Validator
                 $message : "O campo $field é inválido!";
         }
     }
+
     private function validateCompanyIdentificationMask($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateCnpj::validateCnpj($value, true)) {
@@ -307,6 +318,7 @@ class Validator
                 $message : "O campo $field é inválido!";
         }
     }
+
     private function validateInteger($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_INT)) {
@@ -314,6 +326,7 @@ class Validator
                 $message : "O campo $field deve ser do tipo inteiro!";
         }
     }
+
     private function validateIp($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_IP)) {
@@ -321,6 +334,7 @@ class Validator
                 $message : "O campo $field deve ser um endereço de IP válido!";
         }
     }
+
     private function validateMac($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_MAC)) {
@@ -328,6 +342,7 @@ class Validator
                 $message : "O campo $field deve ser um endereço de MAC válido!";
         }
     }
+
     private function validateNumeric($rule = '', $field = '', $value = null, $message = null)
     {
         if (!is_numeric($value)) {
@@ -335,6 +350,7 @@ class Validator
                 $message : "O campo $field só pode conter valores numéricos!";
         }
     }
+
     private function validatePlate($rule = '', $field = '', $value = null, $message = null)
     {
         if (!preg_match('/^[A-Z]{3}-[0-9]{4}+$/', $value) !== false) {
@@ -350,6 +366,7 @@ class Validator
                 $message : "O campo $field precisa conter um valor com formato válido!";
         }
     }
+
     private function validateUrl($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
@@ -357,6 +374,7 @@ class Validator
                 $message : "O campo $field deve ser um endereço de URL válida!";
         }
     }
+
     private function validateZipCode($rule = '', $field = '', $value = null, $message = null)
     {
         if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $value) !== false) {
@@ -364,6 +382,7 @@ class Validator
                 $message : "O campo $field deve corresponder ao formato 00000-000!";
         }
     }
+
     private function validatePhone($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidatePhone::validate($value)) {
@@ -379,6 +398,7 @@ class Validator
                 $message : "O campo $field não é uma data válida!";
         }
     }
+
     private function validateHour($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateHour::validateHour($value)) {
