@@ -39,7 +39,7 @@ class ValidatorJson
         'hour' => 'validateHour',
     ];
 
-    public function set(array &$dates, array $rules)
+    public function set(array $dates, array $rules)
     {
         try { //prepara os dados, gera um json uniforme
             $dates = json_decode($this->levelSubLevelsArrayReturnJson($dates), true);
@@ -93,7 +93,11 @@ class ValidatorJson
             //se for um objeto no primeiro nivel, valida recurssivo
             if ((array_key_exists($key, $data) && is_array($data[$key])) && is_array($val)) {
                 $this->validateSubLevelData($data[$key], $rules[$key], true);
-            } elseif (is_array($data) && !$recursive) {
+            } elseif (
+                (count(array_filter(array_values($data), 'is_array')) > 0)
+                &&
+                !$recursive
+            ) {
                 //se for uma lista de objetos no primeiro niveil, irá testar todos
                 foreach ($data as $valData) {
                     if (is_array($valData) && is_array($rules) && !$recursive) {
@@ -120,6 +124,7 @@ class ValidatorJson
             if (is_string($rules) && !empty($rules)) {
                 $rulesArray = json_decode($rules, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
+                    $rulesArray = [];
                     //--------------------------------------------------
                     //suporte ao padrão antigo
                     //'int|required|min:14|max:14',
@@ -155,10 +160,29 @@ class ValidatorJson
         } else {
             //se o campo é invalido, ele não exite no json de dados no mesmo nivel que a regra
             //aqui valida se na regra há filhos obrigatorios para esse campo
-            $rulesArray = $rules;
+            $rulesArray = is_array($rules) ? $rules : [];
             if (is_string($rules) && !empty($rules)) {
                 $rulesArray = json_decode($rules, true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $rulesArray = [];
+                    //--------------------------------------------------
+                    //suporte ao padrão antigo
+                    //'int|required|min:14|max:14',
+                    $rulesConf = explode('|', trim($rules));
+                    foreach ($rulesConf as $valueRuleConf) {
+                        $ruleArrayConf =  explode(':', trim($valueRuleConf));
+                        if (!empty($ruleArrayConf)) {
+                            $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
+                        }
+                    }
+                    //--------------------------------------------------
+                    if (empty($rulesArray)) {
+                        $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
+                    }
+                    $this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
+                }
             }
+            $rulesArray = is_array($rulesArray) ? $rulesArray : [];
             $jsonRules = $this->levelSubLevelsArrayReturnJson($rulesArray);
             $compareA = strpos(trim(strtolower($jsonRules)), '"required":"true"');
             $compareB = strpos(trim(strtolower($jsonRules)), '"required":true');
@@ -171,7 +195,7 @@ class ValidatorJson
             ) {
                 $msg = "O campo $field não foi encontrado nos dados de entrada, indices filhos são obrigatórios!";
                 if (count(array_filter(array_values(json_decode($jsonRules, true)), 'is_array')) == 0) {
-                    $msg = "O campo $field não foi encontrado nos dados de entrada!";
+                    $msg = "O campo obrigátorio $field não foi encontrado nos dados de entrada!";
                 }
                 $this->errors[$field] = $msg;
             }
