@@ -12,7 +12,7 @@ $datas = [
     'nome' => 'a',
     'numero' => 12345678,
     'email' => 'bruno.com',
-    'msgCustom' => 'abc',
+    'texto' => 'abc',
     'validarPassandoJson' => '@&451',
     'idade' => 'a',
     'senha' => '11111111',
@@ -26,7 +26,7 @@ $rules = [
     'nome' => 'required|min:2',
     'numero' => 'max:5',
     'email' => 'email',
-    'msgCustom' => 'required|min:5, Mensagem customizada aqui|max:20',
+    'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
     'validarPassandoJson' => '{"required":"true","type":"alpha"}',
     'idade' => 'numeric',
     'senha' => 'float, O campo senha deve ser do tipo Inteiro!|required|max:8',
@@ -35,7 +35,7 @@ $rules = [
 $validator = new Validator();
 $validator->set($datas, $rules);
 
-echo 'Itens a validar: ' . count($rules) . '<hr>';
+echo 'Itens a validar: ' . count($datas) . '<hr>';
 if (!$validator->getErros()) {
     echo 'Dados válidados com sucesso!';
 } else {
