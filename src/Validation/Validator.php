@@ -132,9 +132,9 @@ class Validator
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
                     foreach ($rulesConf as $valueRuleConf) {
-                        $ruleArrayConf = explode(':', trim($valueRuleConf));
-                        $msgCustomized = explode(',', trim($valueRuleConf));
-                        $rulesArray['mensagem'] = $msgCustomized[1] ?? $rulesArray['mensagem'] ?? null;
+                        $conf = explode(',', trim($valueRuleConf));
+                        $ruleArrayConf = explode(':', $conf[0] ?? '');
+                        $rulesArray['mensagem'] = trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
                         if (!empty($ruleArrayConf)) {
                             $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                         }

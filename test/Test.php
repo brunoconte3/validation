@@ -15,7 +15,7 @@ $datas = [
     'texto' => 'abc',
     'validarPassandoJson' => '@&451',
     'idade' => 'a',
-    'senha' => '11111111',
+    'senha' => '@11111111',
 ];
 
 $rules = [
