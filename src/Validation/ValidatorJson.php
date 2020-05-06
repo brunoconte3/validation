@@ -116,12 +116,24 @@ class ValidatorJson
         //se o campo é valido, ele exite no json de dados, no mesmo nivel que a regra
         if ($valid) {
             //transforma a string json de validação em array para validação
-            $rulesArray = $rules;
+            $rulesArray = is_array($rules) ? $rules : [];
             if (is_string($rules) && !empty($rules)) {
                 $rulesArray = json_decode($rules, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
-                    $rulesArray = [];
-                    $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
+                    //--------------------------------------------------
+                    //suporte ao padrão antigo
+                    //'int|required|min:14|max:14',
+                    $rulesConf = explode('|', trim($rules));
+                    foreach ($rulesConf as $valueRuleConf) {
+                        $ruleArrayConf =  explode(':', trim($valueRuleConf));
+                        if (!empty($ruleArrayConf)) {
+                            $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
+                        }
+                    }
+                    //--------------------------------------------------
+                    if (empty($rulesArray)) {
+                        $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
+                    }
                 }
             }
             $rulesArray = !empty($rulesArray) && is_array($rulesArray) ? $rulesArray : [];
