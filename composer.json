@@ -22,7 +22,7 @@
             "name": "Walter de Padua Junior",
             "email": "wpadua8@gmail.com",
             "role": "Developer"
-        },
+        }
     ],
     "require": {
         "php": "^7.2"
