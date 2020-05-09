@@ -24,6 +24,7 @@ $datas = [
     'url' => 'ww.test.c',
     'ip' => '1.1.1',
     'mac' => '00:00',
+    'dia' => 32,
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -47,6 +48,7 @@ $rules = [
     'url' => 'url',
     'ip' => 'ip',
     'mac' => 'mac',
+    'dia' => 'numMax:31',
 ];
 
 $validator = new Validator();
