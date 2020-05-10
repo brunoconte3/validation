@@ -25,6 +25,7 @@ $datas = [
     'ip' => '1.1.1',
     'mac' => '00:00',
     'dia' => 32,
+    'qtde' => 3,
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -49,6 +50,7 @@ $rules = [
     'ip' => 'ip',
     'mac' => 'mac',
     'dia' => 'numMax:31',
+    'qtde' => 'numMin:5',
 ];
 
 $validator = new Validator();

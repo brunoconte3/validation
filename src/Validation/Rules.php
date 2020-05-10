@@ -36,6 +36,7 @@ class Rules
             'mac' => 'validateMac',
             'numeric' => 'validateNumeric',
             'numMax' => 'validateNumMax',
+            'numMin' => 'validateNumMin',
             'phone' => 'validatePhone',
             'plate' => 'validatePlate',
             'regex' => 'validateRegex',
@@ -333,6 +334,14 @@ class Rules
         if ($value > $rule) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é permitido até o valor máximo de $rule!";
+        }
+    }
+
+    protected function validateNumMin($rule = '', $field = '', $value = null, $message = null)
+    {
+        if ($value < $rule) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field deve ter o valor mínimo de $rule!";
         }
     }
 
