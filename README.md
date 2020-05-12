@@ -114,6 +114,7 @@ if (!$validator->getErros()) {
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
+- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
