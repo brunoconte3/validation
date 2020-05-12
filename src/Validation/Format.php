@@ -20,8 +20,13 @@ class Format
         return $number;
     }
 
-    public static function formatZipCode(int $valor): string
+    public static function formatZipCode(int $value): string
     {
-        return substr($valor, 0, 5) . '-' . substr($valor, 5, 3);
+        return substr($value, 0, 5) . '-' . substr($value, 5, 3);
+    }
+
+    public static function formatDateBrazil(string $date)
+    {
+        return date("d/m/Y", strtotime($date));
     }
 }

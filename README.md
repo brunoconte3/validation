@@ -149,6 +149,7 @@ echo Format::formatTelephone('44999998888') . '<br>';  //Formata Telefone ==> (4
 echo Format::formatIdentifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
 echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
 echo Format::formatZipCode('87030585'); //Formata CEP ==>  87030-585
+echo Format::formatDateBrazil('2020-05-12'); //Formata Data ==>  12/05/2020
 
 ```
 
