@@ -106,6 +106,7 @@ if (!$validator->getErros()) {
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
 - companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
 - dateBrazil `Valida se a data brasileira é valida.`
+- dateAmerican `Valida se a data americana é valida.`
 - email: `Verifica se é um email válido.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
 - identifier: `Valida se o CPF é válido, passando CPF sem mascara`

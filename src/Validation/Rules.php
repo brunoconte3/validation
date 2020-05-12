@@ -26,6 +26,7 @@ class Rules
             'companyIdentification' => 'validateCompanyIdentification',
             'companyIdentificationMask' => 'validateCompanyIdentificationMask',
             'dateBrazil' => 'validateDateBrazil',
+            'dateAmerican' => 'validateDateAmerican',
             'email' => 'validateEmail',
             'float' => 'validateFloating',
             'hour' => 'validateHour',
@@ -268,6 +269,14 @@ class Rules
     protected function validateDateBrazil($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateDate::validateDateBrazil($value)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field não é uma data válida!";
+        }
+    }
+
+    protected function validateDateAmerican($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateDate::validateDateAmerican($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é uma data válida!";
         }
