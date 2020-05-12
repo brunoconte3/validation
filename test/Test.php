@@ -27,6 +27,8 @@ $datas = [
     'mac' => '00:00',
     'dia' => 32,
     'qtde' => 3,
+    'dataBoleto' => '16/05/2020',
+    'dataOutroBoleto' => '2020-05-17',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -52,6 +54,8 @@ $rules = [
     'mac' => 'mac',
     'dia' => 'numMax:31',
     'qtde' => 'numMin:5',
+    'dataBoleto' => 'noWeekend',
+    'dataOutroBoleto' => 'noWeekend',
 ];
 
 $validator = new Validator();
@@ -74,3 +78,4 @@ echo Format::formatIdentifier('73381209000') . '<br>';  //Formata CPF ==>  733.8
 echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
 echo Format::formatZipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
 echo Format::formatDateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
+echo Format::formatDateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12

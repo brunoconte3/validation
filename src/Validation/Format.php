@@ -29,4 +29,9 @@ class Format
     {
         return date("d/m/Y", strtotime($date));
     }
+
+    public static function formatDateAmerican(string $date)
+    {
+        return implode('-', array_reverse(explode('/', $date)));
+    }
 }

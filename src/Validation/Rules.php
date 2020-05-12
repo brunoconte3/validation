@@ -41,6 +41,7 @@ class Rules
             'plate' => 'validatePlate',
             'regex' => 'validateRegex',
             'url' => 'validateUrl',
+            'noWeekend' => 'validateWeekend',
             'zipcode' => 'validateZipCode',
         ];
     }
@@ -248,6 +249,30 @@ class Rules
         }
     }
 
+    protected function validateCompanyIdentification($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateCnpj::validateCnpj($value, false)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field é inválido!";
+        }
+    }
+
+    protected function validateCompanyIdentificationMask($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateCnpj::validateCnpj($value, true)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field é inválido!";
+        }
+    }
+
+    protected function validateDateBrazil($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateDate::validateDateBrazil($value)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field não é uma data válida!";
+        }
+    }
+
     protected function validateEmail($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -264,6 +289,14 @@ class Rules
         }
     }
 
+    protected function validateHour($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateHour::validateHour($value)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field não é uma hora válida!";
+        }
+    }
+
     protected function validateIdentifier($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidateCpf::validateCpf($value, false)) {
@@ -276,22 +309,6 @@ class Rules
     {
 
         if (!ValidateCpf::validateCpf($value)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field é inválido!";
-        }
-    }
-
-    protected function validateCompanyIdentification($rule = '', $field = '', $value = null, $message = null)
-    {
-        if (!ValidateCnpj::validateCnpj($value, false)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field é inválido!";
-        }
-    }
-
-    protected function validateCompanyIdentificationMask($rule = '', $field = '', $value = null, $message = null)
-    {
-        if (!ValidateCnpj::validateCnpj($value, true)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -380,24 +397,18 @@ class Rules
     protected function validatePhone($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidatePhone::validate($value)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field não é um telefone válido!";
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um telefone válido!";
         }
     }
 
-    protected function validateDateBrazil($rule = '', $field = '', $value = null, $message = null)
+    protected function validateWeekend($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!ValidateDate::validateDateBrazil($value)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field não é uma data válida!";
+        if (strpos($value, '/') > -1) {
+            $value = Format::formatDateAmerican($value);
         }
-    }
-
-    protected function validateHour($rule = '', $field = '', $value = null, $message = null)
-    {
-        if (!ValidateHour::validateHour($value)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field não é uma hora válida!";
+        $day = date('w', strtotime($value));
+        if (in_array($day, [0, 6])) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não pode ser um Final de Semana!";
         }
     }
 
