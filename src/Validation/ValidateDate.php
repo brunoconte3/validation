@@ -26,7 +26,7 @@ class ValidateDate
                 $mes = $partes[1];
                 $ano = isset($partes[2]) ? $partes[2] : 0;
 
-                self::validateYear($ano, $mes, $dia);
+                return self::validateYear($ano, $mes, $dia);
             }
             return false;
         }
@@ -43,7 +43,7 @@ class ValidateDate
                 $mes = $partes[1];
                 $ano = isset($partes[0]) ? $partes[0] : 0;
 
-                self::validateYear($ano, $mes, $dia);
+                return self::validateYear($ano, $mes, $dia);
             }
             return false;
         }
