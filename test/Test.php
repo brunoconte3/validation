@@ -30,6 +30,7 @@ $datas = [
     'qtde' => 3,
     'dataBoleto' => '16/05/2020',
     'dataOutroBoleto' => '2020-05-17',
+    'teste' => 'a',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -58,6 +59,7 @@ $rules = [
     'qtde' => 'numMin:5',
     'dataBoleto' => 'noWeekend',
     'dataOutroBoleto' => 'noWeekend',
+    'teste' => 'array',
 ];
 
 $validator = new Validator();

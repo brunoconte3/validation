@@ -22,6 +22,7 @@ class Rules
             'max' => 'validateMaximumField',
             'alpha' => 'validateAlphabets',
             'alnum' => 'validateAlphaNumerics',
+            'array' => 'validateArray',
             'bool' => 'validateBoolean',
             'companyIdentification' => 'validateCompanyIdentification',
             'companyIdentificationMask' => 'validateCompanyIdentificationMask',
@@ -239,6 +240,13 @@ class Rules
         ) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field só pode conter caracteres alfanuméricos!";
+        }
+    }
+
+    protected function validateArray($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!is_array($value)) {
+            $this->errors[$field] = !empty($message) ? $message : "A variável $field não é um array!";
         }
     }
 

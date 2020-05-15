@@ -102,6 +102,7 @@ if (!$validator->getErros()) {
 - max: `Define o tamanho máximo do valor.`
 - alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
 - alnum: `Verifica se o campo contém caracteres alfanuméricos.`
+- array: `Verifica se a variável é um array.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
 - companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
