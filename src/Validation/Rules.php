@@ -421,7 +421,7 @@ class Rules
     protected function validateWeekend($rule = '', $field = '', $value = null, $message = null)
     {
         if (strpos($value, '/') > -1) {
-            $value = Format::formatDateAmerican($value);
+            $value = Format::dateAmerican($value);
         }
         $day = date('w', strtotime($value));
         if (in_array($day, [0, 6])) {
