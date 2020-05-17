@@ -145,6 +145,7 @@ Após definir algumas de nossas regras aos dados você também pode adicionar um
 # Formatação Exemplos
 
 ```php
+<?php
 
 require 'vendor/autoload.php';
 
