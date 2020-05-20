@@ -31,6 +31,7 @@ $datas = [
     'dataBoleto' => '16/05/2020',
     'dataOutroBoleto' => '2020-05-17',
     'teste' => 'a',
+    'senhaAlpha' => 'abc145Ç',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -60,6 +61,7 @@ $rules = [
     'dataBoleto' => 'noWeekend',
     'dataOutroBoleto' => 'noWeekend',
     'teste' => 'array',
+    'senhaAlpha' => 'alphaNum',
 ];
 
 $validator = new Validator();
