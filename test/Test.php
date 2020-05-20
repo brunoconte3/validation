@@ -31,6 +31,9 @@ $datas = [
     'dataBoleto' => '16/05/2020',
     'dataOutroBoleto' => '2020-05-17',
     'teste' => 'a',
+    'testeInt' => '12.3',
+    'testeBool' => 'true1',
+    'testeFloat' => '35A',
     'senhaAlpha' => 'abc145Ç',
 ];
 
@@ -61,10 +64,14 @@ $rules = [
     'dataBoleto' => 'noWeekend',
     'dataOutroBoleto' => 'noWeekend',
     'teste' => 'array',
+    'testeInt' => 'int|convert',
+    'testeBool' => 'bool|convert',
+    'testeFloat' => 'convert|float',
     'senhaAlpha' => 'alphaNum',
 ];
 
 $validator = new Validator();
+Format::convertTypes($datas, $rules);
 $validator->set($datas, $rules);
 
 echo 'Itens a validar: ' . count($datas) . '<hr>';
@@ -75,7 +82,6 @@ if (!$validator->getErros()) {
     echo 'Itens Validados: ' . count($validator->getErros()) . '<hr>';
     print_r($validator->getErros());
 }
-
 
 echo '<br><br>Formatações Exemplos<hr>';
 
