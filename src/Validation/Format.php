@@ -27,12 +27,15 @@ class Format
 
     public static function dateBrazil(string $date)
     {
-        return date("d/m/Y", strtotime($date));
+        return date('d/m/Y', strtotime($date));
     }
 
     public static function dateAmerican(string $date)
     {
-        return implode('-', array_reverse(explode('/', $date)));
+        if (strpos($date, '/') > -1) {
+            return implode('-', array_reverse(explode('/', $date)));
+        }
+        return date('Y-m-d', strtotime($date));
     }
 
     public static function arrayToIntReference(array &$array): void
