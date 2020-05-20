@@ -25,12 +25,12 @@ class Format
     {
         switch ($type) {
             case 'bool':
-                return is_bool($value) ? (bool) $value : $value;
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? (bool) $value : $value;
             case 'int':
-                return is_integer($value) ? (int) $value : $value;
+                return filter_var($value, FILTER_VALIDATE_INT) ? (int) $value : $value;
             case 'float':
             case 'numeric':
-                return is_float($value) || is_numeric($value) ? (float) $value : $value;
+                return filter_var($value, FILTER_VALIDATE_FLOAT) ? (float) $value : $value;
             default:
                 return $value;
         }
