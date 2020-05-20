@@ -34,6 +34,7 @@ $datas = [
     'testeInt' => '12.3',
     'testeBool' => 'true1',
     'testeFloat' => '35A',
+    'senhaAlpha' => 'abc145Ç',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -66,6 +67,7 @@ $rules = [
     'testeInt' => 'int|convert',
     'testeBool' => 'bool|convert',
     'testeFloat' => 'convert|float',
+    'senhaAlpha' => 'alphaNum',
 ];
 
 $validator = new Validator();
