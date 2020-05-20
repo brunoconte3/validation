@@ -12,7 +12,9 @@ use brunoconte3\Validation\{
 class Rules
 {
     protected $errors = false;
-
+    public const RULES_WITHOUT_FUNCS = [
+        'convert',
+    ];
     public static function functionsValidatade(): array
     {
         return [
@@ -57,6 +59,10 @@ class Rules
 
     protected function validateFieldType($rule = '', $field = '', $value = null, $message = null)
     {
+        if (in_array(trim(strtolower($rule)), self::RULES_WITHOUT_FUNCS)) {
+            return;
+        }
+
         $method = trim(self::functionsValidatade()[trim(strtolower($rule))] ?? 'invalidRule');
         $call = [$this, $method];
         //chama há função de validação, de cada parametro json
@@ -154,6 +160,9 @@ class Rules
                 unset($rulesArray['mensagem']);
             }
             foreach ($rulesArray as $key => $val) {
+                if (in_array(trim(strtolower($key)), self::RULES_WITHOUT_FUNCS)) {
+                    continue;
+                }
                 $method = trim(Rules::functionsValidatade()[trim($key)] ?? 'invalidRule');
                 $call = [$this, $method];
                 //chama a função de validação, de cada parametro json

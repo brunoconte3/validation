@@ -4,6 +4,57 @@ namespace brunoconte3\Validation;
 
 class Format
 {
+    private const DATA_TYPE_TO_CONVERT = [
+        'bool',
+        'float',
+        'int',
+        'numeric',
+    ];
+
+    private static function returnTypeToConvert(array $rules): ?string
+    {
+        foreach (self::DATA_TYPE_TO_CONVERT as $type) {
+            if (in_array($type, $rules)) {
+                return $type;
+            }
+        }
+        return null;
+    }
+
+    private static function executeConvert(string $type, $value)
+    {
+        switch ($type) {
+            case 'bool':
+                return is_bool($value) ? (bool) $value : $value;
+            case 'int':
+                return is_integer($value) ? (int) $value : $value;
+            case 'float':
+            case 'numeric':
+                return is_float($value) || is_numeric($value) ? (float) $value : $value;
+            default:
+                return $value;
+        }
+    }
+
+    public static function convertTypes(array &$data, array $rules)
+    {
+        $error = [];
+        foreach ($rules as $key => $value) {
+            $arrRules = explode('|', $value);
+            $type = self::returnTypeToConvert($arrRules);
+            if (in_array('convert', $arrRules) && !empty($type)) {
+                try {
+                    $data[$key] = self::executeConvert($type, $data[$key]);
+                } catch (\Exception $ex) {
+                    $error[] = "falhar ao tentar converter {$data[$key]} para $type";
+                }
+            }
+        }
+        if (!empty($error)) {
+            return $error;
+        }
+    }
+
     public static function companyIdentification(string $cnpj): string
     {
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj);
