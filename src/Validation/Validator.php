@@ -4,25 +4,25 @@ namespace brunoconte3\Validation;
 
 class Validator extends Rules
 {
-    public function set(array $dates, array $rules)
+    public function set(array $data, array $rules)
     {
         //prepara dados para validação
-        $dates = json_decode($this->levelSubLevelsArrayReturnJson($dates), true);
-        if (empty($dates)) {
+        $data = json_decode($this->levelSubLevelsArrayReturnJson($data), true);
+        if (empty($data)) {
             $this->errors['erro'] = "informe os dados!";
             return false;
         }
         //se for uma lista, valida a lista de objetos
         if (
-            count(array_filter(array_keys($dates), 'is_numeric')) == count($dates)
+            count(array_filter(array_keys($data), 'is_numeric')) == count($data)
             &&
-            count(array_filter(array_values($dates), 'is_array')) == count($dates)
+            count(array_filter(array_values($data), 'is_array')) == count($data)
         ) {
-            foreach ($dates as $val) {
+            foreach ($data as $val) {
                 $this->validateSubLevelData($val, $rules, true);
             }
         } else {
-            $this->validateSubLevelData($dates, $rules, true);
+            $this->validateSubLevelData($data, $rules, true);
         }
         return true;
     }
