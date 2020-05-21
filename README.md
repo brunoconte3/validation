@@ -72,6 +72,10 @@ use brunoconte3\Validation\Validator;
     'email' => 'bruno.com',
     'msgCustom' => 'abc',
     'validarPassandoJson' => '@&451',
+    'tratandoTipoInt' => '12',
+    'tratandoTipoFloat' => '9.63',
+    'tratandoTipoBoolean' => 'true',
+    'tratandoTipoNumeric' => '11',
 ];
 
 $rules = [
@@ -84,9 +88,14 @@ $rules = [
     'email' => 'email',
     'msgCustom' => 'required|min:5, Mensagem customizada aqui|max:20',
     'validarPassandoJson' => '{"required":"true","type":"alpha"}',
+    'tratandoTipoInt' => 'convert|int',
+    'tratandoTipoFloat' => 'float|convert',
+    'tratandoTipoBoolean' => 'convert|bool',
+    'tratandoTipoNumeric' => 'numeric|convert',
 ];
 
 $validator = new Validator();
+Format::convertTypes($datas, $rules);
 $validator->set($datas, $rules);
 
 if (!$validator->getErros()) {

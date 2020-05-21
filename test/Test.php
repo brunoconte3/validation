@@ -26,14 +26,15 @@ $datas = [
     'url' => 'ww.test.c',
     'ip' => '1.1.1',
     'mac' => '00:00',
-    'dia' => 32,
+    'dia' => '32',
     'qtde' => 3,
     'dataBoleto' => '16/05/2020',
     'dataOutroBoleto' => '2020-05-17',
     'teste' => 'a',
-    'testeInt' => '12.3',
-    'testeBool' => 'true1',
-    'testeFloat' => '35A',
+    'testeInt' => '1a23',
+    'testeBool' => '1e',
+    'testeFloat' => '35,3',
+    'testeNumeric' => '59.6',
     'senhaAlpha' => 'abc145Ç',
 ];
 
@@ -59,7 +60,7 @@ $rules = [
     'url' => 'url',
     'ip' => 'ip',
     'mac' => 'mac',
-    'dia' => 'numMax:31',
+    'dia' => 'convert|int|numMax:31',
     'qtde' => 'numMin:5',
     'dataBoleto' => 'noWeekend',
     'dataOutroBoleto' => 'noWeekend',
@@ -67,6 +68,7 @@ $rules = [
     'testeInt' => 'int|convert',
     'testeBool' => 'bool|convert',
     'testeFloat' => 'convert|float',
+    'testeNumeric' => 'convert|numeric',
     'senhaAlpha' => 'alphaNum',
 ];
 
