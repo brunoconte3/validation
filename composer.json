@@ -22,6 +22,11 @@
             "name": "Walter de Padua Junior",
             "email": "wpadua8@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Jonathan Bersot Augusto",
+            "email": "jonathanbersot21@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {

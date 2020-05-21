@@ -168,6 +168,8 @@ echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
 echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
 
+Format::convertTypes($datas, $rules); //Converte o valor para o tipo correto dele ['bool', 'float', 'int', 'numeric',]
+
 $array = [
     0 => '1',
     1 => '123',

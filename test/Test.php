@@ -34,7 +34,7 @@ $datas = [
     'testeInt' => '1a23',
     'testeBool' => '1e',
     'testeFloat' => '35,3',
-    'testeNumeric' => '59.6',
+    'testeNumeric' => '59.6a',
     'senhaAlpha' => 'abc145Ç',
 ];
 
