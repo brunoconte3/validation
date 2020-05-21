@@ -35,7 +35,8 @@ $datas = [
     'testeBool' => '1e',
     'testeFloat' => '35,3',
     'testeNumeric' => '59.6a',
-    'senhaAlpha' => 'abc145Ç',
+    'senhaAlphaNum' => 'abc145Ç',
+    'campoSomenteTexto' => 'AAbbccDD4',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -69,7 +70,8 @@ $rules = [
     'testeBool' => 'bool|convert',
     'testeFloat' => 'convert|float',
     'testeNumeric' => 'convert|numeric',
-    'senhaAlpha' => 'alphaNum',
+    'senhaAlphaNum' => 'alphaNum',
+    'campoSomenteTexto' => 'alpha',
 ];
 
 $validator = new Validator();
