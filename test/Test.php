@@ -37,6 +37,8 @@ $datas = [
     'testeNumeric' => '59.6a',
     'senhaAlphaNum' => 'abc145Ç',
     'campoSomenteTexto' => 'AAbbccDD4',
+    'textoMaiusculo' => 'NOME comPLETO',
+    'textoMinusculo' => 'nome Completo',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -72,6 +74,8 @@ $rules = [
     'testeNumeric' => 'convert|numeric',
     'senhaAlphaNum' => 'alphaNum',
     'campoSomenteTexto' => 'alpha',
+    'textoMaiusculo' => 'upper',
+    'textoMinusculo' => 'lower',
 ];
 
 $validator = new Validator();

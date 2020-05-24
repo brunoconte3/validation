@@ -38,6 +38,7 @@ class Rules
             'identifierMask' => 'validateIdentifierMask',
             'int' => 'validateInteger',
             'ip' => 'validateIp',
+            'lower' => 'validateLower',
             'mac' => 'validateMac',
             'numeric' => 'validateNumeric',
             'numMax' => 'validateNumMax',
@@ -45,6 +46,7 @@ class Rules
             'phone' => 'validatePhone',
             'plate' => 'validatePlate',
             'regex' => 'validateRegex',
+            'upper' => 'validateUpper',
             'url' => 'validateUrl',
             'noWeekend' => 'validateWeekend',
             'zipcode' => 'validateZipCode',
@@ -365,6 +367,13 @@ class Rules
         }
     }
 
+    protected function validateLower($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ctype_lower(preg_replace('/\W+/', '', $value))) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field precisa ser tudo minúsculo!";
+        }
+    }
+
     protected function validateMac($rule = '', $field = '', $value = null, $message = null)
     {
         if (!filter_var($value, FILTER_VALIDATE_MAC)) {
@@ -421,18 +430,17 @@ class Rules
         }
     }
 
-    protected function validateZipCode($rule = '', $field = '', $value = null, $message = null)
-    {
-        if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $value) !== false) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field deve corresponder ao formato 00000-000!";
-        }
-    }
-
     protected function validatePhone($rule = '', $field = '', $value = null, $message = null)
     {
         if (!ValidatePhone::validate($value)) {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um telefone válido!";
+        }
+    }
+
+    protected function validateUpper($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ctype_upper(preg_replace('/\W+/', '', $value))) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field precisa ser tudo maiúsculo!";
         }
     }
 
@@ -447,6 +455,13 @@ class Rules
         }
     }
 
+    protected function validateZipCode($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $value) !== false) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field deve corresponder ao formato 00000-000!";
+        }
+    }
     protected function invalidRule($rule = '', $field = '', $value = null, $message = null)
     {
         $msg = "Uma regra inválida está sendo aplicada no campo $field!";

@@ -127,12 +127,14 @@ if (!$validator->getErros()) {
 - hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
+- lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
+- upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zip_code: `Verifica se o valor corresponde ao formato de um CEP.`
 
@@ -187,8 +189,19 @@ Format::arrayToIntReference($array);
 ]
 ```
 
+# Arquivo com exemplos de Testes
+
+```php
+<?php
+    Execute o arquivo que está no caminho /test/Test.php preparamos para facilitar seu entendimento!
+```
+
 # Licença
 
 O validator é uma aplicação open-source licenciado sob a [licença MIT](https://opensource.org/licenses/MIT).
 
 `Créditos a mammoth-php/validation que foi fork de lá`
+
+```
+
+```
