@@ -76,6 +76,7 @@ use brunoconte3\Validation\Validator;
     'tratandoTipoFloat' => '9.63',
     'tratandoTipoBoolean' => 'true',
     'tratandoTipoNumeric' => '11',
+    'validarValores' => 'SA',
 ];
 
 $rules = [
@@ -92,6 +93,7 @@ $rules = [
     'tratandoTipoFloat' => 'float|convert',
     'tratandoTipoBoolean' => 'convert|bool',
     'tratandoTipoNumeric' => 'numeric|convert',
+    'validarValores' => 'arrayValues:S-N-T',  //Opções aceitas [S,N,T]
 ];
 
 $validator = new Validator();
@@ -115,6 +117,7 @@ if (!$validator->getErros()) {
 - alnum: `Verifica se o campo contém caracteres alfanuméricos.`
 - alphaNum: `Verifica se o campo contém letras sem ascentos, números, não pode carácter especial.`
 - array: `Verifica se a variável é um array.`
+- arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
 - companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`

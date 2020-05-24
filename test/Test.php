@@ -39,6 +39,7 @@ $datas = [
     'campoSomenteTexto' => 'AAbbccDD4',
     'textoMaiusculo' => 'NOME comPLETO',
     'textoMinusculo' => 'nome Completo',
+    'validarValores' => 'SA',
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -76,6 +77,7 @@ $rules = [
     'campoSomenteTexto' => 'alpha',
     'textoMaiusculo' => 'upper',
     'textoMinusculo' => 'lower',
+    'validarValores' => 'arrayValues:S-N-T',
 ];
 
 $validator = new Validator();
