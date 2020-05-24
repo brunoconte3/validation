@@ -191,17 +191,10 @@ Format::arrayToIntReference($array);
 
 # Arquivo com exemplos de Testes
 
-```php
-<?php
-    Execute o arquivo que está no caminho /test/Test.php preparamos para facilitar seu entendimento!
-```
+`Execute o arquivo que está no caminho /test/Test.php preparamos para facilitar seu entendimento!`
 
 # Licença
 
 O validator é uma aplicação open-source licenciado sob a [licença MIT](https://opensource.org/licenses/MIT).
 
 `Créditos a mammoth-php/validation que foi fork de lá`
-
-```
-
-```
