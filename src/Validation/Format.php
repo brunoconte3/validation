@@ -93,4 +93,9 @@ class Format
     {
         $array = array_map('intval', $array);
     }
+
+    public static function formatCurrency($valor) //Entrada Float ou String
+    {
+        return ($valor !== '') ? number_format($valor, 2, ',', '.') : '';
+    }
 }
