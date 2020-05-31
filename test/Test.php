@@ -2,6 +2,7 @@
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
+use brunoconte3\Validation\Compare;
 use brunoconte3\Validation\Format;
 use brunoconte3\Validation\Validator;
 
@@ -114,3 +115,11 @@ echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parame
 Format::arrayToIntReference($array);
 echo '<pre>';
 var_dump($array);
+
+echo '<br><br>Comparações Exemplos<hr>';
+
+echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; // Retorna +30 (+30 dias de diferença)
+
+// Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
+//Data Inicial não pode ser maior que a Data Final!
+echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>';

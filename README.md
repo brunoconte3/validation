@@ -194,6 +194,23 @@ Format::arrayToIntReference($array);
 ]
 ```
 
+# Comparações Exemplos
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Compare;
+
+echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; // Retorna +30 (+30 dias de diferença)
+
+// Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
+//Data Inicial não pode ser maior que a Data Final!
+echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>';
+
+```
+
 # Arquivo com exemplos de Testes
 
 `Execute o arquivo que está no caminho /test/Test.php preparamos para facilitar seu entendimento!`
