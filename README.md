@@ -207,7 +207,7 @@ echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; //
 
 // Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
 //Data Inicial não pode ser maior que a Data Final!
-echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>';
+echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
 ```
 
