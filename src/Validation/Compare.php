@@ -60,9 +60,12 @@ class Compare
         $seconds -= $hours * 3600;
         $minutes = str_pad((floor($seconds / 60)), 2, '0', STR_PAD_LEFT);
         $seconds -= $minutes * 60;
-        $hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
-        $seconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
 
+        if (substr($hours, 0, 1) == '-') {
+            $hours = '-' . str_pad(substr($hours, 1, 2), 2, '0', STR_PAD_LEFT);
+        } else {
+            $hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
+        }
         return "$hours:$minutes:$seconds";
     }
 }
