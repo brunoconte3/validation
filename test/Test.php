@@ -118,8 +118,11 @@ var_dump($array);
 
 echo '<br><br>Comparações Exemplos<hr>';
 
-echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; // Retorna +30 (+30 dias de diferença)
+// Retorna +30 (+30 dias de diferença)
+echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>';
 
 // Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
-//Data Inicial não pode ser maior que a Data Final!
 echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
+
+//Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
+echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';

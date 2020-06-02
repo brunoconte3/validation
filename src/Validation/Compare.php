@@ -37,4 +37,32 @@ class Compare
         }
         return null;
     }
+
+    public static function differenceBetweenHours(string $hourIni, string $hourFin): string
+    {
+        $i = 1;
+        $timeTotal = null;
+        $times = [$hourFin, $hourIni];
+
+        foreach ($times as $time) {
+            $seconds = 0;
+            list($h, $m, $s) = explode(':', $time);
+
+            $seconds += $h * 3600;
+            $seconds += $m * 60;
+            $seconds += $s;
+
+            $timeTotal[$i] = $seconds;
+            $i++;
+        }
+        $seconds = $timeTotal[1] - $timeTotal[2];
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = str_pad((floor($seconds / 60)), 2, '0', STR_PAD_LEFT);
+        $seconds -= $minutes * 60;
+        $hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
+        $seconds = str_pad($seconds, 2, '0', STR_PAD_LEFT);
+
+        return "$hours:$minutes:$seconds";
+    }
 }
