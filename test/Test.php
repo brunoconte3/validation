@@ -126,3 +126,6 @@ echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceit
 
 //Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
 echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';
+
+// Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
+echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';

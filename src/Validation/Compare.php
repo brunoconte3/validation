@@ -33,7 +33,24 @@ class Compare
                 return $msg;
             }
         } else {
-            return 'Campos datas não foram preenchidas!';
+            return 'Um ou mais campos datas não foi preenchido!';
+        }
+        return null;
+    }
+
+    public static function startHourLessThanEnd(
+        string $hourIni,
+        string $hourFin,
+        string $msg = 'Hora Inicial não pode ser maior que a Hora Final!'
+    ): ?string {
+
+        if (!empty($hourIni) && !empty($hourFin)) {
+            $diff = self::differenceBetweenHours($hourIni, $hourFin);
+            if (substr($diff, 0, 1) === '-') {
+                return $msg;
+            }
+        } else {
+            return 'Um ou mais campos horas não foi preenchido!';
         }
         return null;
     }
@@ -61,7 +78,7 @@ class Compare
         $minutes = str_pad((floor($seconds / 60)), 2, '0', STR_PAD_LEFT);
         $seconds -= $minutes * 60;
 
-        if (substr($hours, 0, 1) == '-') {
+        if (substr($hours, 0, 1) === '-') {
             $hours = '-' . str_pad(substr($hours, 1, 2), 2, '0', STR_PAD_LEFT);
         } else {
             $hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
