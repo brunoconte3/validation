@@ -41,6 +41,7 @@ class Rules
             'ip' => 'validateIp',
             'lower' => 'validateLower',
             'mac' => 'validateMac',
+            'notSpace' => 'validateSpace',
             'numeric' => 'validateNumeric',
             'numMax' => 'validateNumMax',
             'numMin' => 'validateNumMin',
@@ -391,6 +392,14 @@ class Rules
         if (!filter_var($value, FILTER_VALIDATE_MAC)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field deve ser um endereço de MAC válido!";
+        }
+    }
+
+    protected function validateSpace($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (strpos($value, ' ') !== false) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field não pode conter espaço!";
         }
     }
 
