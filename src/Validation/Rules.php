@@ -23,8 +23,8 @@ class Rules
             'min' => 'validateMinimumField',
             'max' => 'validateMaximumField',
             'alpha' => 'validateAlphabets',
-            'alnum' => 'validateAlphaNumerics',
-            'alphaNum' => 'validateAlphabetsNum',
+            'alphaNum' => 'validateAlphaNumerics',
+            'alphaNumNoSpecial' => 'validateAlphaNumNoSpecial',
             'array' => 'validateArray',
             'arrayValues' => 'validateArrayValues',
             'bool' => 'validateBoolean',
@@ -244,7 +244,7 @@ class Rules
         }
     }
 
-    protected function validateAlphabetsNum($rule = '', $field = '', $value = null, $message = null)
+    protected function validateAlphaNumNoSpecial($rule = '', $field = '', $value = null, $message = null)
     {
         if (!preg_match('/^([a-zA-Z0-9\s])+$/', $value) !== false) {
             $this->errors[$field] = !empty($message) ?
