@@ -114,6 +114,7 @@ if (!$validator->getErros()) {
 - min: `Define o tamanho mínimo do valor.`
 - max: `Define o tamanho máximo do valor.`
 - alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
+- alphaNoSpecial: `Verifica se o campo contém caracteres texto regular, não pode ter ascentos.`
 - alphaNum: `Verifica se o campo contém caracteres alfanuméricos.`
 - alphaNumNoSpecial: `Verifica se o campo contém letras sem ascentos, números, não pode carácter especial.`
 - array: `Verifica se a variável é um array.`

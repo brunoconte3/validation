@@ -23,6 +23,7 @@ class Rules
             'min' => 'validateMinimumField',
             'max' => 'validateMaximumField',
             'alpha' => 'validateAlphabets',
+            'alphaNoSpecial' => 'validateAlphaNoSpecial',
             'alphaNum' => 'validateAlphaNumerics',
             'alphaNumNoSpecial' => 'validateAlphaNumNoSpecial',
             'array' => 'validateArray',
@@ -241,6 +242,19 @@ class Rules
         ) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field só pode conter caracteres alfabéticos!";
+        }
+    }
+
+    protected function validateAlphaNoSpecial($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (
+            !preg_match(
+                '/^([a-zA-Z\s])+$/',
+                $value
+            ) !== false
+        ) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field só pode conter caracteres alfabéticos regular, não pode ter ascentos!";
         }
     }
 
