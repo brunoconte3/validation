@@ -133,3 +133,6 @@ echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';
 
 // Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
 echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
+
+//Compada a data com a data atual, e retorna a idade da pessoa
+echo Compare::calculateAgeInYears('20/05/1989');
