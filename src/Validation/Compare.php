@@ -33,7 +33,7 @@ class Compare
                 return $msg;
             }
         } else {
-            return 'Um ou mais campos datas não foi preenchido!';
+            return 'Um ou mais campos datas não foram preenchidos!';
         }
         return null;
     }
@@ -50,7 +50,7 @@ class Compare
                 return $msg;
             }
         } else {
-            return 'Um ou mais campos horas não foi preenchido!';
+            return 'Um ou mais campos horas não foram preenchidos!';
         }
         return null;
     }
