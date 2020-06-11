@@ -185,15 +185,25 @@ $array = [
     1 => '123',
     'a' => '222',
     'b' => 333,
+    'c' => '',
 ];
-Format::arrayToIntReference($array);
 
-//Formata valores do array em inteiro ==>
+Format::emptyToNullReference($array); //Converte vazio para null
 [
   0 => 1,
   1 => 123,
   'a' => 222,
   'b' => 333,
+  'c' => null,
+]
+
+Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
+[
+  0 => 1,
+  1 => 123,
+  'a' => 222,
+  'b' => 333,
+  'c' => 0,
 ]
 ```
 

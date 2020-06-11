@@ -107,6 +107,7 @@ $array = [
     1 => '123',
     'a' => '222',
     'b' => 333,
+    'c' => '',
 ];
 
 echo Format::telephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
@@ -119,8 +120,11 @@ echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
 echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parametro escolhe o charset, UTF-8 default];
 
-Format::arrayToIntReference($array);
 echo '<pre>';
+var_dump(Format::emptyToNullReference($array)); //Converte vazio para null
+echo '<br>';
+
+Format::arrayToIntReference($array);
 var_dump($array);
 
 echo '<br><br>Comparações Exemplos<hr>';
