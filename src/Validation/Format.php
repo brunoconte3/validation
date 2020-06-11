@@ -109,7 +109,7 @@ class Format
         return preg_replace('/[^0-9]/', '.', preg_replace('/[^0-9,]/', '', $str));
     }
 
-    public static function emptyToNull(array &$array): array
+    public static function emptyToNull(array $array): array
     {
         return array_map(function ($value) {
             return (isset($value) && empty(trim($value))) ? null : $value;
