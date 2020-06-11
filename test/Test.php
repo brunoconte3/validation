@@ -36,7 +36,8 @@ $datas = [
     'testeBool' => '1e',
     'testeFloat' => '35,3',
     'testeNumeric' => '59.6a',
-    'senhaAlphaNum' => 'abc145Ç',
+    'senhaAlphaNumNoSpace' => '59.6a',
+    'nomeAlphaNum' => 'Bru Con 457 !@',
     'campoSomenteTexto' => 'AAbbccDD4',
     'textoSemAscentos' => 'Téste',
     'textoMaiusculo' => 'NOME comPLETO',
@@ -76,7 +77,8 @@ $rules = [
     'testeBool' => 'bool|convert',
     'testeFloat' => 'convert|float',
     'testeNumeric' => 'convert|numeric',
-    'senhaAlphaNum' => 'alphaNumNoSpecial',
+    'senhaAlphaNumNoSpace' => 'alphaNumNoSpecial',
+    'nomeAlphaNum' => 'alphaNum',
     'campoSomenteTexto' => 'alpha',
     'textoSemAscentos' => 'alphaNoSpecial',
     'textoMaiusculo' => 'upper',
@@ -114,6 +116,7 @@ echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
 echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
 echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
+echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
 echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parametro escolhe o charset, UTF-8 default];
 
 Format::arrayToIntReference($array);

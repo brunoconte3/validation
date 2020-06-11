@@ -103,4 +103,9 @@ class Format
     {
         return mb_convert_case(mb_strtolower($string, $charset), MB_CASE_TITLE, 'UTF-8');
     }
+
+    public static function pointOnlyValue(string $str): string
+    {
+        return preg_replace('/[^0-9]/', '.', preg_replace('/[^0-9,]/', '', $str));
+    }
 }
