@@ -188,7 +188,7 @@ $array = [
     'c' => '',
 ];
 
-Format::emptyToNullReference($array); //Converte vazio para null
+$arrayComNull = Format::emptyToNull($array); //Converte vazio para null
 [
   0 => 1,
   1 => 123,

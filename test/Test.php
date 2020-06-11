@@ -121,7 +121,8 @@ echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravaçã
 echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parametro escolhe o charset, UTF-8 default];
 
 echo '<pre>';
-var_dump(Format::emptyToNullReference($array)); //Converte vazio para null
+$arrayComNull = Format::emptyToNull($array);
+var_dump($arrayComNull); //Converte vazio para null
 echo '<br>';
 
 Format::arrayToIntReference($array);
