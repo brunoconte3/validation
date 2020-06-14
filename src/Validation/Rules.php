@@ -18,6 +18,7 @@ class Rules
     public static function functionsValidatade(): array
     {
         return [
+            'optional' => 'validateOptional',
             'required' => 'validateFieldMandatory',
             'type' => 'validateFieldType',
             'min' => 'validateMinimumField',
@@ -54,6 +55,11 @@ class Rules
             'noWeekend' => 'validateWeekend',
             'zipcode' => 'validateZipCode',
         ];
+    }
+
+    protected function validateOptional()
+    {
+        return true;
     }
 
     protected function validateFieldMandatory($rule = '', $field = '', $value = null, $message = null)
