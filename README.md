@@ -136,6 +136,7 @@ if (!$validator->getErros()) {
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
 - notSpace: `Verifica se a string contém espaços.`
+- optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`

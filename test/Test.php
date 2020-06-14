@@ -2,11 +2,14 @@
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-use brunoconte3\Validation\Compare;
-use brunoconte3\Validation\Format;
-use brunoconte3\Validation\Validator;
+use brunoconte3\Validation\{
+    Compare,
+    Format,
+    Validator
+};
 
 $datas = [
+    'infOpcional' => 'a',
     'sexo' => '',
     'cnpj' => '33452731000159',
     'cnpjComMascara' => '33.452.731/0001-59',
@@ -48,6 +51,7 @@ $datas = [
 
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
+    'infOpcional' => 'optional|min:2|int',
     'sexo' => 'required',
     'cnpj' => 'required|min:18|max:18|companyIdentification',
     'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',

@@ -145,17 +145,19 @@ class Rules
                     //suporte ao padrão PIPE
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
-                    foreach ($rulesConf as $valueRuleConf) {
-                        $conf = explode(',', trim($valueRuleConf));
-                        $ruleArrayConf = explode(':', $conf[0] ?? '');
-                        $rulesArray['mensagem'] = trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
-                        if (!empty($ruleArrayConf)) {
-                            $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
+                    if (!in_array('optional', $rulesConf) || (in_array('optional', $rulesConf) && !empty($value))) {
+                        foreach ($rulesConf as $valueRuleConf) {
+                            $conf = explode(',', trim($valueRuleConf));
+                            $ruleArrayConf = explode(':', $conf[0] ?? '');
+                            $rulesArray['mensagem'] = trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
+                            if (!empty($ruleArrayConf)) {
+                                $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
+                            }
                         }
-                    }
-                    //--------------------------------------------------
-                    if (empty($rulesArray)) {
-                        $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
+                        //--------------------------------------------------
+                        if (empty($rulesArray)) {
+                            $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
+                        }
                     }
                 }
             }
