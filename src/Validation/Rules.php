@@ -174,16 +174,18 @@ class Rules
                 unset($rulesArray['mensagem']);
             }
             foreach ($rulesArray as $key => $val) {
-                if (in_array(trim(strtolower($key)), self::RULES_WITHOUT_FUNCS)) {
-                    continue;
-                }
-                $method = trim(Rules::functionsValidatade()[trim($key)] ?? 'invalidRule');
-                $call = [$this, $method];
-                //chama a função de validação, de cada parametro json
-                if (is_callable($call, true, $method)) {
-                    call_user_func_array($call, [$val, $field, $value, $msgCustomized]);
-                } else {
-                    $this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
+                if (!in_array('optional', $rulesArray) || (in_array('optional', $rulesArray) && !empty($val))) {
+                    if (in_array(trim(strtolower($key)), self::RULES_WITHOUT_FUNCS)) {
+                        continue;
+                    }
+                    $method = trim(Rules::functionsValidatade()[trim($key)] ?? 'invalidRule');
+                    $call = [$this, $method];
+                    //chama a função de validação, de cada parametro json
+                    if (is_callable($call, true, $method)) {
+                        call_user_func_array($call, [$val, $field, $value, $msgCustomized]);
+                    } else {
+                        $this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
+                    }
                 }
             }
         } else {
