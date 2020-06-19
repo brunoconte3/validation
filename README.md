@@ -10,6 +10,12 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 
 # Instalação
 
+via composer.json
+
+```
+"brunoconte3/validation": "~4.3.3"
+```
+
 via composer.
 
 ```

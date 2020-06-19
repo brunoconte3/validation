@@ -99,7 +99,7 @@ class Rules
             if (is_array($val)) {
                 $data[$key] = $this->levelSubLevelsArrayReturnJson($val, true);
             } elseif (is_string($val)) {
-                $data[$key] =  addslashes($val);
+                $data[$key] =  utf8_encode(addslashes($val));
             }
         }
         if ($recursive) {
