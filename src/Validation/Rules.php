@@ -15,6 +15,32 @@ class Rules
     public const RULES_WITHOUT_FUNCS = [
         'convert',
     ];
+
+    protected function prepareCharset(string $string = '', string $convert = 'UTF-8', bool $bom = false): string
+    {
+        $bomchar = pack('H*', 'EFBBBF');
+        $string = trim(preg_replace("/^$bomchar/", '', $string));
+        static $enclist = [
+            'UTF-8', 'ASCII',
+            'ISO-8859-1', 'ISO-8859-2', 'ISO-8859-3', 'ISO-8859-4', 'ISO-8859-5',
+            'ISO-8859-6', 'ISO-8859-7', 'ISO-8859-8', 'ISO-8859-9', 'ISO-8859-10',
+            'ISO-8859-13', 'ISO-8859-14', 'ISO-8859-15', 'ISO-8859-16',
+            'Windows-1251', 'Windows-1252', 'Windows-1254',
+        ];
+        $charsetType = mb_detect_encoding($string);
+        foreach ($enclist as $item) {
+            $converted = iconv($item, $item . '//IGNORE', $string);
+            if (md5($converted) == md5($string)) {
+                $charsetType = $item;
+                break;
+            }
+        }
+        if (strtoupper(trim($charsetType)) != strtoupper(trim($convert))) {
+            return ($bom ? $bomchar : '') . iconv($charsetType, $convert . '//TRANSLIT', $string);
+        }
+        return ($bom ? $bomchar : '') . $string;
+    }
+
     public static function functionsValidatade(): array
     {
         return [
@@ -90,6 +116,7 @@ class Rules
         //funcao recurssiva para tratar array e retornar json valido
         //essa função serve para validar dados com json_encode multiplos, e indices quebrados na estrutura
         foreach ($data as $key => $val) {
+            $key = $this->prepareCharset($key, 'UTF-8');
             if (is_string($val) && !empty($val)) {
                 $arr = json_decode($val, true);
                 if (is_array($arr) && (json_last_error() === JSON_ERROR_NONE)) {
@@ -99,7 +126,7 @@ class Rules
             if (is_array($val)) {
                 $data[$key] = $this->levelSubLevelsArrayReturnJson($val, true);
             } elseif (is_string($val)) {
-                $data[$key] = $val;
+                $data[$key] = $this->prepareCharset(addslashes($val), 'UTF-8');
             }
         }
         if ($recursive) {
