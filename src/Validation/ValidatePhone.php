@@ -4,8 +4,10 @@ namespace brunoconte3\Validation;
 
 class ValidatePhone
 {
-    public static function validate(int $phone)
+    public static function validate(string $phone)
     {
+        $phone = (int) Format::onlyNumbers($phone);
+
         $array = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
         $phone = preg_replace('/\D+/', '', trim($phone));

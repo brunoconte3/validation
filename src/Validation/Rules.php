@@ -57,14 +57,12 @@ class Rules
             'arrayValues' => 'validateArrayValues',
             'bool' => 'validateBoolean',
             'companyIdentification' => 'validateCompanyIdentification',
-            'companyIdentificationMask' => 'validateCompanyIdentificationMask',
             'dateBrazil' => 'validateDateBrazil',
             'dateAmerican' => 'validateDateAmerican',
             'email' => 'validateEmail',
             'float' => 'validateFloating',
             'hour' => 'validateHour',
             'identifier' => 'validateIdentifier',
-            'identifierMask' => 'validateIdentifierMask',
             'int' => 'validateInteger',
             'ip' => 'validateIp',
             'lower' => 'validateLower',
@@ -232,11 +230,10 @@ class Rules
                             $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                         }
                     }
-
                     if (empty($rulesArray)) {
                         $this->errors[$field] = "Há errors no json de regras de validação do campo $field!";
                     }
-                    $this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
+                    //$this->errors[$field] = "Há regras de validação não implementadas no campo $field!";
                 }
             }
             $rulesArray = is_array($rulesArray) ? $rulesArray : [];
@@ -344,15 +341,10 @@ class Rules
 
     protected function validateCompanyIdentification($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!ValidateCnpj::validateCnpj($value, false)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field é inválido!";
+        if (is_numeric($value) && strlen($value) === 14) {
+            $value = Format::mask('##.###.###/####-##', $value);
         }
-    }
-
-    protected function validateCompanyIdentificationMask($rule = '', $field = '', $value = null, $message = null)
-    {
-        if (!ValidateCnpj::validateCnpj($value, true)) {
+        if (!ValidateCnpj::validateCnpj($value, false)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -360,6 +352,9 @@ class Rules
 
     protected function validateDateBrazil($rule = '', $field = '', $value = null, $message = null)
     {
+        if (is_numeric($value) && strlen($value) === 8) {
+            $value = Format::mask('##/##/####', $value);
+        }
         if (!ValidateDate::validateDateBrazil($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é uma data válida!";
@@ -368,6 +363,9 @@ class Rules
 
     protected function validateDateAmerican($rule = '', $field = '', $value = null, $message = null)
     {
+        if (is_numeric($value) && strlen($value) === 8) {
+            $value = Format::mask('####-##-##', $value);
+        }
         if (!ValidateDate::validateDateAmerican($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é uma data válida!";
@@ -400,16 +398,10 @@ class Rules
 
     protected function validateIdentifier($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!ValidateCpf::validateCpf($value, false)) {
-            $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field é inválido!";
+        if (is_numeric($value) && strlen($value) === 11) {
+            $value = Format::mask('###.###.###-##', $value);
         }
-    }
-
-    protected function validateIdentifierMask($rule = '', $field = '', $value = null, $message = null)
-    {
-
-        if (!ValidateCpf::validateCpf($value)) {
+        if (!ValidateCpf::validateCpf($value, false)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -504,6 +496,14 @@ class Rules
 
     protected function validatePhone($rule = '', $field = '', $value = null, $message = null)
     {
+        if (is_numeric($value) && in_array(strlen($value), [10, 11])) {
+            if (strlen($value) === 10) {
+                $value = Format::mask('(##)####-####', $value);
+            }
+            if (strlen($value) === 11) {
+                $value = Format::mask('(##)#####-####', $value);
+            }
+        }
         if (!ValidatePhone::validate($value)) {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um telefone válido!";
         }
@@ -529,12 +529,16 @@ class Rules
 
     protected function validateZipCode($rule = '', $field = '', $value = null, $message = null)
     {
+        if (is_numeric($value) && strlen($value) === 8) {
+            $value = Format::mask('#####-###', $value);
+        }
         if (!preg_match('/^([0-9]{2}[0-9]{3}-[0-9]{3})+$/', $value) !== false) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field deve corresponder ao formato 00000-000!";
         }
     }
-    protected function invalidRule($rule = '', $field = '', $value = null, $message = null)
+
+    private function invalidRule($rule = '', $field = '', $value = null, $message = null)
     {
         $msg = "Uma regra inválida está sendo aplicada no campo $field!";
         $this->errors[$field] = $msg;

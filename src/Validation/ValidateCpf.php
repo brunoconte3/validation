@@ -38,21 +38,12 @@ class ValidateCpf
         return true;
     }
 
-    private static function dealCpf(string $cpf): string
+    public static function validateCpf(string $cpf): bool
     {
-        $newCpf = preg_match('/[0-9]/', $cpf) ?
-            str_replace('-', '', str_replace('.', '', str_pad($cpf, 11, '0', STR_PAD_LEFT), $cpf), $cpf) : 0;
-        return $newCpf;
-    }
+        $cpf = (string) Format::onlyNumbers($cpf);
 
-    public static function validateCpf(string $cpf, bool $mask = true): bool
-    {
         if (empty($cpf)) {
             return false;
-        }
-
-        if ($mask) {
-            $cpf = self::dealCpf($cpf);
         }
 
         if (strlen($cpf) != 11) {

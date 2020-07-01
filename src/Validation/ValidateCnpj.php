@@ -18,6 +18,8 @@ class ValidateCnpj
 
     private static function validateRuleCnpj(string $cnpj): bool
     {
+        $cnpj = (string) Format::onlyNumbers($cnpj);
+
         for ($i = 0, $j = 5, $sum = 0; $i < 12; $i++) {
             $sum += $cnpj[$i] * $j;
             $j = ($j == 2) ? 9 : $j - 1;

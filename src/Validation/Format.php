@@ -115,4 +115,18 @@ class Format
             return (isset($value) && empty(trim($value))) ? null : $value;
         }, $array);
     }
+
+    public static function mask($mask, $str): string
+    {
+        $str = str_replace(' ', '', $str);
+        for ($i = 0; $i < strlen($str); $i++) {
+            $mask[strpos($mask, "#")] = $str[$i];
+        }
+        return $mask;
+    }
+
+    public static function onlyNumbers(string $str): int
+    {
+        return preg_replace('/[^0-9]/', '', $str);
+    }
 }

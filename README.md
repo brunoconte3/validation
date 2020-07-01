@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.3.4"
+"brunoconte3/validation": "4.4.0"
 ```
 
 via composer.
@@ -70,7 +70,6 @@ use brunoconte3\Validation\Validator;
 
  $datas = [
     'sexo' => '',
-    'cnpjComMascara' => '33.452.731/0001-59',
     'telefone' => '44999696',
     'cpf' => '12547845874',
     'nome' => 'a',
@@ -87,7 +86,6 @@ use brunoconte3\Validation\Validator;
 
 $rules = [
     'sexo' => 'required',
-    'cnpjComMascara' => 'required|min:18|max:18|companyIdentificationMask',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
     'nome' => 'required|min:2',
@@ -126,14 +124,12 @@ if (!$validator->getErros()) {
 - array: `Verifica se a variável é um array.`
 - arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
-- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ sem mascara`
-- companyIdentificationMask: `Valida se o CNPJ é válido, passando CNPJ com mascara`
+- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
 - dateBrazil `Valida se a data brasileira é valida.`
 - dateAmerican `Valida se a data americana é valida.`
 - email: `Verifica se é um email válido.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
-- identifier: `Valida se o CPF é válido, passando CPF sem mascara`
-- identifierMask: `Valida se o CPF é válido, passando CPF com mascara`
+- identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
 - hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
