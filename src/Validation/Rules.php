@@ -344,7 +344,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 14) {
             $value = Format::mask('##.###.###/####-##', $value);
         }
-        if (!ValidateCnpj::validateCnpj($value, false)) {
+        if (!ValidateCnpj::validateCnpj($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -401,7 +401,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 11) {
             $value = Format::mask('###.###.###-##', $value);
         }
-        if (!ValidateCpf::validateCpf($value, false)) {
+        if (!ValidateCpf::validateCpf($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }

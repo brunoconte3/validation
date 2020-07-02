@@ -38,15 +38,24 @@ class ValidateCpf
         return true;
     }
 
+    private static function dealCpf(string $cpf): string
+    {
+        $newCpf = preg_match('/[0-9]/', $cpf) ?
+            str_replace('-', '', str_replace('.', '', str_pad($cpf, 11, '0', STR_PAD_LEFT), $cpf), $cpf) : 0;
+        return $newCpf;
+    }
+
     public static function validateCpf(string $cpf): bool
     {
-        $cpf = (string) Format::onlyNumbers($cpf);
+        if (strlen($cpf) > 11) {
+            $cpf = self::dealCpf($cpf);
+        }
 
         if (empty($cpf)) {
             return false;
         }
 
-        if (strlen($cpf) != 11) {
+        if (strlen($cpf) !== 11) {
             return false;
         }
 

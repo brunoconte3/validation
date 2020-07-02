@@ -11,7 +11,7 @@ use brunoconte3\Validation\{
 $datas = [
     'infOpcional' => 'a',
     'sexo' => '',
-    'cnpj' => '33452731000159',
+    'cnpj' => '52186923000120',
     'telefone' => '449565',
     'cpf' => '12547845874',
     'nome' => 'a',
@@ -51,7 +51,7 @@ $datas = [
 $rules = [
     'infOpcional' => 'optional|min:2|int',
     'sexo' => 'required',
-    'cnpj' => 'required|min:18|max:18|companyIdentification',
+    'cnpj' => 'required|min:14|max:18|companyIdentification',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
     'nome' => 'required|min:2',

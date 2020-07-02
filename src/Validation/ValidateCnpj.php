@@ -44,12 +44,12 @@ class ValidateCnpj
         return $newCnpj;
     }
 
-    public static function validateCnpj(string $cnpj, bool $mask = true): bool
+    public static function validateCnpj(string $cnpj): bool
     {
         if (empty($cnpj)) {
             return false;
         }
-        if ($mask) {
+        if (strlen($cnpj) > 14) {
             $cnpj = self::dealCnpj($cnpj);
         }
 
