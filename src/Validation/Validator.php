@@ -9,7 +9,7 @@ class Validator extends Rules
         //prepara dados para validação
         $data = json_decode($this->levelSubLevelsArrayReturnJson($data), true);
         if (empty($data)) {
-            $this->errors['erro'] = "informe os dados!";
+            $this->errors['erro'] = 'informe os dados!';
             return false;
         }
         //se for uma lista, valida a lista de objetos

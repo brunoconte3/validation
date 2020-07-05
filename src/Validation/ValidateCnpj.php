@@ -22,6 +22,10 @@ class ValidateCnpj
             $cnpj = self::dealCnpj($cnpj);
         }
 
+        if (strlen($cnpj) < 14) {
+            return false;
+        }
+
         for ($i = 0, $j = 5, $sum = 0; $i < 12; $i++) {
             $sum += $cnpj[$i] * $j;
             $j = ($j == 2) ? 9 : $j - 1;
