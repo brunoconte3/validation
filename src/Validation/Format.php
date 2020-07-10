@@ -8,7 +8,7 @@ class Format
         'bool',
         'float',
         'int',
-        'numeric',
+        'numeric'
     ];
 
     private static function returnTypeToConvert(array $rules): ?string

@@ -25,7 +25,7 @@ class ValidatePhone
         return false;
     }
 
-    private static function substrCountArray(int $phone, array $array)
+    private static function substrCountArray(int $phone, array $array): bool
     {
         $count = 0;
         foreach ($array as $substring) {

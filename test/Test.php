@@ -44,7 +44,7 @@ $datas = [
     'textoMaiusculo' => 'NOME comPLETO',
     'textoMinusculo' => 'nome Completo',
     'validarValores' => 'SA',
-    'validarEspaco' => 'BRU C',
+    'validarEspaco' => 'BRU C'
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -84,7 +84,7 @@ $rules = [
     'textoMaiusculo' => 'upper',
     'textoMinusculo' => 'lower',
     'validarValores' => 'arrayValues:S-N-T',
-    'validarEspaco' => 'notSpace',
+    'validarEspaco' => 'notSpace'
 ];
 
 $validator = new Validator();
@@ -107,7 +107,7 @@ $array = [
     1 => '123',
     'a' => '222',
     'b' => 333,
-    'c' => '',
+    'c' => ''
 ];
 
 echo Format::telephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
