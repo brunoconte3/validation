@@ -112,7 +112,7 @@ class Format
     public static function emptyToNull(array $array): array
     {
         return array_map(function ($value) {
-            return (isset($value) && empty(trim($value))) ? null : $value;
+            return (isset($value) && empty(trim($value)) || $value === 'null') ? null : $value;
         }, $array);
     }
 
