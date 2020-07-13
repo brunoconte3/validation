@@ -174,7 +174,10 @@ class Rules
                     //suporte ao padrão PIPE
                     //'int|required|min:14|max:14',
                     $rulesConf = explode('|', trim($rules));
-                    if (!in_array('optional', $rulesConf) || (in_array('optional', $rulesConf) && !empty($value))) {
+                    if (
+                        !in_array('optional', $rulesConf)
+                        || (in_array('optional', $rulesConf) && !empty($value) && $value !== 'null')
+                    ) {
                         foreach ($rulesConf as $valueRuleConf) {
                             $conf = explode(',', trim($valueRuleConf));
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
