@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.4.5"
+"brunoconte3/validation": "4.5.0"
 ```
 
 via composer.
@@ -82,6 +82,9 @@ use brunoconte3\Validation\Validator;
     'tratandoTipoBoolean' => 'true',
     'tratandoTipoNumeric' => '11',
     'validarValores' => 'SA',
+    'validaJson' => '{
+        "nome": "Bruno"
+    }'
 ];
 
 $rules = [
@@ -98,6 +101,7 @@ $rules = [
     'tratandoTipoBoolean' => 'convert|bool',
     'tratandoTipoNumeric' => 'numeric|convert',
     'validarValores' => 'arrayValues:S-N-T',  //Opções aceitas [S,N,T]
+    'validaJson' => 'type:json'
 ];
 
 $validator = new Validator();
@@ -133,6 +137,7 @@ if (!$validator->getErros()) {
 - hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
+- json `Verifica se o valor é um json válido.`
 - lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`

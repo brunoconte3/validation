@@ -14,6 +14,12 @@ class Rules
     protected $errors = false;
     public const RULES_WITHOUT_FUNCS = ['convert'];
 
+    private function invalidRule($rule = '', $field = '', $value = null, $message = null)
+    {
+        $msg = "Uma regra inválida está sendo aplicada no campo $field!";
+        $this->errors[$field] = $msg;
+    }
+
     protected function prepareCharset(string $string = '', string $convert = 'UTF-8', bool $bom = false): string
     {
         $bomchar = pack('H*', 'EFBBBF');
@@ -75,7 +81,8 @@ class Rules
             'upper' => 'validateUpper',
             'url' => 'validateUrl',
             'noWeekend' => 'validateWeekend',
-            'zipcode' => 'validateZipCode'
+            'zipcode' => 'validateZipCode',
+            'json' => 'validateJson'
         ];
     }
 
@@ -86,7 +93,8 @@ class Rules
 
     protected function validateFieldMandatory($rule = '', $field = '', $value = null, $message = null)
     {
-        if (empty(trim($value))) {
+        $value = is_array($value) ? $value : trim($value);
+        if (empty($value)) {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
         }
     }
@@ -539,9 +547,16 @@ class Rules
         }
     }
 
-    private function invalidRule($rule = '', $field = '', $value = null, $message = null)
+    protected function validateJson($rule = '', $field = '', $value = null, $message = null)
     {
-        $msg = "Uma regra inválida está sendo aplicada no campo $field!";
-        $this->errors[$field] = $msg;
+        $value = is_array($value) ? json_encode($value) : $value;
+        if (is_string($value)) {
+            $arr = json_decode($value, true);
+            if (!is_array($arr) || (json_last_error() !== JSON_ERROR_NONE)) {
+                $this->errors[$field] = !empty($message) ? $message : "O campo $field não contém um json válido!";
+            }
+        } else {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não contém um json válido!";
+        }
     }
 }

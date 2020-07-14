@@ -44,7 +44,10 @@ $datas = [
     'textoMaiusculo' => 'NOME comPLETO',
     'textoMinusculo' => 'nome Completo',
     'validarValores' => 'SA',
-    'validarEspaco' => 'BRU C'
+    'validarEspaco' => 'BRU C',
+    'validaJson' => '
+        "nome": "Bruno"
+    }'
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -84,7 +87,8 @@ $rules = [
     'textoMaiusculo' => 'upper',
     'textoMinusculo' => 'lower',
     'validarValores' => 'arrayValues:S-N-T',
-    'validarEspaco' => 'notSpace'
+    'validarEspaco' => 'notSpace',
+    'validaJson' => 'type:json'
 ];
 
 $validator = new Validator();
