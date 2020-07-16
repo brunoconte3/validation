@@ -129,6 +129,7 @@ $arrayComNull = Format::emptyToNull($array);
 var_dump($arrayComNull); //Converte vazio para null
 echo '<br>';
 
+//$value = Format::arrayToInt($array); ==> Opção para sem ser por Referencia
 Format::arrayToIntReference($array);
 var_dump($array);
 

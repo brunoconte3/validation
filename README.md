@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.5.0"
+"brunoconte3/validation": "4.6.0"
 ```
 
 via composer.
@@ -205,6 +205,7 @@ $arrayComNull = Format::emptyToNull($array); //Converte vazio para null
   'c' => null,
 ]
 
+//$value = Format::arrayToInt($array); ==> Opção para sem ser por Referencia
 Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
 [
   0 => 1,
