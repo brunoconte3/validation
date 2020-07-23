@@ -24,18 +24,17 @@ class Compare
 
     public static function startDateLessThanEnd(
         string $dtIni,
-        string $dtFin,
-        string $msg = 'Data Inicial não pode ser maior que a Data Final!'
-    ): ?string {
+        string $dtFin
+    ): bool {
 
         if (!empty($dtIni) && !empty($dtFin)) {
             if (self::daysDifferenceBetweenData($dtIni, $dtFin) < 0) {
-                return $msg;
+                return false;
             }
         } else {
-            return 'Um ou mais campos datas não foram preenchidos!';
+            return false;
         }
-        return null;
+        return true;
     }
 
     public static function startHourLessThanEnd(

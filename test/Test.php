@@ -139,7 +139,9 @@ echo '<br><br>Comparações Exemplos<hr>';
 echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>';
 
 // Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
-echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
+echo 'Data de início é menor que a data final? ';
+var_dump(Compare::startDateLessThanEnd('30/07/2020', '30/06/2020'));
+echo '<br>'; //Aceita data Americana também
 
 //Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
 echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';

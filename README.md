@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.6.0"
+"brunoconte3/validation": "4.7.0"
 ```
 
 via composer.
@@ -228,7 +228,7 @@ use brunoconte3\Validation\Compare;
 // Retorna +30 (+30 dias de diferença)
 echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>';
 
-// Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
+// Compara se a data inicial é menor que a data final => Retorna [bool]
 echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
 //Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
