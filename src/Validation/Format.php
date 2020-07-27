@@ -130,7 +130,7 @@ class Format
         return $mask;
     }
 
-    public static function onlyNumbers(string $str): int
+    public static function onlyNumbers(string $str): string
     {
         return preg_replace('/[^0-9]/', '', $str);
     }
