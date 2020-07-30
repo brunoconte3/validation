@@ -240,8 +240,8 @@ echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
 //Compada a data com a data atual, e retorna a idade da pessoa
 echo Compare::calculateAgeInYears('20/05/1989');
 
-//echo 'Compara igualdade dos campos<br>';
-//terceiro parametro opcional, false para não comparar caseSensitive
+//echo 'Compara igualdade dos campos, retorna booleano <br>';
+//terceiro parametro opcional, false para não comparar caseSensitive, default true
 var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
 
 ```
