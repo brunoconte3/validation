@@ -95,4 +95,21 @@ class Compare
         }
         return "$hours:$minutes:$seconds";
     }
+
+    public static function checkDataEquality(
+        string $firstValue,
+        string $secoundValue,
+        bool $caseSensitive = true
+    ): bool {
+        if ($caseSensitive) {
+            if ($firstValue !== $secoundValue) {
+                return false;
+            }
+        } else {
+            if (0 !== strcasecmp($firstValue, $secoundValue)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

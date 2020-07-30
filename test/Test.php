@@ -135,19 +135,23 @@ var_dump($array);
 
 echo '<br><br>Comparações Exemplos<hr>';
 
-// Retorna +30 (+30 dias de diferença)
+echo 'Retorna (+30 dias de diferença)<br>';
 echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>';
 
-// Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)
+echo 'Compara se a data inicial é menor que a data final (3º parâmetro, aceita mensagem customizada)<br>';
 echo 'Data de início é menor que a data final? ';
 var_dump(Compare::startDateLessThanEnd('30/07/2020', '30/06/2020'));
 echo '<br>'; //Aceita data Americana também
 
-//Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
+echo 'Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]<br>';
 echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';
 
-// Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
+echo 'Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)<br>';
 echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
 
-//Compada a data com a data atual, e retorna a idade da pessoa
-echo Compare::calculateAgeInYears('20/05/1989');
+echo 'Compada a data com a data atual, e retorna a idade da pessoa ';
+echo Compare::calculateAgeInYears('20/05/1989') . '<br>';
+
+echo 'Compara igualdade dos campos<br>';
+//terceiro parametro opcional, false para não comparar caseSensitive
+var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));

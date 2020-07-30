@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.7.1"
+"brunoconte3/validation": "4.8.0"
 ```
 
 via composer.
@@ -239,6 +239,10 @@ echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
 
 //Compada a data com a data atual, e retorna a idade da pessoa
 echo Compare::calculateAgeInYears('20/05/1989');
+
+//echo 'Compara igualdade dos campos<br>';
+//terceiro parametro opcional, false para não comparar caseSensitive
+var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
 
 ```
 
