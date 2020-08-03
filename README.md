@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.8.0"
+"brunoconte3/validation": "4.9.0"
 ```
 
 via composer.
@@ -142,6 +142,7 @@ if (!$validator->getErros()) {
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - numeric: `Verifica se o valor contém apenas valores numéricos.`
+- numMonth `Verifica se o valor é um mês válido (1 a 12).`
 - notSpace: `Verifica se a string contém espaços.`
 - optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`

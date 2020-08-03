@@ -74,6 +74,7 @@ class Rules
             'notSpace' => 'validateSpace',
             'numeric' => 'validateNumeric',
             'numMax' => 'validateNumMax',
+            'numMonth' => 'validateNumMonth',
             'numMin' => 'validateNumMin',
             'phone' => 'validatePhone',
             'plate' => 'validatePlate',
@@ -189,7 +190,8 @@ class Rules
                         foreach ($rulesConf as $valueRuleConf) {
                             $conf = explode(',', trim($valueRuleConf));
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
-                            $rulesArray['mensagem'] = trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
+                            $msg = !empty($conf[1]) && trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
+                            $rulesArray['mensagem'] = $msg;
                             if (!empty($ruleArrayConf)) {
                                 $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                             }
@@ -469,6 +471,23 @@ class Rules
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é permitido até o valor máximo de $rule!";
         }
+    }
+
+    protected function validateNumMonth($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!is_int($value)) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field precisa ser do valor inteiro!";
+        }
+        if ($value > 12 || $value <= 0 || strlen((string)$value) > 2) {
+            $this->errors[$field] = !empty($message) ?
+                $message : "O campo $field não é um mês válido!";
+        } /*elseif (empty($rule) || $rule !== 'zero') {
+            if (substr((string)$value, 0, 1) === 0) {
+                $this->errors[$field] = !empty($message) ?
+                    $message : "O campo $field com zero a esquerda não é aceito, a não ser que passe numMonth:zero!";
+            }
+        }*/
     }
 
     protected function validateNumMin($rule = '', $field = '', $value = null, $message = null)
