@@ -355,7 +355,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 14) {
             $value = Format::mask('##.###.###/####-##', $value);
         }
-        if (!ValidateCnpj::validateCnpj($value)) {
+        if (empty($value) ||  !ValidateCnpj::validateCnpj($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -366,7 +366,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 8) {
             $value = Format::mask('##/##/####', $value);
         }
-        if (!ValidateDate::validateDateBrazil($value)) {
+        if (empty($value) || !ValidateDate::validateDateBrazil($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é uma data válida!";
         }
@@ -377,7 +377,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 8) {
             $value = Format::mask('####-##-##', $value);
         }
-        if (!ValidateDate::validateDateAmerican($value)) {
+        if (empty($value) || !ValidateDate::validateDateAmerican($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é uma data válida!";
         }
