@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.9.0"
+"brunoconte3/validation": "4.9.1"
 ```
 
 via composer.

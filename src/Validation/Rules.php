@@ -492,6 +492,9 @@ class Rules
 
     protected function validateNumMin($rule = '', $field = '', $value = null, $message = null)
     {
+        if (!is_int($value)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um inteiro!";
+        }
         if ($value < $rule) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field deve ter o valor mínimo de $rule!";
