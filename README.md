@@ -227,7 +227,7 @@ require 'vendor/autoload.php';
 use brunoconte3\Validation\Compare;
 
 // Retorna +30 (+30 dias de diferença)
-echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>';
+echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
 // Compara se a data inicial é menor que a data final => Retorna [bool]
 echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
