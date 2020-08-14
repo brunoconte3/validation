@@ -409,7 +409,7 @@ class Rules
 
     protected function validateIdentifier($rule = '', $field = '', $value = null, $message = null)
     {
-        if (is_numeric($value) && strlen($value) === 11) {
+        if (strlen($value) === 11) {
             $value = Format::mask('###.###.###-##', $value);
         }
         if (!ValidateCpf::validateCpf($value)) {
@@ -475,7 +475,7 @@ class Rules
 
     protected function validateNumMonth($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!is_int($value)) {
+        if (!is_int((int) $value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field precisa ser do valor inteiro!";
         }
@@ -492,7 +492,7 @@ class Rules
 
     protected function validateNumMin($rule = '', $field = '', $value = null, $message = null)
     {
-        if (!is_int($value)) {
+        if (!is_int((int) $value)) {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um inteiro!";
         }
         if ($value < $rule) {
