@@ -134,4 +134,9 @@ class Format
     {
         return preg_replace('/[^0-9]/', '', $str);
     }
+
+    public static function onlyLettersNumbers(string $str): string
+    {
+        return preg_replace('/[^a-zA-Z0-9]/', '', $str);
+    }
 }

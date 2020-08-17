@@ -125,6 +125,7 @@ echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
 echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
 echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parametro escolhe o charset, UTF-8 default];
+echo Format::onlyLettersNumbers('Adçã98@#012') . '<br>'; //Ad98012
 
 echo '<pre>';
 $arrayComNull = Format::emptyToNull($array);
