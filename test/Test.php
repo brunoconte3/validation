@@ -126,6 +126,7 @@ echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
 echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Açafrão   [Segundo parametro escolhe o charset, UTF-8 default];
 echo Format::onlyLettersNumbers('Adçã98@#012') . '<br>'; //Ad98012
+echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //1234 5678 9012 3456
 
 echo '<pre>';
 $arrayComNull = Format::emptyToNull($array);
