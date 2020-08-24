@@ -71,7 +71,7 @@ class Format
         return $number;
     }
 
-    public static function zipCode(int $value): string
+    public static function zipCode(string $value): string
     {
         return substr($value, 0, 5) . '-' . substr($value, 5, 3);
     }
