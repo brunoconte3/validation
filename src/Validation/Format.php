@@ -101,7 +101,7 @@ class Format
 
     public static function currency($valor) //Entrada Float ou String
     {
-        return ($valor !== '') ? number_format($valor, 2, ',', '.') : '';
+        return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
     }
 
     public static function ucwordsCharset(string $string, string $charset = 'UTF-8'): string
