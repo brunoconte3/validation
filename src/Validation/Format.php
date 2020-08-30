@@ -139,4 +139,22 @@ class Format
     {
         return preg_replace('/[^a-zA-Z0-9]/', '', $str);
     }
+
+    public static function upper(string $string, string $charset = 'UTF-8'): string
+    {
+        return mb_strtoupper($string, $charset);
+    }
+
+    public static function lower(string $string, string $charset = 'UTF-8'): string
+    {
+        return mb_strtolower($string, $charset);
+    }
+
+    public static function reverse(string $string, string $charSet = 'UTF-8'): string
+    {
+        if (!extension_loaded('iconv')) {
+            throw new \Exception(__METHOD__ . '() requires ICONV extension that is not loaded.');
+        }
+        return iconv('UTF-32LE', $charSet, strrev(iconv($charSet, 'UTF-32BE', $string)));
+    }
 }

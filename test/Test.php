@@ -124,12 +124,16 @@ echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
 echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
-echo Format::ucwordsCharset('aÇafrÃo') . '<br>'; //Segundo parametro escolhe o charset, UTF-8 default ==> Açafrão
 echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números => 54887;
 echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números => 548Abc87;
-
 //[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
 echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //1234 5678 9012 3456
+
+//Os format abaixo, o segundo parametro escolhe o charset, UTF-8 default
+echo Format::lower('CArrO') . '<br>'; //Minusculo,  ==> carro
+echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO
+echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
+echo Format::reverse('Abacaxi') . '<br>'; //Retorna string invertida ==> ixacabA
 
 echo '<pre>';
 $arrayComNull = Format::emptyToNull($array);
