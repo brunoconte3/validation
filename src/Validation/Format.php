@@ -157,4 +157,9 @@ class Format
         }
         return iconv('UTF-32LE', $charSet, strrev(iconv($charSet, 'UTF-32BE', $string)));
     }
+
+    public static function falseToNull($value)
+    {
+        return $value === false ? null : $value;
+    }
 }

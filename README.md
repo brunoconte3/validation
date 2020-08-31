@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.11.0"
+"brunoconte3/validation": "4.12.0"
 ```
 
 via composer.
@@ -253,6 +253,28 @@ echo Compare::calculateAgeInYears('20/05/1989');
 //echo 'Compara igualdade dos campos, retorna booleano <br>';
 //terceiro parametro opcional, false para não comparar caseSensitive, default true
 var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
+
+```
+
+# Manipular Arrays
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Array;
+
+echo '<br><br>Manipular Arrays<hr>';
+
+$array = ['primeiro' => 15, 'segundo' => 25];
+var_dump(Arrays::searchKey($array, 'primeiro'));   // Procura chave no array, e retorna a posição ==> returns 0
+var_dump(Arrays::searchKey($array, 'segundo'));    // Procura chave no array, e retorna a posição ==> returns 1
+var_dump(Arrays::searchKey($array, 'nao-existe')); // Procura chave no array, e retorna a posição ==> returns null
+
+$array = ['primeiro' => 10, 'segundo' => 20];
+Arrays::renameKey($array, 'primeiro', 'novoNome');
+var_dump($array); //Renomeia a chave do array ==> ['renamed' => 10, 'second' => 20];
 
 ```
 

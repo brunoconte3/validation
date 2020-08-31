@@ -3,6 +3,7 @@
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use brunoconte3\Validation\{
+    Arrays,
     Compare,
     Format,
     Validator
@@ -166,3 +167,14 @@ echo Compare::calculateAgeInYears('20/05/1989') . '<br>';
 echo 'Compara igualdade dos campos retorna booleano <br>';
 //terceiro parametro opcional, false para não comparar caseSensitive, default true
 var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
+
+echo '<br><br>Manipular Arrays<hr>';
+
+$array = ['primeiro' => 15, 'segundo' => 25];
+var_dump(Arrays::searchKey($array, 'primeiro'));   // Procura chave no array, e retorna a posição ==> returns 0
+var_dump(Arrays::searchKey($array, 'segundo'));    // Procura chave no array, e retorna a posição ==> returns 1
+var_dump(Arrays::searchKey($array, 'nao-existe')); // Procura chave no array, e retorna a posição ==> returns null
+
+$array = ['primeiro' => 10, 'segundo' => 20];
+Arrays::renameKey($array, 'primeiro', 'novoNome');
+var_dump($array); //Renomeia a chave do array ==> ['renamed' => 10, 'second' => 20];
