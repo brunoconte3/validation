@@ -141,7 +141,7 @@ if (!$validator->getErros()) {
 - lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
-- numeric: `Verifica se o valor contém apenas valores numéricos.`
+- numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
 - numMonth `Verifica se o valor é um mês válido (1 a 12).`
 - notSpace: `Verifica se a string contém espaços.`
 - optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
