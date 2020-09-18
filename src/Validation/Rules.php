@@ -67,6 +67,7 @@ class Rules
             'float' => 'validateFloating',
             'hour' => 'validateHour',
             'identifier' => 'validateIdentifier',
+            'identifierOrCompany' => 'validateIdentifierOrCompany',
             'int' => 'validateInteger',
             'ip' => 'validateIp',
             'lower' => 'validateLower',
@@ -415,6 +416,28 @@ class Rules
         if (!ValidateCpf::validateCpf($value)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
+        }
+    }
+
+    protected function validateIdentifierOrCompany($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (strlen($value) === 11) {
+            $value = Format::mask('###.###.###-##', $value);
+        }
+        if (is_numeric($value) && strlen($value) === 14) {
+            $value = Format::mask('##.###.###/####-##', $value);
+        }
+        if (strlen($value) === 14) {
+            if (!ValidateCpf::validateCpf($value)) {
+                $this->errors[$field] = !empty($message) ?
+                    $message : "O campo $field é inválido!";
+            }
+        }
+        if (strlen($value) === 18) {
+            if (empty($value) ||  !ValidateCnpj::validateCnpj($value)) {
+                $this->errors[$field] = !empty($message) ?
+                    $message : "O campo $field é inválido!";
+            }
         }
     }
 

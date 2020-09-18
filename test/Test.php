@@ -49,7 +49,8 @@ $datas = [
     'validaJson' => '
         "nome": "Bruno"
     }',
-    'validaMes' => 13
+    'validaMes' => 13,
+    'cpfOuCnpn' => '83.113.366.0001/01'
 ];
 
 //Aceita divisao das regras por PIPE ou formato JSON
@@ -92,6 +93,7 @@ $rules = [
     'validarEspaco' => 'notSpace',
     'validaJson' => 'type:json',
     'validaMes' => 'numMonth',
+    'cpfOuCnpn' => 'identifierOrCompany'
 ];
 
 $validator = new Validator();

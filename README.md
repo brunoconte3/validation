@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.12.0"
+"brunoconte3/validation": "4.13.0"
 ```
 
 via composer.
@@ -134,6 +134,7 @@ if (!$validator->getErros()) {
 - email: `Verifica se é um email válido.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
 - identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
+- identifierOrCompany: `Valida se o CPF ou CNPJ é válido, passando CPF ou CNPJ com ou sem mascara`
 - hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
 - ip: `Verifica se o valor é um endereço de IP válido.`
