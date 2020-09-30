@@ -505,12 +505,7 @@ class Rules
         if ($value > 12 || $value <= 0 || strlen((string)$value) > 2) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field não é um mês válido!";
-        } /*elseif (empty($rule) || $rule !== 'zero') {
-            if (substr((string)$value, 0, 1) === 0) {
-                $this->errors[$field] = !empty($message) ?
-                    $message : "O campo $field com zero a esquerda não é aceito, a não ser que passe numMonth:zero!";
-            }
-        }*/
+        }
     }
 
     protected function validateNumMin($rule = '', $field = '', $value = null, $message = null)
