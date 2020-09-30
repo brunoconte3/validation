@@ -99,7 +99,10 @@ class Format
         return array_map('intval', $array);
     }
 
-    public static function currency($valor) //Entrada Float ou String
+    /**
+     * @param float|string $valor
+     */
+    public static function currency($valor)
     {
         return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
     }

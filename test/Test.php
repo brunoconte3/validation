@@ -6,7 +6,7 @@ use brunoconte3\Validation\{
     Arrays,
     Compare,
     Format,
-    Validator
+    Validator,
 };
 
 $datas = [
@@ -180,3 +180,31 @@ var_dump(Arrays::searchKey($array, 'nao-existe')); // Procura chave no array, e 
 $array = ['primeiro' => 10, 'segundo' => 20];
 Arrays::renameKey($array, 'primeiro', 'novoNome');
 var_dump($array); //Renomeia a chave do array ==> ['renamed' => 10, 'second' => 20];
+
+$array = [
+    'frutas' => ['fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'],
+    'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
+    'legume' => 'Tomate'
+];
+
+// Verifica no array, se existe algum índice com o valor desejado
+var_dump(Arrays::checkExistIndexByValue($array, 'Tomate'));
+
+// Realiza a busca no array, através da key e retorna um array com todos índices localizados
+var_dump(Arrays::findValueByKey($array, 'verduras'));
+
+// Realiza a busca no array, através de um valor e rotorna um array com todos itens localizados
+var_dump(Arrays::findIndexByValue($array, 'Tomate'));
+
+$xml = new SimpleXMLElement('<root/>');
+Arrays::convertArrayToXml($array, $xml); // Converte array em Xml
+var_dump($xml->asXML());
+
+$array = [
+    'frutas' => ['fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'],
+    'verduras' => '{"verdura_1": "Rúcula", "verdura_2": "Acelga", "verdura_3": "Alface"}'
+];
+
+// Verifica no array, se possui algum índice com JSON e o transforma em array
+Arrays::convertJsonIndexToArray($array);
+var_dump($array);

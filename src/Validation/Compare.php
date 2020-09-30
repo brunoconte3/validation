@@ -26,7 +26,6 @@ class Compare
         string $dtIni,
         string $dtFin
     ): bool {
-
         if (!empty($dtIni) && !empty($dtFin)) {
             if (self::daysDifferenceBetweenData($dtIni, $dtFin) < 0) {
                 return false;
@@ -42,7 +41,6 @@ class Compare
         string $hourFin,
         string $msg = 'Hora Inicial não pode ser maior que a Hora Final!'
     ): ?string {
-
         if (!empty($hourIni) && !empty($hourFin)) {
             $diff = self::differenceBetweenHours($hourIni, $hourFin);
             if (substr($diff, 0, 1) === '-') {

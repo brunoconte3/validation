@@ -15,6 +15,7 @@ class ValidateDate
             return false;
         }
     }
+
     public static function validateDateBrazil(string $data): bool
     {
         if (strlen($data) < 8) {
