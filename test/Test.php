@@ -6,7 +6,7 @@ use brunoconte3\Validation\{
     Arrays,
     Compare,
     Format,
-    Validator,
+    Validator
 };
 
 $datas = [
