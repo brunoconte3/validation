@@ -38,6 +38,22 @@ class Format
         }
     }
 
+    /**
+     * @param float|int|string $valor
+     */
+    private static function formatCurrencyForFloat($valor): float
+    {
+        if (is_string($valor)) {
+            if (preg_match('/(\,|\.)/', substr(substr($valor, -3), 0, 1))) {
+                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+                $valor = substr_replace($valor, '.', -2, 0);
+            } else {
+                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+            };
+        }
+        return (float) $valor;
+    }
+
     public static function convertTypes(array &$data, array $rules)
     {
         $error = [];
@@ -117,22 +133,6 @@ class Format
     {
         $valor = self::formatCurrencyForFloat($valor);
         return ((float) $valor !== '') ?  number_format((float) $valor, 2, '.', ',') : '';
-    }
-
-    /**
-     * @param float|int|string $valor
-     */
-    private static function formatCurrencyForFloat($valor): float
-    {
-        if (is_string($valor)) {
-            if (preg_match('/(\,|\.)/', substr(substr($valor, -3), 0, 1))) {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
-                $valor = substr_replace($valor, '.', -2, 0);
-            } else {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
-            };
-        }
-        return (float) $valor;
     }
 
     /**
