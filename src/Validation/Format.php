@@ -2,6 +2,8 @@
 
 namespace brunoconte3\Validation;
 
+use brunoconte3\Validation\ValidatePhone;
+
 class Format
 {
     private const DATA_TYPE_TO_CONVERT = [
@@ -100,11 +102,49 @@ class Format
     }
 
     /**
-     * @param float|string $valor
+     * @param float|int|string $valor
      */
-    public static function currency($valor)
+    public static function currency($valor): string
     {
+        $valor = self::formatCurrencyForFloat($valor);
         return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
+    }
+
+    /**
+     * @param float|int|string $valor
+     */
+    public static function currencyUsd($valor): string
+    {
+        $valor = self::formatCurrencyForFloat($valor);
+        return ((float) $valor !== '') ?  number_format((float) $valor, 2, '.', ',') : '';
+    }
+
+    /**
+     * @param float|int|string $valor
+     */
+    private static function formatCurrencyForFloat($valor): float
+    {
+        if (is_string($valor)) {
+            if (preg_match('/(\,|\.)/', substr(substr($valor, -3), 0, 1))) {
+                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+                $valor = substr_replace($valor, '.', -2, 0);
+            } else {
+                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+            };
+        }
+        return (float) $valor;
+    }
+
+    /**
+     * @return string|bool
+     */
+    public static function returnPhoneOrAreaCode(string $phone, bool $areaCode = false)
+    {
+        $phone = self::onlyNumbers($phone);
+        if (!empty($phone) && ValidatePhone::validate($phone)) {
+            return ($areaCode) ? preg_replace('/\A.{2}?\K[\d]+/', '', $phone) : preg_replace('/^\d{2}/', '', $phone);
+        }
+        return false;
     }
 
     public static function ucwordsCharset(string $string, string $charset = 'UTF-8'): string
