@@ -27,6 +27,11 @@
             "name": "Jonathan Bersot Augusto",
             "email": "jonathanbersot21@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Robson Willian da Silva",
+            "email": "robsonwillian.ads@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
