@@ -214,7 +214,17 @@ $rules = [
                     <?php
                     echo '<p>';
                     echo '<i>Format::telephone(\'44999998888\')</i> <br>';
-                    echo '<b>Telefone: </b>' . Format::telephone('44999998888');
+                    echo '<b>DD + Telefone: </b>' . Format::telephone('44999998888');
+                    echo '</p>';
+
+                    echo '<p>';
+                    echo '<i>Format::returnPhoneOrAreaCode(\'44999998888\')</i> <br>';
+                    echo '<b>Telefone: </b>' . Format::returnPhoneOrAreaCode('44999998888');
+                    echo '</p>';
+
+                    echo '<p>';
+                    echo '<i>Format::returnPhoneOrAreaCode(\'44999998888\', true)</i> <br>';
+                    echo '<b>DD: </b>' . Format::returnPhoneOrAreaCode('44999998888', true);
                     echo '</p>';
 
                     echo '<p>';
@@ -244,7 +254,12 @@ $rules = [
 
                     echo '<p>';
                     echo '<i>Format::currency(\'1123.45\')</i> <br>';
-                    echo '<b>Moeda: </b>' . Format::currency('1123.45');
+                    echo '<b>Moeda (BR): </b>' . Format::currency('1123.45');
+                    echo '</p>';
+
+                    echo '<p>';
+                    echo '<i>Format::currencyUsd(\'1123.45\')</i> <br>';
+                    echo '<b>Moeda (USD): </b>' . Format::currencyUsd('1123.45');
                     echo '</p>';
 
                     echo '<p>';

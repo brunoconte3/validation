@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.14.0"
+"brunoconte3/validation": "4.15.0"
 ```
 
 via composer.
@@ -179,12 +179,15 @@ require 'vendor/autoload.php';
 use brunoconte3\Validation\Format;
 
 echo Format::telephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
+echo Format::returnPhoneOrAreaCode('44999998888', false) . '<br>'; // Retorna apenas o número do telefone 999998888
+echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; // Retorna apenas o DD do telefone 44
 echo Format::identifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
 echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
 echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
 echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
-echo Format::currency('1123.45') . '<br>'; //Formata Moeda ==>  1.123,45
+echo Format::currency('1123.45') . '<br>'; //Formata Moeda padrão BR ==>  1.123,45
+echo Format::currencyUsd('1123.45') . '<br>'; // Formata Moeda padrão USD ==> 1,123.45
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
 echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números => 54887;
 echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números => 548Abc87;
