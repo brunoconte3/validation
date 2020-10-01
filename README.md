@@ -180,7 +180,7 @@ use brunoconte3\Validation\Format;
 
 echo Format::telephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
 echo Format::returnPhoneOrAreaCode('44999998888', false) . '<br>'; // Retorna apenas o número do telefone 999998888
-echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; // Retorna apenas o DD do telefone 44
+echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; // Retorna apenas o DDD do telefone 44
 echo Format::identifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
 echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
 echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
