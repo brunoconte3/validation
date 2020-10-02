@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace brunoconte3\Test;
+
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use brunoconte3\Validation\{
@@ -213,8 +217,8 @@ $rules = [
                 <div class="class-section-code">
                     <?php
                     echo '<p>';
-                    echo '<i>Format::telephone(\'44999998888\')</i> <br>';
-                    echo '<b>DD + Telefone: </b>' . Format::telephone('44999998888');
+                    echo '<i>Format::telephone(44999998888)</i> <br>';
+                    echo '<b>DD + Telefone: </b>' . Format::telephone(44999998888);
                     echo '</p>';
 
                     echo '<p>';
@@ -541,7 +545,7 @@ $rules = [
                 <p>Arrays::convertArrayToXml()</p>
                 <div class="class-section-code">
                     <?php
-                    $xml = new SimpleXMLElement('<root/>');
+                    $xml = new \SimpleXMLElement('<root/>');
                     Arrays::convertArrayToXml($array, $xml); // Converte array em Xml
                     var_dump($xml->asXML());
                     ?>

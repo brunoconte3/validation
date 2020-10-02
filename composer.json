@@ -41,5 +41,8 @@
         "psr-4": {
             "brunoconte3\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.4"
     }
 }
