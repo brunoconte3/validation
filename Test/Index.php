@@ -181,7 +181,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.14.0</small>
+            <small>Versão 4.16.0</small>
         </header>
 
         <!-- Validação de dados -->
@@ -306,6 +306,11 @@ $rules = [
                     echo '<p>';
                     echo '<i>Format::reverse(\'Abacaxi\')</i> <br>';
                     echo '<b>String invertida: </b>' . Format::reverse('Abacaxi');
+                    echo '</p>';
+
+                    echo '<p>';
+                    echo '<i>Format::removeAccent(\'Açafrão\')</i> <br>';
+                    echo '<b>Remove acentos: </b>' . Format::removeAccent('Açafrão');
                     echo '</p>';
                     ?>
                 </div>

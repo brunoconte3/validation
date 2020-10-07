@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.15.0"
+"brunoconte3/validation": "4.16.0"
 ```
 
 via composer.
@@ -199,6 +199,7 @@ echo Format::lower('CArrO') . '<br>'; //Minusculo,  ==> carro
 echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO
 echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
 echo Format::reverse('Abacaxi') . '<br>'; //Retorna string invertida ==> ixacabA
+echo Format::removeAccent('Açafrão') . '<br>'; //Remove acentos e o caracter 'ç' ==> Acafrao
 
 Format::convertTypes($datas, $rules); //Converte o valor para o tipo correto dele ['bool', 'float', 'int', 'numeric',]
 
