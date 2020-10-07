@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace brunoconte3\Validation;
 
+use brunoconte3\Validation\Format;
+
 class Arrays
 {
     public static function searchKey(array $array, $key): ?int
