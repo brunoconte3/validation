@@ -32,6 +32,11 @@
             "name": "Robson Willian da Silva",
             "email": "robsonwillian.ads@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Rafael Henrique Barbosa Pereira",
+            "email": "rafael@agenciab33.com.br",
+            "role": "Developer"
         }
     ],
     "require": {
