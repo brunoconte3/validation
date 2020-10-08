@@ -313,7 +313,8 @@ var_dump($array);
 
 # Arquivo com exemplos de Testes
 
-`Execute o arquivo que está no caminho /test/Test.php preparamos para facilitar seu entendimento!`
+`Execute o arquivo que está no caminho: /test/Index.php preparamos para facilitar seu entendimento!`
+`UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!`
 
 # Licença
 

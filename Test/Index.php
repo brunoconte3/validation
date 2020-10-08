@@ -218,7 +218,7 @@ $rules = [
                     <?php
                     echo '<p>';
                     echo '<i>Format::telephone(44999998888)</i> <br>';
-                    echo '<b>DD + Telefone: </b>' . Format::telephone(44999998888);
+                    echo '<b>DDD + Telefone: </b>' . Format::telephone(44999998888);
                     echo '</p>';
 
                     echo '<p>';
@@ -228,7 +228,7 @@ $rules = [
 
                     echo '<p>';
                     echo '<i>Format::returnPhoneOrAreaCode(\'44999998888\', true)</i> <br>';
-                    echo '<b>DD: </b>' . Format::returnPhoneOrAreaCode('44999998888', true);
+                    echo '<b>DDD: </b>' . Format::returnPhoneOrAreaCode('44999998888', true);
                     echo '</p>';
 
                     echo '<p>';

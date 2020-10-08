@@ -19,8 +19,18 @@ class UnitTest extends TestCase
         $this->assertEquals('894.213.600-10', Format::identifier('89421360010'));
     }
 
+    public function testTelephone(): void
+    {
+        $this->assertEquals('(44) 99999-8888', Format::telephone(44999998888));
+    }
+
     public function testRemoveAccent(): void
     {
         $this->assertEquals('Acafrao', Format::removeAccent('Açafrão'));
+    }
+
+    public function testZipCode(): void
+    {
+        $this->assertEquals('87047-590', Format::zipCode('87047590'));
     }
 }
