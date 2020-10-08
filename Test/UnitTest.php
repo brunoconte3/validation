@@ -33,4 +33,14 @@ class UnitTest extends TestCase
     {
         $this->assertEquals('87047-590', Format::zipCode('87047590'));
     }
+
+    public function testDateBrazil(): void
+    {
+        $this->assertEquals('10/10/2020', Format::dateBrazil('2020-10-10'));
+    }
+
+    public function testDateAmerican(): void
+    {
+        $this->assertEquals('2020-10-10', Format::dateAmerican('10/10/2020'));
+    }
 }
