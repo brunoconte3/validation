@@ -241,6 +241,11 @@ $rules = [
                     echo '<b>CNPJ: </b>' . Format::companyIdentification('39678379000129');
                     echo '</p>';
 
+                    echo '</p>';
+                    echo '<i>Format::identifierOrCompany(\'30720870089\')</i> <br>';
+                    echo '<b>CPF/CNPJ: </b>' . Format::identifierOrCompany('30720870089');
+                    echo '</p>';
+
                     echo '<p>';
                     echo '<i>Format::zipCode(\'87030585\')</i> <br>';
                     echo '<b>CEP: </b>' . Format::zipCode('87030585');

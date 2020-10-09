@@ -83,6 +83,17 @@ class Format
         return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpf);
     }
 
+    public static function identifierOrCompany(string $cpfCnpj): string
+    {
+        if (strlen($cpfCnpj) === 11) {
+            return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpfCnpj);
+        } elseif (strlen($cpfCnpj) === 14) {
+            return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cpfCnpj);
+        } else {
+            throw new \Exception("Valor precisa ser um CPF ou CNPJ!");
+        }
+    }
+
     public static function telephone(int $number): string
     {
         $number = '(' . substr($number, 0, 2) . ') ' . substr($number, 2, -4) . '-' . substr($number, -4);

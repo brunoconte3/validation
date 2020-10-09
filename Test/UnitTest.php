@@ -19,6 +19,12 @@ class UnitTest extends TestCase
         $this->assertEquals('894.213.600-10', Format::identifier('89421360010'));
     }
 
+    public function testIdentifierOrCompany(): void
+    {
+        $this->assertEquals('307.208.700-89', Format::identifierOrCompany('30720870089'));
+        $this->assertEquals('12.456.571/0001-14', Format::identifierOrCompany('12456571000114'));
+    }
+
     public function testTelephone(): void
     {
         $this->assertEquals('(44) 99999-8888', Format::telephone(44999998888));

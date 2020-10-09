@@ -13,7 +13,7 @@ Classe de Formatação, onde contempla opções de formatação para seus dados.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.16.0"
+"brunoconte3/validation": "4.17.0"
 ```
 
 via composer.
@@ -183,6 +183,7 @@ echo Format::returnPhoneOrAreaCode('44999998888', false) . '<br>'; // Retorna ap
 echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; // Retorna apenas o DDD do telefone 44
 echo Format::identifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
 echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
+echo Format::identifierOrCompany('30720870089') . '<br>'; //Formata CPF/CNPJ ==> 307.208.700-89
 echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
 echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
