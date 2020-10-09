@@ -388,7 +388,7 @@ class Rules
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $this->errors[$field] = !empty($message) ?
-                $message : "O campo $field deve ser um endereço de email válido!";
+                $message : "O campo $field deve ser um endereço de e-mail válido!";
         }
     }
 
