@@ -178,31 +178,29 @@ require 'vendor/autoload.php';
 
 use brunoconte3\Validation\Format;
 
-echo Format::telephone('44999998888') . '<br>';  //Formata Telefone ==> (44) 99999-8888
-echo Format::returnPhoneOrAreaCode('44999998888', false) . '<br>'; // Retorna apenas o número do telefone 999998888
-echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; // Retorna apenas o DDD do telefone 44
-echo Format::identifier('73381209000') . '<br>';  //Formata CPF ==>  733.812.090-00
-echo Format::companyIdentification('39678379000129') . '<br>'; //Formata CNPJ ==> 39.678.379/0001-29
-echo Format::identifierOrCompany('30720870089') . '<br>'; //Formata CPF/CNPJ ==> 307.208.700-89
-echo Format::zipCode('87030585') . '<br>'; //Formata CEP ==>  87030-585
-echo Format::dateBrazil('2020-05-12') . '<br>'; //Formata Data ==>  12/05/2020
-echo Format::dateAmerican('12-05-2020') . '<br>'; //Formata Data ==>  2020-05-12
-echo Format::currency('1123.45') . '<br>'; //Formata Moeda padrão BR ==>  1.123,45
-echo Format::currencyUsd('1123.45') . '<br>'; // Formata Moeda padrão USD ==> 1,123.45
-echo Format::pointOnlyValue('1.350,45') . '<br>'; //Formata moeda para gravação no BD ==>  1350.45
-echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números => 54887;
-echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números => 548Abc87;
-//[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
-echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //1234 5678 9012 3456
-
-//Os format abaixo, o segundo parametro escolhe o charset, UTF-8 default
-echo Format::lower('CArrO') . '<br>'; //Minusculo,  ==> carro
-echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO
-echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
-echo Format::reverse('Abacaxi') . '<br>'; //Retorna string invertida ==> ixacabA
-echo Format::removeAccent('Açafrão') . '<br>'; //Remove acentos e o caracter 'ç' ==> Acafrao
-
+echo Format::companyIdentification('39678379000129') . '<br>'; //CNPJ ==> 39.678.379/0001-29
 Format::convertTypes($datas, $rules); //Converte o valor para o tipo correto dele ['bool', 'float', 'int', 'numeric',]
+echo Format::currency('1123.45') . '<br>'; //Moeda padrão BR ==>  1.123,45
+echo Format::currencyUsd('1123.45') . '<br>'; //Moeda padrão USD ==> 1,123.45
+echo Format::dateAmerican('12-05-2020') . '<br>'; //Data ==>  2020-05-12
+echo Format::dateBrazil('2020-05-12') . '<br>'; //Data ==>  12/05/2020
+echo Format::identifier('73381209000') . '<br>';  //CPF ==>  733.812.090-00
+echo Format::identifierOrCompany('30720870089') . '<br>'; //CPF/CNPJ ==> 307.208.700-89
+echo Format::falseToNull(false) . '<br>'; //Retorna ==> null
+echo Format::lower('CArrO') . '<br>'; //Minusculo ==> carro - o segundo parametro escolhe o charset, UTF-8 default
+//[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
+echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //Mascara ==> 1234 5678 9012 3456
+echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números ==> 54887;
+echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números ==> 548Abc87;
+echo Format::pointOnlyValue('1.350,45') . '<br>'; //Moeda para gravação no BD ==>  1350.45
+echo Format::removeAccent('Açafrão') . '<br>'; //Remove acentos e o caracter 'ç' ==> Acafrao
+echo Format::returnPhoneOrAreaCode('44999998888', false) . '<br>'; //Retorna apenas o número do telefone ==> 999998888
+echo Format::returnPhoneOrAreaCode('44999998888', true) . '<br>'; //Retorna apenas o DDD do telefone ==> 44
+echo Format::reverse('Abacaxi') . '<br>'; //Retorna string invertida ==> ixacabA
+echo Format::telephone('44999998888') . '<br>';  //Telefone ==> (44) 99999-8888
+echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
+echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO - o segundo parametro escolhe o charset, UTF-8 default
+echo Format::zipCode('87030585') . '<br>'; //CEP ==>  87030-585
 
 $array = [
     0 => '1',

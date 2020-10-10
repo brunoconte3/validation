@@ -181,7 +181,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.16.0</small>
+            <small>Versão 4.17.0</small>
         </header>
 
         <!-- Validação de dados -->

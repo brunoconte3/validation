@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 
 class UnitTest extends TestCase
 {
+    /**
+     * Formatações
+     */
     public function testCompanyIdentification(): void
     {
         $this->assertEquals('76.027.484/0001-24', Format::companyIdentification('76027484000124'));
@@ -145,4 +148,12 @@ class UnitTest extends TestCase
     {
         $this->assertEquals(null, Format::falseToNull(false));
     }
+
+    /**
+     * Regras
+     */
+
+    /**
+     * Comparações
+     */
 }
