@@ -49,4 +49,100 @@ class UnitTest extends TestCase
     {
         $this->assertEquals('2020-10-10', Format::dateAmerican('10/10/2020'));
     }
+
+    public function testArrayToInt(): void
+    {
+        $arrayProcessed = [
+            0 => 1,
+            1 => 123,
+            'a' => 222,
+            'b' => 333,
+            'c' => 0
+        ];
+        $this->assertEquals($arrayProcessed, Format::arrayToInt([
+            0 => '1',
+            1 => '123',
+            'a' => '222',
+            'b' => 333,
+            'c' => ''
+        ]));
+    }
+
+    public function testCurrency(): void
+    {
+        $this->assertEquals('1.123,45', Format::currency('1123.45'));
+    }
+
+    public function testCurrencyUsd(): void
+    {
+        $this->assertEquals('1,123.45', Format::currencyUsd('1123.45'));
+    }
+
+    public function testReturnPhoneOrAreaCode(): void
+    {
+        $this->assertEquals('44', Format::returnPhoneOrAreaCode('44999998888', true));
+        $this->assertEquals('999998888', Format::returnPhoneOrAreaCode('44999998888'));
+    }
+
+    public function testUcwordsCharset(): void
+    {
+        $this->assertEquals('Açafrão Macarrão', Format::ucwordsCharset('aÇafrÃo maCaRRão'));
+    }
+
+    public function testPointOnlyValue(): void
+    {
+        $this->assertEquals('1350.45', Format::pointOnlyValue('1.350,45'));
+    }
+
+    public function testEmptyToNull(): void
+    {
+        $array = [
+            0 => '1',
+            'a' => '222',
+            'b' => 333,
+            'c' => null
+        ];
+
+        $this->assertEquals($array, Format::emptyToNull([
+            0 => '1',
+            'a' => '222',
+            'b' => 333,
+            'c' => ''
+        ]));
+    }
+
+    public function testMask(): void
+    {
+        $this->assertEquals('1234 5678 9012 3456', Format::mask('#### #### #### ####', '1234567890123456'));
+    }
+
+    public function testOnlyNumbers(): void
+    {
+        $this->assertEquals('54887', Format::onlyNumbers('548Abc87@'));
+    }
+
+    public function testOnlyLettersNumbers(): void
+    {
+        $this->assertEquals('548Abc87', Format::onlyLettersNumbers('548Abc87@'));
+    }
+
+    public function testUpper(): void
+    {
+        $this->assertEquals('CARRO', Format::upper('CArrO'));
+    }
+
+    public function testLower(): void
+    {
+        $this->assertEquals('carro', Format::lower('CArrO'));
+    }
+
+    public function testReverse(): void
+    {
+        $this->assertEquals('ixacabA', Format::reverse('Abacaxi'));
+    }
+
+    public function testFalseToNull(): void
+    {
+        $this->assertEquals(null, Format::falseToNull(false));
+    }
 }

@@ -314,8 +314,9 @@ var_dump($array);
 
 # Arquivo com exemplos de Testes
 
-- Execute o arquivo que está no caminho: /Test/Index.php preparamos para facilitar seu entendimento!
 - /Test/UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!
+- O que ainda não estiver no teste unitário acima, execute o arquivo que está no caminho: /Test/Index.php
+  preparamos para facilitar seu entendimento!
 
 # Licença
 
