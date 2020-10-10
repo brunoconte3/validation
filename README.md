@@ -1,12 +1,14 @@
 # Validator
 
-O Validator é baseado em PHP 7 que permite validar vários tipos de dados.
+Permite validar vários tipos de dados.
+Aplicado padrão das PSR.
 
-Aplicado padrão da PSR-12.
+# Adicionais
 
-Possui Validates com assuntos específicos, onde pode validar isoladamente alguns itens que desejar.
-
-Classe de Formatação, onde contempla opções de formatação para seus dados.
+- Classe de Arrays
+- Classe de Comparação
+- Classe de Formatação
+- Classe de Testes Unitários
 
 # Instalação
 
