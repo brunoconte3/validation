@@ -14,8 +14,6 @@ use brunoconte3\Validation\{
 };
 
 $datas = [
-    'infOpcional' => 'a',
-    'sexo' => '',
     'cnpj' => '52186923000120',
     'telefone' => '449565',
     'cpf' => '12547845874',
@@ -59,8 +57,6 @@ $datas = [
 
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
-    'infOpcional' => 'optional|min:2|int',
-    'sexo' => 'required',
     'cnpj' => 'required|min:14|max:18|companyIdentification',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
