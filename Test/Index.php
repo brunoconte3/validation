@@ -14,8 +14,6 @@ use brunoconte3\Validation\{
 };
 
 $datas = [
-    'infOpcional' => 'a',
-    'sexo' => '',
     'cnpj' => '52186923000120',
     'telefone' => '449565',
     'cpf' => '12547845874',
@@ -59,8 +57,6 @@ $datas = [
 
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
-    'infOpcional' => 'optional|min:2|int',
-    'sexo' => 'required',
     'cnpj' => 'required|min:14|max:18|companyIdentification',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
@@ -181,7 +177,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.14.0</small>
+            <small>Versão 4.17.0</small>
         </header>
 
         <!-- Validação de dados -->
@@ -203,157 +199,6 @@ $rules = [
                         echo 'Itens Validados: ' . count($validator->getErros()) . '<hr>';
                         var_dump($validator->getErros());
                     }
-                    ?>
-                </div>
-            </div>
-        </section>
-
-        <!-- Formatações Exemplos -->
-        <section class="body-section-class">
-            <h3># Formatações Exemplos</h3>
-
-            <div class="item-section-class">
-                <p></p>
-                <div class="class-section-code">
-                    <?php
-                    echo '<p>';
-                    echo '<i>Format::telephone(44999998888)</i> <br>';
-                    echo '<b>DD + Telefone: </b>' . Format::telephone(44999998888);
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::returnPhoneOrAreaCode(\'44999998888\')</i> <br>';
-                    echo '<b>Telefone: </b>' . Format::returnPhoneOrAreaCode('44999998888');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::returnPhoneOrAreaCode(\'44999998888\', true)</i> <br>';
-                    echo '<b>DD: </b>' . Format::returnPhoneOrAreaCode('44999998888', true);
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::identifier(\'73381209000\')</i> <br>';
-                    echo '<b>CPF: </b>' . Format::identifier('73381209000');
-                    echo '</p>';
-
-                    echo '</p>';
-                    echo '<i>Format::companyIdentification(\'39678379000129\')</i> <br>';
-                    echo '<b>CNPJ: </b>' . Format::companyIdentification('39678379000129');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::zipCode(\'87030585\')</i> <br>';
-                    echo '<b>CEP: </b>' . Format::zipCode('87030585');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::dateBrazil(\'2020-05-12\')</i> <br>';
-                    echo '<b>Data (dd/mm/yyyy): </b>' . Format::dateBrazil('2020-05-12');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::dateAmerican(\'12-05-2020\')</i> <br>';
-                    echo '<b>Data (yyyy-mm-dd): </b>' . Format::dateAmerican('12-05-2020');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::currency(\'1123.45\')</i> <br>';
-                    echo '<b>Moeda (BR): </b>' . Format::currency('1123.45');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::currencyUsd(\'1123.45\')</i> <br>';
-                    echo '<b>Moeda (USD): </b>' . Format::currencyUsd('1123.45');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::pointOnlyValue(\'1.350,45\')</i> <br>';
-                    echo '<b>Moeda para gravção no BD: </b>' . Format::pointOnlyValue('1.350,45');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::onlyNumbers(\'548Abc87@\')</i> <br>';
-                    echo '<b>Apenas números: </b>' . Format::onlyNumbers('548Abc87@');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::onlyLettersNumbers(\'548Abc87@\')</i> <br>';
-                    echo '<b>Letras e números: </b>' . Format::onlyLettersNumbers('548Abc87@');
-                    echo '</p>';
-
-                    //[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
-                    echo '<p>';
-                    echo '<i>Format::mask(\'#### #### #### ####', '1234567890123456\')</i> <br>';
-                    echo '<b>Máscara genérica: </b>' . Format::mask('#### #### #### ####', '1234567890123456');
-                    echo '</p>';
-
-                    //Os format abaixo, o segundo parametro escolhe o charset, UTF-8 default
-                    echo '<p>';
-                    echo '<i>Format::lower(\'CArrO\')</i> <br>';
-                    echo '<b>Minúsculo: </b>' . Format::lower('CArrO');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::upper(\'Moto\')</i> <br>';
-                    echo '<b>Maiúsculo: </b>' . Format::upper('Moto');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::ucwordsCharset(\'aÇafrÃo maCaRRão\')</i> <br>';
-                    echo '<b>Primeira letra maiúcula: </b>' . Format::ucwordsCharset('aÇafrÃo maCaRRão');
-                    echo '</p>';
-
-                    echo '<p>';
-                    echo '<i>Format::reverse(\'Abacaxi\')</i> <br>';
-                    echo '<b>String invertida: </b>' . Format::reverse('Abacaxi');
-                    echo '</p>';
-                    ?>
-                </div>
-            </div>
-
-            <div class="item-section-class">
-                <p>Format::emptyToNull($array)</p>
-                <div class="class-section-code">
-                    <?php
-                    $array = [
-                        0 => '1',
-                        1 => '123',
-                        'a' => '222',
-                        'b' => 333,
-                        'c' => ''
-                    ];
-
-                    echo "Array para formatação";
-                    var_dump($array);
-                    echo '<hr>';
-
-                    $arrayComNull = Format::emptyToNull($array);
-
-                    echo "Array formatado";
-                    var_dump($arrayComNull); //Converte vazio para null
-                    ?>
-                </div>
-            </div>
-
-            <div class="item-section-class">
-                <p>Format::arrayToIntReference()</p>
-                <div class="class-section-code">
-                    <?php
-                    $array = [
-                        0 => '1',
-                        1 => '123',
-                        'a' => '222',
-                        'b' => 333,
-                        'c' => ''
-                    ];
-
-                    echo "Array para formatação";
-                    var_dump($array);
-                    echo '<hr>';
-
-                    echo "Array formatado";
-                    Format::arrayToIntReference($array);
-                    var_dump($array); //Converte vazio para null
                     ?>
                 </div>
             </div>

@@ -83,6 +83,17 @@ class Format
         return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpf);
     }
 
+    public static function identifierOrCompany(string $cpfCnpj): string
+    {
+        if (strlen($cpfCnpj) === 11) {
+            return self::identifier($cpfCnpj);
+        } elseif (strlen($cpfCnpj) === 14) {
+            return self::companyIdentification($cpfCnpj);
+        } else {
+            throw new \Exception("Valor precisa ser um CPF ou CNPJ!");
+        }
+    }
+
     public static function telephone(int $number): string
     {
         $number = '(' . substr($number, 0, 2) . ') ' . substr($number, 2, -4) . '-' . substr($number, -4);
@@ -204,5 +215,29 @@ class Format
     public static function falseToNull($value)
     {
         return $value === false ? null : $value;
+    }
+
+    public static function removeAccent(string $string): string
+    {
+        return preg_replace(
+            [
+                '/(á|à|ã|â|ä)/',
+                '/(Á|À|Ã|Â|Ä)/',
+                '/(é|è|ê|ë)/',
+                '/(É|È|Ê|Ë)/',
+                '/(í|ì|î|ï)/',
+                '/(Í|Ì|Î|Ï)/',
+                '/(ó|ò|õ|ô|ö)/',
+                '/(Ó|Ò|Õ|Ô|Ö)/',
+                '/(ú|ù|û|ü)/',
+                '/(Ú|Ù|Û|Ü)/',
+                '/(ñ)/',
+                '/(Ñ)/',
+                '/(ç)/',
+                '/(Ç)/',
+            ],
+            explode(' ', 'a A e E i I o O u U n N c C'),
+            $string
+        );
     }
 }
