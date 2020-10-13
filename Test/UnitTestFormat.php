@@ -4,18 +4,11 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
-use brunoconte3\Validation\{
-    Format,
-    Validator
-};
+use brunoconte3\Validation\Format;
 use PHPUnit\Framework\TestCase;
 
-class UnitTest extends TestCase
+class UnitTestFormat extends TestCase
 {
-    /**
-     * Formatações
-     */
-
     public function testArrayToInt(): void
     {
         $arrayProcessed = [
@@ -135,7 +128,7 @@ class UnitTest extends TestCase
 
     public function testTelephone(): void
     {
-        $this->assertEquals('(44) 99999-8888', Format::telephone(44999998888));
+        $this->assertEquals('(44) 99999-8888', Format::telephone('44999998888'));
     }
 
     public function testUcwordsCharset(): void
@@ -152,29 +145,4 @@ class UnitTest extends TestCase
     {
         $this->assertEquals('87047-590', Format::zipCode('87047590'));
     }
-
-    /**
-     * Regras
-     */
-
-    public function testOptional(): void
-    {
-        $validator = new Validator();
-        $validator->set(['teste' => null], ['teste' => 'optional|min:2|int']);
-        $this->assertFalse($validator->getErros());
-    }
-
-    public function testRequired(): void
-    {
-        $array = ['a' => '', 'b' => null, 'c' => false];
-        $rules = ['a' => 'required', 'b' => 'required', 'c' => 'required'];
-
-        $vR = new Validator();
-        $vR->set($array, $rules);
-        $this->assertCount(3, $vR->getErros());
-    }
-
-    /**
-     * Comparações
-     */
 }
