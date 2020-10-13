@@ -44,7 +44,8 @@
     },
     "autoload": {
         "psr-4": {
-            "brunoconte3\\": "src/"
+            "brunoconte3\\Validation\\": "src/Validation/",
+            "brunoconte3\\Test\\": "src/Test/"
         }
     },
     "require-dev": {
