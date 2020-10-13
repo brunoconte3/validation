@@ -97,7 +97,6 @@ class Format
     public static function telephone(string $number): string
     {
         $number = '(' . substr($number, 0, 2) . ') ' . substr($number, 2, -4) . '-' . substr($number, -4);
-
         return $number;
     }
 
