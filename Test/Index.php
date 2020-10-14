@@ -14,11 +14,6 @@ use brunoconte3\Validation\{
 };
 
 $datas = [
-    'cnpj' => '52186923000120',
-    'telefone' => '449565',
-    'cpf' => '12547845874',
-    'nome' => 'a',
-    'numero' => 12345678,
     'email' => 'bruno.com',
     'texto' => 'abc',
     'validarPassandoJson' => '@&451',
@@ -57,11 +52,6 @@ $datas = [
 
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
-    'cnpj' => 'required|min:14|max:18|companyIdentification',
-    'telefone' => 'required|phone',
-    'cpf' => 'required|identifier',
-    'nome' => 'required|min:2',
-    'numero' => 'max:5',
     'email' => 'email',
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
     'validarPassandoJson' => '{"required":"true","type":"alpha"}',
@@ -177,7 +167,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.17.0</small>
+            <small>Versão 4.17.1</small>
         </header>
 
         <!-- Validação de dados -->
