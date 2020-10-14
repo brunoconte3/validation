@@ -17,8 +17,8 @@ class UnitTestCompare extends TestCase
 
     public function testStartDateLessThanEnd(): void
     {
-        $this->assertEquals(false, Compare::startDateLessThanEnd('30/11/2020', '31/10/2020'));
-        $this->assertEquals(true, Compare::startDateLessThanEnd('31/10/2020', '30/11/2020'));
+        $this->assertFalse(Compare::startDateLessThanEnd('30/11/2020', '31/10/2020'));
+        $this->assertTrue(Compare::startDateLessThanEnd('31/10/2020', '30/11/2020'));
     }
 
     public function testStartHourLessThanEnd(): void
@@ -27,7 +27,7 @@ class UnitTestCompare extends TestCase
         $msgVazio = 'Um ou mais campos horas não foram preenchidos!';
         $this->assertEquals($msg, Compare::startHourLessThanEnd('12:05:01', '10:20:01', $msg));
         $this->assertEquals($msgVazio, Compare::startHourLessThanEnd('', '10:20:01', $msgVazio));
-        $this->assertEquals(null, Compare::startHourLessThanEnd('10:05:01', '12:20:01', $msg));
+        $this->assertNull(Compare::startHourLessThanEnd('10:05:01', '12:20:01', $msg));
     }
 
     public function testCalculateAgeInYears(): void
@@ -44,7 +44,7 @@ class UnitTestCompare extends TestCase
 
     public function testCheckDataEquality(): void
     {
-        $this->assertEquals(false, Compare::checkDataEquality('AçaFrão', 'Açafrão'));
-        $this->assertEquals(true, Compare::checkDataEquality('AçaFrão', 'Açafrão', false));
+        $this->assertFalse(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
+        $this->assertTrue(Compare::checkDataEquality('AçaFrão', 'Açafrão', false));
     }
 }
