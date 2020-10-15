@@ -15,8 +15,6 @@ use brunoconte3\Validation\{
 
 $datas = [
     'texto' => 'abc',
-    'idade' => 'a',
-    'senha' => '@11111111',
     'cep' => '8704750',
     'data' => '31/04/1990',
     'dataAmericana' => '1990-04-31',
@@ -51,8 +49,6 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'idade' => 'numeric',
-    'senha' => 'float, O campo senha deve ser do tipo Inteiro!|required|max:8',
     'cep' => '{"type":"zipcode"}',
     'data' => 'dateBrazil',
     'dataAmericana' => 'dateAmerican',
