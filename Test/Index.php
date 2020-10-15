@@ -8,17 +8,12 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
 
 use brunoconte3\Validation\{
     Arrays,
-    Compare,
     Format,
     Validator
 };
 
 $datas = [
     'texto' => 'abc',
-    'cep' => '8704750',
-    'data' => '31/04/1990',
-    'dataAmericana' => '1990-04-31',
-    'hora' => '24:03',
     'url' => 'ww.test.c',
     'ip' => '1.1.1',
     'mac' => '00:00',
@@ -49,10 +44,6 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'cep' => '{"type":"zipcode"}',
-    'data' => 'dateBrazil',
-    'dataAmericana' => 'dateAmerican',
-    'hora' => '{"type":"hour"}',
     'url' => 'url',
     'ip' => 'ip',
     'mac' => 'mac',
@@ -159,7 +150,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.17.1</small>
+            <small>Versão 4.17.2</small>
         </header>
 
         <!-- Validação de dados -->

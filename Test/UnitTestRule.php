@@ -9,10 +9,30 @@ use PHPUnit\Framework\TestCase;
 
 class UnitTestRule extends TestCase
 {
+    public function testDateAmerican(): void
+    {
+        $array = ['testError' => '1990-04-31', 'testValid' => '1990-04-30'];
+        $rules = ['testError' => 'dateAmerican', 'testValid' => 'dateAmerican'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testCompanyIdentification(): void
     {
         $array = ['testError' => '52186923000120', 'testValid' => '21111527000163'];
         $rules = ['testError' => 'companyIdentification', 'testValid' => 'companyIdentification'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testDateBrazil(): void
+    {
+        $array = ['testError' => '31042020', 'testValid' => '31052020'];
+        $rules = ['testError' => 'dateBrazil', 'testValid' => 'dateBrazil'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -43,6 +63,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => 'a1', 'testValid' => '10.125'];
         $rules = ['testError' => 'float', 'testValid' => 'float'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testHour(): void
+    {
+        $array = ['testError' => '24:03', 'testValid' => '21:03'];
+        $rules = ['testError' => '{"type":"hour"}', 'testValid' => '{"type":"hour"}'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -120,5 +150,15 @@ class UnitTestRule extends TestCase
         $validator = new Validator();
         $validator->set($array, $rules);
         $this->assertCount(3, $validator->getErros());
+    }
+
+    public function testZipcode(): void
+    {
+        $array = ['testError' => '870475', 'testValid' => '87047510'];
+        $rules = ['testError' => 'zipcode', 'testValid' => 'zipcode'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
     }
 }
