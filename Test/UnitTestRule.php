@@ -19,10 +19,30 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testEmail(): void
+    {
+        $array = ['testError' => 'bruno.com', 'testValid' => 'brunoconte3@gmail.com'];
+        $rules = ['testError' => 'email', 'testValid' => 'email'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testIdentifier(): void
     {
         $array = ['testError' => '06669987788', 'testValid' => '55634405831'];
         $rules = ['testError' => 'identifier', 'testValid' => 'identifier'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testFloat(): void
+    {
+        $array = ['testError' => 'a1', 'testValid' => '10.125'];
+        $rules = ['testError' => 'float', 'testValid' => 'float'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -49,11 +69,37 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testNumeric(): void
+    {
+        $array = ['testError' => 'a', 'testValid' => 123];
+        $rules = ['testError' => 'numeric', 'testValid' => 'numeric'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testOptional(): void
     {
         $validator = new Validator();
         $validator->set(['test' => null], ['test' => 'optional|min:2|int']);
         $this->assertFalse($validator->getErros());
+    }
+
+    public function testParamJson(): void
+    {
+        $array = [
+            'testError' => '@&451',
+            'testValid' => 123
+        ];
+        $rules = [
+            'testError' => '{"required":"true","type":"alpha"}',
+            'testValid' => '{"required":"true","type":"int"}'
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
     }
 
     public function testPhone(): void
