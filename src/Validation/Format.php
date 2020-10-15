@@ -94,7 +94,10 @@ class Format
         }
     }
 
-    public static function telephone(string $number): string
+    /**
+     * @param string|int $number Pode receber uma String ou Inteiro, compatibilidade com sistemas que já usam
+     */
+    public static function telephone($number): string
     {
         $number = '(' . substr($number, 0, 2) . ') ' . substr($number, 2, -4) . '-' . substr($number, -4);
         return $number;

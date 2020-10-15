@@ -58,14 +58,14 @@ class UnitTestFormat extends TestCase
             0 => '1',
             'a' => '222',
             'b' => 333,
-            'c' => null
+            'c' => ''
         ];
 
         $this->assertEquals($array, Format::emptyToNull([
             0 => '1',
             'a' => '222',
             'b' => 333,
-            'c' => ''
+            'c' => null
         ]));
     }
 
