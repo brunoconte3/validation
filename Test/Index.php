@@ -167,114 +167,79 @@ $rules = [
         <section class="body-section-class">
             <h3># Manipular Arrays</h3>
 
-            <div class="item-section-class">
-                <ol>
-                    <li>Arrays::searchKey($array, 'primeiro')</li>
-                    <li>Arrays::searchKey($array, 'segundo')</li>
-                    <li>Arrays::searchKey($array, 'nao-existe')</li>
-                </ol>
-                <div class="class-section-code">
-                    <?php
-                    $array = ['primeiro' => 15, 'segundo' => 25];
-                    // Procura chave no array, e retorna a posição ==> returns 0
-                    var_dump(Arrays::searchKey($array, 'primeiro'));
-                    // Procura chave no array, e retorna a posição ==> returns 1
-                    var_dump(Arrays::searchKey($array, 'segundo'));
-                    // Procura chave no array, e retorna a posição ==> returns null
-                    var_dump(Arrays::searchKey($array, 'nao-existe'));
-                    ?>
-                </div>
-            </div>
-
-            <div class="item-section-class">
-                <p>Arrays::renameKey()</p>
-                <div class="class-section-code">
-                    <?php
-                    $array = ['primeiro' => 10, 'segundo' => 20];
-                    echo 'Array base';
-                    var_dump($array);
-
-                    echo '<hr>';
-
-                    echo 'Array alterado';
-                    Arrays::renameKey($array, 'primeiro', 'novoNome');
-                    var_dump($array); //Renomeia a chave do array ==> ['renamed' => 10, 'second' => 20];
-                    ?>
-                </div>
-            </div>
-
-            <div class="item-section-class">
+            <!-- <div class="item-section-class">
                 <p>Arrays::checkExistIndexByValue()</p>
                 <div class="class-section-code">
                     <?php
-                    $array = [
-                        'frutas' => [
-                            'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
-                        ],
-                        'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
-                        'legume' => 'Tomate'
-                    ];
+                    // $array = [
+                    //     'frutas' => [
+                    //         'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
+                    //     ],
+                    //     'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
+                    //     'legume' => 'Tomate'
+                    // ];
 
-                    $array = ['primeiro' => 10, 'segundo' => 20];
-                    echo 'Array para busca';
-                    var_dump($array);
+                    // echo 'Array para busca';
+                    // var_dump($array);
 
-                    echo '<hr>';
-                    echo 'Retorno da busca';
+                    // echo '<hr>';
+                    // echo 'Retorno da busca';
 
-                    // Verifica no array, se existe algum indíce com o valor desejado
-                    var_dump(Arrays::checkExistIndexByValue($array, 'Tomate'));
+                    // // Verifica no array, se existe algum indíce com o valor desejado
+                    // var_dump(Arrays::checkExistIndexByValue($array, 'Tomate'));
+                    // var_dump(Arrays::checkExistIndexByValue($array, 'nao-existe'));
                     ?>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="item-section-class">
+            <!-- <div class="item-section-class">
                 <p>Arrays::findValueByKey()</p>
                 <div class="class-section-code">
                     <?php
-                    $array = [
-                        'frutas' => [
-                            'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
-                        ],
-                        'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
-                        'legume' => 'Tomate'
-                    ];
+                    // $array = [
+                    //     'frutas' => [
+                    //         'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
+                    //     ],
+                    //     'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
+                    //     'legume' => 'Tomate'
+                    // ];
 
-                    echo 'Array para busca';
-                    var_dump($array);
+                    // echo 'Array para busca';
+                    // var_dump($array);
 
-                    echo '<hr>';
-                    echo 'Retorno da busca';
+                    // echo '<hr>';
+                    // echo 'Retorno da busca';
 
-                    // Realiza a busca no array, através da key e retorna um array com todos indíces localizados
-                    var_dump(Arrays::findValueByKey($array, 'fruta_2'));
+                    // // Realiza a busca no array, através da key e retorna um array com todos indíces localizados
+                    // var_dump(Arrays::findValueByKey($array, 'fruta_2'));
+                    // var_dump(Arrays::findValueByKey($array, 'fruta'));
                     ?>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="item-section-class">
+            <!-- <div class="item-section-class">
                 <p>Arrays::findIndexByValue()</p>
                 <div class="class-section-code">
                     <?php
-                    $array = [
-                        'frutas' => [
-                            'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
-                        ],
-                        'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
-                        'legume' => 'Tomate'
-                    ];
+                    // $array = [
+                    //     'frutas' => [
+                    //         'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
+                    //     ],
+                    //     'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
+                    //     'legume' => 'Tomate'
+                    // ];
 
-                    echo 'Array para busca';
-                    var_dump($array);
+                    // echo 'Array para busca';
+                    // var_dump($array);
 
-                    echo '<hr>';
-                    echo 'Retorno da busca';
+                    // echo '<hr>';
+                    // echo 'Retorno da busca';
 
-                    // Realiza a busca no array, através de um valor e rotorna um array com todos itens localizados
-                    var_dump(Arrays::findIndexByValue($array, 'Rúcula'));
+                    // // Realiza a busca no array, através de um valor e rotorna um array com todos itens localizados
+                    // var_dump(Arrays::findIndexByValue($array, 'Rúcula'));
                     ?>
                 </div>
-            </div>
+            </div> -->
 
             <div class="item-section-class">
                 <p>Arrays::convertArrayToXml()</p>
