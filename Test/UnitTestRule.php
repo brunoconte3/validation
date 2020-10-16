@@ -59,6 +59,16 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testIp(): void
+    {
+        $array = ['testError' => '1.1.0', 'testValid' => '10.202.0.58'];
+        $rules = ['testError' => 'ip', 'testValid' => 'ip'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testFloat(): void
     {
         $array = ['testError' => 'a1', 'testValid' => '10.125'];
@@ -73,6 +83,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => '24:03', 'testValid' => '21:03'];
         $rules = ['testError' => '{"type":"hour"}', 'testValid' => '{"type":"hour"}'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testMac(): void
+    {
+        $array = ['testError' => '00:00', 'testValid' => '00-D0-56-F2-B5-12'];
+        $rules = ['testError' => 'mac', 'testValid' => 'mac'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -150,6 +170,16 @@ class UnitTestRule extends TestCase
         $validator = new Validator();
         $validator->set($array, $rules);
         $this->assertCount(3, $validator->getErros());
+    }
+
+    public function testUrl(): void
+    {
+        $array = ['testError' => 'ww.test.c', 'testValid' => 'https://www.google.com.br'];
+        $rules = ['testError' => 'url', 'testValid' => 'url'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
     }
 
     public function testZipcode(): void

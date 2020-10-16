@@ -14,9 +14,6 @@ use brunoconte3\Validation\{
 
 $datas = [
     'texto' => 'abc',
-    'url' => 'ww.test.c',
-    'ip' => '1.1.1',
-    'mac' => '00:00',
     'dia' => '32',
     'qtde' => 3,
     'dataBoleto' => '16/05/2020',
@@ -44,9 +41,6 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'url' => 'url',
-    'ip' => 'ip',
-    'mac' => 'mac',
     'dia' => 'convert|int|numMax:31',
     'qtde' => 'numMin:5',
     'dataBoleto' => 'noWeekend',
