@@ -119,10 +119,40 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testNoWeekend(): void
+    {
+        $array = ['testError' => '10/10/2020', 'testValid' => '16/10/2020'];
+        $rules = ['testError' => 'noWeekend', 'testValid' => 'noWeekend'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testNumeric(): void
     {
         $array = ['testError' => 'a', 'testValid' => 123];
         $rules = ['testError' => 'numeric', 'testValid' => 'numeric'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testNumMax(): void
+    {
+        $array = ['testError' => 32, 'testValid' => 31];
+        $rules = ['testError' => 'numMax:31', 'testValid' => 'numMax:31'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testNumMin(): void
+    {
+        $array = ['testError' => 2, 'testValid' => 8];
+        $rules = ['testError' => 'numMin:5', 'testValid' => 'numMin:5'];
 
         $validator = new Validator();
         $validator->set($array, $rules);

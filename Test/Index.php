@@ -14,10 +14,6 @@ use brunoconte3\Validation\{
 
 $datas = [
     'texto' => 'abc',
-    'dia' => '32',
-    'qtde' => 3,
-    'dataBoleto' => '16/05/2020',
-    'dataOutroBoleto' => '2020-05-17',
     'teste' => 'a',
     'testeInt' => '1a23',
     'testeBool' => '1e',
@@ -41,10 +37,6 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'dia' => 'convert|int|numMax:31',
-    'qtde' => 'numMin:5',
-    'dataBoleto' => 'noWeekend',
-    'dataOutroBoleto' => 'noWeekend',
     'teste' => 'array',
     'testeInt' => 'int|convert',
     'testeBool' => 'bool|convert',
