@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.17.1"
+"brunoconte3/validation": "4.17.2"
 ```
 
 via composer.
@@ -185,6 +185,7 @@ Format::convertTypes($datas, $rules); //Converte o valor para o tipo correto del
 echo Format::currency('1123.45') . '<br>'; //Moeda padrão BR ==>  1.123,45
 echo Format::currencyUsd('1123.45') . '<br>'; //Moeda padrão USD ==> 1,123.45
 echo Format::dateAmerican('12-05-2020') . '<br>'; //Data ==>  2020-05-12
+echo Format::emptyToNull(['test' => 'null']) . '<br>'; //['test' => null]
 echo Format::dateBrazil('2020-05-12') . '<br>'; //Data ==>  12/05/2020
 echo Format::identifier('73381209000') . '<br>';  //CPF ==>  733.812.090-00
 echo Format::identifierOrCompany('30720870089') . '<br>'; //CPF/CNPJ ==> 307.208.700-89
