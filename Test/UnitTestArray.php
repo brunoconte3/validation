@@ -7,8 +7,6 @@ namespace brunoconte3\Test;
 use brunoconte3\Validation\Arrays;
 use PHPUnit\Framework\TestCase;
 
-use function PHPUnit\Framework\assertTrue;
-
 class UnitTestArray extends TestCase
 {
     public function testSearchKey(): void
@@ -50,7 +48,7 @@ class UnitTestArray extends TestCase
         $this->assertIsArray(Arrays::findValueByKey($array, 'fruta_2'));
     }
 
-    public function testFindIndexByValue()
+    public function testFindIndexByValue(): void
     {
         $array = [
             'frutas' => [
@@ -59,6 +57,38 @@ class UnitTestArray extends TestCase
             'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
             'legume' => 'Tomate'
         ];
-        $this->assertIsArray(Arrays::findValueByKey($array, 'Rúcula'));
+        $this->assertIsArray(Arrays::findIndexByValue($array, 'Rúcula'));
+    }
+
+    public function testConvertArrayToXml(): void
+    {
+        $array = [
+            'frutas' => [
+                'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
+            ],
+            'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
+            'legume' => 'Tomate'
+        ];
+
+        $xml = new \SimpleXMLElement('<root/>');
+        Arrays::convertArrayToXml($array, $xml);
+        
+        $this->assertIsObject($xml);
+        $this->assertNotEmpty($xml->asXML());
+    }
+
+    public function testConvertJsonIndexToArray(): void
+    {
+        $array = [
+            'frutas' => [
+                'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
+            ],
+            'verduras' => '{"verdura_1": "Rúcula", "verdura_2": "Acelga", "verdura_3": "Alface"}'
+        ];
+
+        Arrays::convertJsonIndexToArray($array);
+        
+        $this->assertIsArray($array);
+        $this->assertIsArray($array['verduras']);
     }
 }
