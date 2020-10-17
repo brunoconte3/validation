@@ -7,7 +7,6 @@ namespace brunoconte3\Test;
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use brunoconte3\Validation\{
-    Arrays,
     Format,
     Validator
 };
@@ -158,52 +157,6 @@ $rules = [
                         echo 'Itens Validados: ' . count($validator->getErros()) . '<hr>';
                         var_dump($validator->getErros());
                     }
-                    ?>
-                </div>
-            </div>
-        </section>
-
-        <!-- Manipular Arrays -->
-        <section class="body-section-class">
-            <h3># Manipular Arrays</h3>
-
-            <div class="item-section-class">
-                <p>Arrays::convertArrayToXml()</p>
-                <div class="class-section-code">
-                    <?php
-                    $array = [
-                        'frutas' => [
-                            'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
-                        ],
-                        'verduras' => ['verdura_1' => 'Rúcula', 'verdura_2' => 'Acelga', 'verdura_3' => 'Alface'],
-                        'legume' => 'Tomate'
-                    ];
-                    $xml = new \SimpleXMLElement('<root/>');
-                    Arrays::convertArrayToXml($array, $xml); // Converte array em Xml
-                    var_dump($xml->asXML());
-                    ?>
-                </div>
-            </div>
-
-            <div class="item-section-class">
-                <p>Arrays::convertJsonIndexToArray()</p>
-                <div class="class-section-code">
-                    <?php
-                    $array = [
-                        'frutas' => [
-                            'fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'
-                        ],
-                        'verduras' => '{"verdura_1": "Rúcula", "verdura_2": "Acelga", "verdura_3": "Alface"}'
-                    ];
-
-                    echo "Array para formatação";
-                    var_dump($array);
-                    echo "<hr>";
-
-                    // Verifica no array, se possui algum indíce com JSON e o transforma em array
-                    echo "Array formatado";
-                    Arrays::convertJsonIndexToArray($array);
-                    var_dump($array);
                     ?>
                 </div>
             </div>
