@@ -54,6 +54,19 @@ class Format
         return (float) $valor;
     }
 
+    /**
+     * @param string|int $valor
+     */
+    private static function validateForFormatting(string $nome, int $tamanho, $valor): void
+    {
+        if (strlen($valor) !== $tamanho) {
+            throw new \Exception("$nome precisa ter $tamanho números!");
+        }
+        if (!is_numeric($valor)) {
+            throw new \Exception($nome . ' precisa conter apenas números!');
+        }
+    }
+
     public static function convertTypes(array &$data, array $rules)
     {
         $error = [];
@@ -75,11 +88,13 @@ class Format
 
     public static function companyIdentification(string $cnpj): string
     {
+        self::validateForFormatting('companyIdentification', 14, $cnpj);
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj);
     }
 
     public static function identifier(string $cpf): string
     {
+        self::validateForFormatting('identifier', 11, $cpf);
         return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpf);
     }
 
@@ -90,7 +105,7 @@ class Format
         } elseif (strlen($cpfCnpj) === 14) {
             return self::companyIdentification($cpfCnpj);
         } else {
-            throw new \Exception("Valor precisa ser um CPF ou CNPJ!");
+            throw new \Exception('identifierOrCompany => Valor precisa ser um CPF ou CNPJ!');
         }
     }
 
@@ -99,22 +114,35 @@ class Format
      */
     public static function telephone($number): string
     {
+        if (strlen($number) < 10 || strlen($number) > 11) {
+            throw new \Exception('telephone precisa ter 10 ou 11 números!');
+        }
+        if (!is_numeric($number)) {
+            throw new \Exception('telephone precisa conter apenas números!');
+        }
         $number = '(' . substr($number, 0, 2) . ') ' . substr($number, 2, -4) . '-' . substr($number, -4);
         return $number;
     }
 
     public static function zipCode(string $value): string
     {
+        self::validateForFormatting('zipCode', 8, $value);
         return substr($value, 0, 5) . '-' . substr($value, 5, 3);
     }
 
     public static function dateBrazil(string $date)
     {
+        if (strlen($date) < 8 || strlen($date) > 10) {
+            throw new \Exception('dateBrazil precisa conter 8 à 10 dígitos!');
+        }
         return date('d/m/Y', strtotime($date));
     }
 
     public static function dateAmerican(string $date)
     {
+        if (strlen($date) < 8 || strlen($date) > 10) {
+            throw new \Exception('dateAmerican precisa conter 8 à 10 dígitos!');
+        }
         if (strpos($date, '/') > -1) {
             return implode('-', array_reverse(explode('/', $date)));
         }
@@ -136,6 +164,10 @@ class Format
      */
     public static function currency($valor): string
     {
+        if (!is_numeric($valor)) {
+            throw new \Exception('currency precisa ser do tipo numérico!');
+        }
+
         $valor = self::formatCurrencyForFloat($valor);
         return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
     }
@@ -145,6 +177,10 @@ class Format
      */
     public static function currencyUsd($valor): string
     {
+        if (!is_numeric($valor)) {
+            throw new \Exception('currencyUsd precisa ser do tipo numérico!');
+        }
+
         $valor = self::formatCurrencyForFloat($valor);
         return ((float) $valor !== '') ?  number_format((float) $valor, 2, '.', ',') : '';
     }
