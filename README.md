@@ -281,7 +281,7 @@ var_dump(Arrays::searchKey($array, 'nao-existe')); // Procura chave no array, e 
 
 $array = ['primeiro' => 10, 'segundo' => 20];
 Arrays::renameKey($array, 'primeiro', 'novoNome');
-var_dump($array); //Renomeia a chave do array ==> ['renamed' => 10, 'second' => 20];
+var_dump($array); //Renomeia a chave do array ==> ['novoNome' => 10, 'segundo' => 20];
 
 $array = [
     'frutas' => ['fruta_1' => 'Maçã', 'fruta_2' => 'Pêra', 'fruta_3' => 'fruta', 'fruta_4' => 'Uva'],

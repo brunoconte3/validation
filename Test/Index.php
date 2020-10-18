@@ -13,14 +13,7 @@ use brunoconte3\Validation\{
 
 $datas = [
     'texto' => 'abc',
-    'teste' => 'a',
-    'testeInt' => '1a23',
-    'testeBool' => '1e',
-    'testeFloat' => '35,3',
-    'testeNumeric' => '59.6a',
-    'senhaAlphaNumNoSpace' => '59.6a',
     'nomeAlphaNum' => 'Bru Con 457 !@',
-    'campoSomenteTexto' => 'José da Silva1',
     'textoSemAscentos' => 'Téste',
     'textoMaiusculo' => 'NOME comPLETO',
     'textoMinusculo' => 'nome Completo',
@@ -36,14 +29,7 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'teste' => 'array',
-    'testeInt' => 'int|convert',
-    'testeBool' => 'bool|convert',
-    'testeFloat' => 'convert|float',
-    'testeNumeric' => 'convert|numeric',
-    'senhaAlphaNumNoSpace' => 'alphaNumNoSpecial',
     'nomeAlphaNum' => 'alphaNum',
-    'campoSomenteTexto' => 'alpha',
     'textoSemAscentos' => 'alphaNoSpecial',
     'textoMaiusculo' => 'upper',
     'textoMinusculo' => 'lower',
@@ -135,7 +121,7 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Versão 4.17.2</small>
+            <small>Lugar para fazer seus testes</small>
         </header>
 
         <!-- Validação de dados -->

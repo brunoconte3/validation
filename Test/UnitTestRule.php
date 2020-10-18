@@ -9,10 +9,40 @@ use PHPUnit\Framework\TestCase;
 
 class UnitTestRule extends TestCase
 {
-    public function testDateAmerican(): void
+    public function testAlpha(): void
     {
-        $array = ['testError' => '1990-04-31', 'testValid' => '1990-04-30'];
-        $rules = ['testError' => 'dateAmerican', 'testValid' => 'dateAmerican'];
+        $array = ['testError' => 'a@', 'testValid' => 'aeiouAÉIÓÚ'];
+        $rules = ['testError' => 'alpha', 'testValid' => 'alpha'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testAlphaNumNoSpecial(): void
+    {
+        $array = ['testError' => 'AeioÚ123', 'testValid' => 'AeioU123'];
+        $rules = ['testError' => 'alphaNumNoSpecial', 'testValid' => 'alphaNumNoSpecial'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testArray(): void
+    {
+        $array = ['testError' => 'a', 'testValid' => ['a' => 1, 'b' => 2]];
+        $rules = ['testError' => 'array', 'testValid' => 'array'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testBool(): void
+    {
+        $array = ['testError' => 'a123', 'testValid' => true];
+        $rules = ['testError' => 'int', 'testValid' => 'bool'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -23,6 +53,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => '52186923000120', 'testValid' => '21111527000163'];
         $rules = ['testError' => 'companyIdentification', 'testValid' => 'companyIdentification'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testDateAmerican(): void
+    {
+        $array = ['testError' => '1990-04-31', 'testValid' => '1990-04-30'];
+        $rules = ['testError' => 'dateAmerican', 'testValid' => 'dateAmerican'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -53,6 +93,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => '06669987788', 'testValid' => '55634405831'];
         $rules = ['testError' => 'identifier', 'testValid' => 'identifier'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testInt(): void
+    {
+        $array = ['testError' => 'a123', 'testValid' => 123];
+        $rules = ['testError' => 'int', 'testValid' => 'int'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
