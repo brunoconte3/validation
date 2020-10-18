@@ -19,6 +19,26 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testAlphaNoSpecial(): void
+    {
+        $array = ['testError' => 'aéiou', 'testValid' => 'aEiOU'];
+        $rules = ['testError' => 'alphaNoSpecial', 'testValid' => 'alphaNoSpecial'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testAlphaNum(): void
+    {
+        $array = ['testError' => 'a1B2Éí3@', 'testValid' => 'a1B2Éí3'];
+        $rules = ['testError' => 'alphaNum', 'testValid' => 'alphaNum'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testAlphaNumNoSpecial(): void
     {
         $array = ['testError' => 'AeioÚ123', 'testValid' => 'AeioU123'];
@@ -33,6 +53,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => 'a', 'testValid' => ['a' => 1, 'b' => 2]];
         $rules = ['testError' => 'array', 'testValid' => 'array'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testArrayValues(): void
+    {
+        $array = ['testError' => 'M', 'testValid' => 'S'];
+        $rules = ['testError' => 'arrayValues:S-N-T', 'testValid' => 'arrayValues:S-N-T'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -133,6 +163,16 @@ class UnitTestRule extends TestCase
     {
         $array = ['testError' => '24:03', 'testValid' => '21:03'];
         $rules = ['testError' => '{"type":"hour"}', 'testValid' => '{"type":"hour"}'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testLower(): void
+    {
+        $array = ['testError' => 'Abcdção', 'testValid' => 'abcdção'];
+        $rules = ['testError' => '{"type":"lower"}', 'testValid' => '{"type":"lower"}'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
@@ -250,6 +290,16 @@ class UnitTestRule extends TestCase
         $validator = new Validator();
         $validator->set($array, $rules);
         $this->assertCount(3, $validator->getErros());
+    }
+
+    public function testUpper(): void
+    {
+        $array = ['testError' => 'AbcDçÃo', 'testValid' => 'ABCDÇÃO'];
+        $rules = ['testError' => 'upper', 'testValid' => 'upper'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
     }
 
     public function testUrl(): void

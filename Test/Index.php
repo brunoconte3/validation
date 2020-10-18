@@ -13,11 +13,6 @@ use brunoconte3\Validation\{
 
 $datas = [
     'texto' => 'abc',
-    'nomeAlphaNum' => 'Bru Con 457 !@',
-    'textoSemAscentos' => 'Téste',
-    'textoMaiusculo' => 'NOME comPLETO',
-    'textoMinusculo' => 'nome Completo',
-    'validarValores' => 'SA',
     'validarEspaco' => 'BRU C',
     'validaJson' => '
         "nome": "Bruno"
@@ -29,11 +24,6 @@ $datas = [
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
     'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
-    'nomeAlphaNum' => 'alphaNum',
-    'textoSemAscentos' => 'alphaNoSpecial',
-    'textoMaiusculo' => 'upper',
-    'textoMinusculo' => 'lower',
-    'validarValores' => 'arrayValues:S-N-T',
     'validarEspaco' => 'notSpace',
     'validaJson' => 'type:json',
     'validaMes' => 'numMonth',
@@ -74,45 +64,12 @@ $rules = [
             display: block;
             width: 100%;
             text-align: center;
+            margin-bottom: 15px;
         }
 
-        .container>section.body-section-class {
-            padding: 20px;
-            margin-top: 30px;
-            background: #EEEEEE;
-            border: 1px solid #eee;
-            border-radius: .25rem;
-        }
-
-        .container>section.body-section-class>h3 {
-            margin: 0px 0px 15px 0px;
-        }
-
-        .container>section.body-section-class>div.item-section-class {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .container>section.body-section-class>div.item-section-class>p {
-            margin: 30px 0px 10px 0px;
-        }
-
-        .container>section.body-section-class>div.item-section-class>ol {
-            margin: 30px 0px 10px 0px;
-            padding-left: 15px;
-        }
-
-        .container>section.body-section-class>div.item-section-class>ol>li {
-            padding: 2px 0px;
-        }
-
-        .container>section.body-section-class>div.item-section-class>div {
-            background: rgb(255, 255, 255);
+        section.body-section-class {
+            background-color: white;
             padding: 15px;
-            border: 1px solid #eee;
-            border-left: 4px solid #4CAF50;
-            overflow-x: auto;
         }
     </style>
 </head>
@@ -121,15 +78,11 @@ $rules = [
     <div class="container">
         <header id="body-title-page">
             <h1>Brunoconte3/Validation</h1>
-            <small>Lugar para fazer seus testes</small>
+            <small>Espaço para fazer seus testes</small>
         </header>
 
-        <!-- Validação de dados -->
         <section class="body-section-class">
-            <h3># Validação de dados</h3>
-
             <div class="item-section-class">
-                <p>$validator->set($datas, $rules)</p>
                 <div>
                     <?php
                     $validator = new Validator();
