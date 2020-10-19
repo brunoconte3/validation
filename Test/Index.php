@@ -5,30 +5,6 @@ declare(strict_types=1);
 namespace brunoconte3\Test;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-
-use brunoconte3\Validation\{
-    Format,
-    Validator
-};
-
-$datas = [
-    'texto' => 'abc',
-    'validarEspaco' => 'BRU C',
-    'validaJson' => '
-        "nome": "Bruno"
-    }',
-    'validaMes' => 13,
-    'cpfOuCnpn' => '83.113.366.0001/01'
-];
-
-//Aceita divisao das regras por PIPE ou formato JSON
-$rules = [
-    'texto' => 'required|min:5, Mensagem customizada aqui!|max:20',
-    'validarEspaco' => 'notSpace',
-    'validaJson' => 'type:json',
-    'validaMes' => 'numMonth',
-    'cpfOuCnpn' => 'identifierOrCompany'
-];
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +46,7 @@ $rules = [
         section.body-section-class {
             background-color: white;
             padding: 15px;
+            min-height: 400px;
         }
     </style>
 </head>
@@ -85,17 +62,7 @@ $rules = [
             <div class="item-section-class">
                 <div>
                     <?php
-                    $validator = new Validator();
-                    Format::convertTypes($datas, $rules);
-                    $validator->set($datas, $rules);
-
-                    echo 'Itens a validar: ' . count($datas) . '<hr>';
-                    if (!$validator->getErros()) {
-                        echo 'Dados válidados com sucesso!';
-                    } else {
-                        echo 'Itens Validados: ' . count($validator->getErros()) . '<hr>';
-                        var_dump($validator->getErros());
-                    }
+                    echo '<p>Aqui vem os seus testes!</p>';
                     ?>
                 </div>
             </div>

@@ -321,4 +321,67 @@ class UnitTestRule extends TestCase
         $validator->set($array, $rules);
         $this->assertCount(1, $validator->getErros());
     }
+
+    public function testCustomMessage(): void
+    {
+        $msg = 'Mensagem customizada aqui!';
+        $array = [
+            'textoError' => 'abc',
+            'textoValid' => 'abcde'
+        ];
+        $rules = [
+            'textoError' => 'required|min:5, ' . $msg . '|max:20',
+            'textoValid' => 'required|min:5, ' . $msg . '|max:20'
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(1, $validator->getErros());
+        $this->assertEquals($msg, $validator->getErros()['textoError']);
+    }
+
+    public function testValidateSpace(): void
+    {
+        $array = ['validarEspacoError' => 'BRU C', 'validarEspacoValid' => 'BRUC'];
+        $rules = ['validarEspacoError' => 'notSpace', 'validarEspacoValid' => 'notSpace'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testValidateJson(): void
+    {
+        $array = ['validaJsonError' => '"nome": "Bruno"}', 'validaJsonValid' => '{"nome": "Bruno"}'];
+        $rules = ['validaJsonError' => 'type:json', 'validaJsonValid' => 'type:json'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testValidateNumMonth(): void
+    {
+        $array = ['validaMesError' => 13, 'validaMesValid' => 10];
+        $rules = ['validaMesError' => 'numMonth', 'validaMesValid' => 'numMonth'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testValidateIdentifierOrCompany(): void
+    {
+        $array = ['cpfOuCnpnError' => '96.284.092.0001/59', 'cpfOuCnpnValid' => '96.284.092/0001-58'];
+        $rules = ['cpfOuCnpnError' => 'identifierOrCompany', 'cpfOuCnpnValid' => 'identifierOrCompany'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(1, $validator->getErros());
+    }
 }
