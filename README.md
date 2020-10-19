@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.18.0"
+"brunoconte3/validation": "4.18.1"
 ```
 
 via composer.
@@ -96,7 +96,7 @@ $rules = [
     'nome' => 'required|min:2',
     'numero' => 'max:5',
     'email' => 'email',
-    'msgCustom' => 'required|min:5, Mensagem customizada aqui|max:20',
+    'msgCustom' => 'required|min:5, Mensagem customizada aqui!|max:20',
     'validarPassandoJson' => '{"required":"true","type":"alpha"}',
     'tratandoTipoInt' => 'convert|int',
     'tratandoTipoFloat' => 'float|convert',

@@ -191,8 +191,11 @@ class Rules
                         foreach ($rulesConf as $valueRuleConf) {
                             $conf = explode(',', trim($valueRuleConf));
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
-                            $msg = !empty($conf[1]) && trim($conf[1] ?? $rulesArray['mensagem'] ?? null);
-                            $rulesArray['mensagem'] = $msg;
+
+                            if (array_key_exists(1, $conf) && !empty($conf[1])) {
+                                $rulesArray['mensagem'] = trim(strip_tags($conf[1]));
+                            }
+
                             if (!empty($ruleArrayConf)) {
                                 $rulesArray[$ruleArrayConf[0] ?? (count($rulesArray) + 1)] = $ruleArrayConf[1] ?? true;
                             }

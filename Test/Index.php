@@ -23,7 +23,7 @@ $datas = [
 
 //Aceita divisao das regras por PIPE ou formato JSON
 $rules = [
-    'texto' => 'required|min:5, Mensagem customizada aqui|max:20',
+    'texto' => 'required|min:5, Mensagem customizada aqui!|max:20',
     'validarEspaco' => 'notSpace',
     'validaJson' => 'type:json',
     'validaMes' => 'numMonth',
