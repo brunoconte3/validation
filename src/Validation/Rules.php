@@ -6,7 +6,7 @@ use brunoconte3\Validation\{
     ValidateCpf,
     ValidateCnpj,
     ValidatePhone,
-    ValidateHour,
+    ValidateHour
 };
 
 class Rules
