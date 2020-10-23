@@ -39,30 +39,30 @@ class Format
     }
 
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    private static function formatCurrencyForFloat($valor): float
+    private static function formatCurrencyForFloat($value): float
     {
-        if (is_string($valor)) {
-            if (preg_match('/(\,|\.)/', substr(substr($valor, -3), 0, 1))) {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
-                $valor = substr_replace($valor, '.', -2, 0);
+        if (is_string($value)) {
+            if (preg_match('/(\,|\.)/', substr(substr($value, -3), 0, 1))) {
+                $value = (strlen(self::onlyNumbers($value)) > 0) ? self::onlyNumbers($value) : '000';
+                $value = substr_replace($value, '.', -2, 0);
             } else {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+                $value = (strlen(self::onlyNumbers($value)) > 0) ? self::onlyNumbers($value) : '000';
             };
         }
-        return (float) $valor;
+        return (float) $value;
     }
 
     /**
-     * @param string|int $valor
+     * @param string|int $value
      */
-    private static function validateForFormatting(string $nome, int $tamanho, $valor): void
+    private static function validateForFormatting(string $nome, int $tamanho, $value): void
     {
-        if (strlen($valor) !== $tamanho) {
+        if (strlen($value) !== $tamanho) {
             throw new \Exception("$nome precisa ter $tamanho números!");
         }
-        if (!is_numeric($valor)) {
+        if (!is_numeric($value)) {
             throw new \Exception($nome . ' precisa conter apenas números!');
         }
     }
@@ -160,29 +160,29 @@ class Format
     }
 
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    public static function currency($valor): string
+    public static function currency($value): string
     {
-        if (!is_numeric($valor)) {
+        if (!is_numeric($value)) {
             throw new \Exception('currency precisa ser do tipo numérico!');
         }
 
-        $valor = self::formatCurrencyForFloat($valor);
-        return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
+        $value = self::formatCurrencyForFloat($value);
+        return ((float) $value !== '') ? number_format((float) $value, 2, ',', '.') : '';
     }
 
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    public static function currencyUsd($valor): string
+    public static function currencyUsd($value): string
     {
-        if (!is_numeric($valor)) {
+        if (!is_numeric($value)) {
             throw new \Exception('currencyUsd precisa ser do tipo numérico!');
         }
 
-        $valor = self::formatCurrencyForFloat($valor);
-        return ((float) $valor !== '') ?  number_format((float) $valor, 2, '.', ',') : '';
+        $value = self::formatCurrencyForFloat($value);
+        return ((float) $value !== '') ?  number_format((float) $value, 2, '.', ',') : '';
     }
 
     /**

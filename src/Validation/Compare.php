@@ -110,4 +110,9 @@ class Compare
         }
         return true;
     }
+
+    public static function contains(string $value, string $search): bool
+    {
+        return strpos($value, $search) !== false;
+    }
 }

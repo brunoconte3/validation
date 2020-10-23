@@ -242,24 +242,27 @@ require 'vendor/autoload.php';
 
 use brunoconte3\Validation\Compare;
 
-// Retorna +30 (+30 dias de diferença)
+//Retorna +30 (+30 dias de diferença)
 echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
-// Compara se a data inicial é menor que a data final => Retorna [bool]
+//Compara se a data inicial é menor que a data final => Retorna [bool]
 echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
 //Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
 echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';
 
-// Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
+//Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
 echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
 
-//Compada a data com a data atual, e retorna a idade da pessoa
+//Compara a data com a data atual, e retorna a idade da pessoa
 echo Compare::calculateAgeInYears('20/05/1989');
 
-//echo 'Compara igualdade dos campos, retorna booleano <br>';
+//Compara igualdade dos campos, retorna booleano;
 //terceiro parametro opcional, false para não comparar caseSensitive, default true
 var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
+
+//Compara se o conteudo desejado existe na String, retorna booleano
+var_dump(Compare::contains('AçaFrão', 'çaF'));
 
 ```
 
