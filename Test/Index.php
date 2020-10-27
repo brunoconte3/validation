@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
+use brunoconte3\Validation\Arrays;
 use brunoconte3\Validation\Validator;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';

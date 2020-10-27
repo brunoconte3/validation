@@ -72,7 +72,7 @@ class UnitTestArray extends TestCase
 
         $xml = new \SimpleXMLElement('<root/>');
         Arrays::convertArrayToXml($array, $xml);
-        
+
         $this->assertIsObject($xml);
         $this->assertNotEmpty($xml->asXML());
     }
@@ -87,8 +87,23 @@ class UnitTestArray extends TestCase
         ];
 
         Arrays::convertJsonIndexToArray($array);
-        
+
         $this->assertIsArray($array);
         $this->assertIsArray($array['verduras']);
+    }
+
+    public function testCheckExistsIndexArrayRecursive(): void
+    {
+        $array = [
+            'pessoa' => [
+                'pedidos' => ['pedido1', 'pedido2'],
+                'categorias' => [
+                    'subcategorias' => ['subcategoria1' => 'valor teste']
+                ]
+            ]
+        ];
+
+        $this->assertTrue(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1'));
+        $this->assertFalse(Arrays::checkExistIndexArrayRecursive($array, 'mercado'));
     }
 }
