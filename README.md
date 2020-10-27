@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.19.1"
+"brunoconte3/validation": "4.20.0"
 ```
 
 via composer.
@@ -313,6 +313,20 @@ $array = [
 // Verifica no array, se possui algum índice com JSON e o transforma em array
 Arrays::convertJsonIndexToArray($array);
 var_dump($array);
+
+$array = [
+            'pessoa' => [
+                'pedidos' => ['pedido1', 'pedido2'],
+                'categorias' => [
+                    'subcategorias' => [
+                        'subcategoria1' => 'valor teste'
+                    ]
+                ]
+            ]
+        ];
+
+// Verifica se existe um índice específico em um array multinível
+var_dump(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1')); // Retorna true
 
 ```
 
