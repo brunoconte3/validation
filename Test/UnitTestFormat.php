@@ -147,4 +147,9 @@ class UnitTestFormat extends TestCase
     {
         $this->assertEquals('87047-590', Format::zipCode('87047590'));
     }
+
+    public function testWriteDateExtensive(): void
+    {
+        $this->assertEquals('sexta-feira, 06 de novembro de 2020', Format::writeDateExtensive('06/11/2020'));
+    }
 }

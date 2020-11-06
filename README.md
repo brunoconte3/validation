@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.20.0"
+"brunoconte3/validation": "4.21.0"
 ```
 
 via composer.
@@ -204,6 +204,7 @@ echo Format::telephone('44999998888') . '<br>';  //Telefone ==> (44) 99999-8888
 echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
 echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO - o segundo parametro escolhe o charset, UTF-8 default
 echo Format::zipCode('87030585') . '<br>'; //CEP ==>  87030-585
+echo Format::writeDateExtensive('06/11/2020') . '<br>'; //sexta-feira, 06 de novembro de 2020
 
 $array = [
     0 => '1',
