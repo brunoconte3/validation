@@ -4,40 +4,8 @@ namespace brunoconte3\Validation;
 
 use brunoconte3\Validation\ValidatePhone;
 
-class Format
+class Format extends FormatAux
 {
-    private const DATA_TYPE_TO_CONVERT = [
-        'bool',
-        'float',
-        'int',
-        'numeric'
-    ];
-
-    private static function returnTypeToConvert(array $rules): ?string
-    {
-        foreach (self::DATA_TYPE_TO_CONVERT as $type) {
-            if (in_array($type, $rules)) {
-                return $type;
-            }
-        }
-        return null;
-    }
-
-    private static function executeConvert(string $type, $value)
-    {
-        switch ($type) {
-            case 'bool':
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? (bool) $value : $value;
-            case 'int':
-                return filter_var($value, FILTER_VALIDATE_INT) ? (int) $value : $value;
-            case 'float':
-            case 'numeric':
-                return filter_var($value, FILTER_VALIDATE_FLOAT) ? (float) $value : $value;
-            default:
-                return $value;
-        }
-    }
-
     /**
      * @param float|int|string $value
      */
@@ -54,28 +22,15 @@ class Format
         return (float) $value;
     }
 
-    /**
-     * @param string|int $value
-     */
-    private static function validateForFormatting(string $nome, int $tamanho, $value): void
-    {
-        if (strlen($value) !== $tamanho) {
-            throw new \Exception("$nome precisa ter $tamanho números!");
-        }
-        if (!is_numeric($value)) {
-            throw new \Exception($nome . ' precisa conter apenas números!');
-        }
-    }
-
     public static function convertTypes(array &$data, array $rules)
     {
         $error = [];
         foreach ($rules as $key => $value) {
             $arrRules = explode('|', $value);
-            $type = self::returnTypeToConvert($arrRules);
+            $type = parent::returnTypeToConvert($arrRules);
             if (in_array('convert', $arrRules) && !empty($type)) {
                 try {
-                    $data[$key] = self::executeConvert($type, $data[$key]);
+                    $data[$key] = parent::executeConvert($type, $data[$key]);
                 } catch (\Exception $ex) {
                     $error[] = "falhar ao tentar converter {$data[$key]} para $type";
                 }
@@ -88,13 +43,13 @@ class Format
 
     public static function companyIdentification(string $cnpj): string
     {
-        self::validateForFormatting('companyIdentification', 14, $cnpj);
+        parent::validateForFormatting('companyIdentification', 14, $cnpj);
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj);
     }
 
     public static function identifier(string $cpf): string
     {
-        self::validateForFormatting('identifier', 11, $cpf);
+        parent::validateForFormatting('identifier', 11, $cpf);
         return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpf);
     }
 
@@ -126,7 +81,7 @@ class Format
 
     public static function zipCode(string $value): string
     {
-        self::validateForFormatting('zipCode', 8, $value);
+        parent::validateForFormatting('zipCode', 8, $value);
         return substr($value, 0, 5) . '-' . substr($value, 5, 3);
     }
 
@@ -289,5 +244,14 @@ class Format
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
         return strftime('%A, %d de %B de %Y', strtotime($date));
+    }
+
+    public static function writeCurrencyExtensive(float $numeral): string
+    {
+        if ($numeral <= 0) {
+            throw new \Exception('O valor numeral deve ser maior que zero!');
+        } else {
+            return parent::extensive($numeral);
+        }
     }
 }
