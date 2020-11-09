@@ -335,8 +335,6 @@ var_dump(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1')); // Ret
 # Arquivo com exemplos de Testes
 
 - /Test/UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!
-- O que ainda não estiver no teste unitário acima, execute o arquivo que está no caminho: /Test/Index.php
-  preparamos para facilitar seu entendimento!
 
 # Licença
 
