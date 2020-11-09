@@ -119,10 +119,6 @@ class Format extends FormatAux
      */
     public static function currency($value): string
     {
-        if (!is_numeric($value)) {
-            throw new \Exception('currency precisa ser do tipo numérico!');
-        }
-
         $value = self::formatCurrencyForFloat($value);
         return ((float) $value !== '') ? number_format((float) $value, 2, ',', '.') : '';
     }
@@ -132,10 +128,6 @@ class Format extends FormatAux
      */
     public static function currencyUsd($value): string
     {
-        if (!is_numeric($value)) {
-            throw new \Exception('currencyUsd precisa ser do tipo numérico!');
-        }
-
         $value = self::formatCurrencyForFloat($value);
         return ((float) $value !== '') ?  number_format((float) $value, 2, '.', ',') : '';
     }
