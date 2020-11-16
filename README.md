@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.22.0"
+"brunoconte3/validation": "4.23.0"
 ```
 
 via composer.
@@ -329,6 +329,19 @@ $array = [
 
 // Verifica se existe um índice específico em um array multinível
 var_dump(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1')); // Retorna true
+
+```
+
+# Utilidades
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Utility;
+
+echo Utility::captureClientIp(); //Retorna o IP do usuário, captura por camada disponível, Ex: 201.200.25.40
 
 ```
 
