@@ -332,6 +332,19 @@ var_dump(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1')); // Ret
 
 ```
 
+# Utilidades
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Utility;
+
+echo Utility::captureClientIp(); //Retorna o IP do usuário, captura por camada disponível, Ex: 201.200.25.40
+
+```
+
 # Arquivo com exemplos de Testes
 
 - /Test/UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!
