@@ -203,8 +203,11 @@ class Format extends FormatAux
         return $value === false ? null : $value;
     }
 
-    public static function removeAccent(string $string): string
+    public static function removeAccent(?string $string): ?string
     {
+        if (empty($string)) {
+            return null;
+        }
         return preg_replace(
             [
                 '/(á|à|ã|â|ä)/',
