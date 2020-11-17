@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.22.0"
+"brunoconte3/validation": "4.23.0"
 ```
 
 via composer.
