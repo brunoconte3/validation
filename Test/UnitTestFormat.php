@@ -115,6 +115,7 @@ class UnitTestFormat extends TestCase
     public function testRemoveAccent(): void
     {
         $this->assertEquals('Acafrao', Format::removeAccent('Açafrão'));
+        $this->assertNull(Format::removeAccent(''));
     }
 
     public function testReturnPhoneOrAreaCode(): void
