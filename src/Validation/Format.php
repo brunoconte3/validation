@@ -190,6 +190,21 @@ class Format extends FormatAux
         return mb_strtolower($string, $charset);
     }
 
+    public static function maskStringHidden(string $string, int $qtdHidden, int $positionHidden, string $char): ?string
+    {
+        if (empty(trim($string))) {
+            return null;
+        }
+        if ($qtdHidden > strlen($string)) {
+            throw new \Exception('Quantidade de caracteres para ocultar não pode ser maior que a String!');
+        }
+        if ($qtdHidden < 1) {
+            throw new \Exception('Quantidade de caracteres para ocultar não pode ser menor que 1!');
+        }
+        $chars = str_repeat($char, $qtdHidden);
+        return substr_replace($string, $chars, $positionHidden, strlen($chars));
+    }
+
     public static function reverse(string $string, string $charSet = 'UTF-8'): string
     {
         if (!extension_loaded('iconv')) {

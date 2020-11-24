@@ -154,8 +154,14 @@ class UnitTestFormat extends TestCase
         $this->assertEquals('sexta-feira, 06 de novembro de 2020', Format::writeDateExtensive('06/11/2020'));
     }
 
-    public function writeCurrencyExtensive(): void
+    public function testWriteCurrencyExtensive(): void
     {
         $this->assertEquals('um real e noventa e sete centavos', Format::writeCurrencyExtensive(1.97));
+    }
+
+    public function testMaskStringHidden(): void
+    {
+        $this->assertEquals('065.***.009.96', Format::maskStringHidden('065.775.009.96', 3, 4, '*'));
+        $this->assertNull(Format::maskStringHidden('', 3, 4, '*'));
     }
 }

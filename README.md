@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.24.1"
+"brunoconte3/validation": "4.25.0"
 ```
 
 via composer.
@@ -193,6 +193,7 @@ echo Format::falseToNull(false) . '<br>'; //Retorna ==> null
 echo Format::lower('CArrO') . '<br>'; //Minusculo ==> carro - o segundo parametro escolhe o charset, UTF-8 default
 //[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
 echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //Mascara ==> 1234 5678 9012 3456
+echo Format::maskStringHidden('065.775.009.96', 3, 4, '*'); //Marcarar uma string ==> 065.***.009.96
 echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números ==> 54887;
 echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números ==> 548Abc87;
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Moeda para gravação no BD ==>  1350.45
