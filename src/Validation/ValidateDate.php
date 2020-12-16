@@ -9,8 +9,10 @@ class ValidateDate
         if (strlen($ano) < 4) {
             return false;
         } else {
-            if (checkdate($mes, $dia, $ano)) {
-                return true;
+            if (ctype_digit($mes) && ctype_digit($dia) && ctype_digit($ano)) {
+                if (checkdate($mes, $dia, $ano)) {
+                    return true;
+                }
             }
             return false;
         }
