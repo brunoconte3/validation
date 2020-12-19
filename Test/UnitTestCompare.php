@@ -47,4 +47,10 @@ class UnitTestCompare extends TestCase
         $this->assertFalse(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
         $this->assertTrue(Compare::checkDataEquality('AçaFrão', 'Açafrão', false));
     }
+
+    public function testContains(): void
+    {
+        $this->assertFalse(Compare::contains('AçaFrão', 'Mac'));
+        $this->assertTrue(Compare::contains('AçaFrão', 'çaF'));
+    }
 }

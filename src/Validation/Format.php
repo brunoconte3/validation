@@ -4,67 +4,22 @@ namespace brunoconte3\Validation;
 
 use brunoconte3\Validation\ValidatePhone;
 
-class Format
+class Format extends FormatAux
 {
-    private const DATA_TYPE_TO_CONVERT = [
-        'bool',
-        'float',
-        'int',
-        'numeric'
-    ];
-
-    private static function returnTypeToConvert(array $rules): ?string
-    {
-        foreach (self::DATA_TYPE_TO_CONVERT as $type) {
-            if (in_array($type, $rules)) {
-                return $type;
-            }
-        }
-        return null;
-    }
-
-    private static function executeConvert(string $type, $value)
-    {
-        switch ($type) {
-            case 'bool':
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? (bool) $value : $value;
-            case 'int':
-                return filter_var($value, FILTER_VALIDATE_INT) ? (int) $value : $value;
-            case 'float':
-            case 'numeric':
-                return filter_var($value, FILTER_VALIDATE_FLOAT) ? (float) $value : $value;
-            default:
-                return $value;
-        }
-    }
-
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    private static function formatCurrencyForFloat($valor): float
+    private static function formatCurrencyForFloat($value): float
     {
-        if (is_string($valor)) {
-            if (preg_match('/(\,|\.)/', substr(substr($valor, -3), 0, 1))) {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
-                $valor = substr_replace($valor, '.', -2, 0);
+        if (is_string($value)) {
+            if (preg_match('/(\,|\.)/', substr(substr($value, -3), 0, 1))) {
+                $value = (strlen(self::onlyNumbers($value)) > 0) ? self::onlyNumbers($value) : '000';
+                $value = substr_replace($value, '.', -2, 0);
             } else {
-                $valor = (strlen(self::onlyNumbers($valor)) > 0) ? self::onlyNumbers($valor) : '000';
+                $value = (strlen(self::onlyNumbers($value)) > 0) ? self::onlyNumbers($value) : '000';
             };
         }
-        return (float) $valor;
-    }
-
-    /**
-     * @param string|int $valor
-     */
-    private static function validateForFormatting(string $nome, int $tamanho, $valor): void
-    {
-        if (strlen($valor) !== $tamanho) {
-            throw new \Exception("$nome precisa ter $tamanho números!");
-        }
-        if (!is_numeric($valor)) {
-            throw new \Exception($nome . ' precisa conter apenas números!');
-        }
+        return (float) $value;
     }
 
     public static function convertTypes(array &$data, array $rules)
@@ -72,10 +27,10 @@ class Format
         $error = [];
         foreach ($rules as $key => $value) {
             $arrRules = explode('|', $value);
-            $type = self::returnTypeToConvert($arrRules);
+            $type = parent::returnTypeToConvert($arrRules);
             if (in_array('convert', $arrRules) && !empty($type)) {
                 try {
-                    $data[$key] = self::executeConvert($type, $data[$key]);
+                    $data[$key] = parent::executeConvert($type, $data[$key]);
                 } catch (\Exception $ex) {
                     $error[] = "falhar ao tentar converter {$data[$key]} para $type";
                 }
@@ -88,13 +43,13 @@ class Format
 
     public static function companyIdentification(string $cnpj): string
     {
-        self::validateForFormatting('companyIdentification', 14, $cnpj);
+        parent::validateForFormatting('companyIdentification', 14, $cnpj);
         return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj);
     }
 
     public static function identifier(string $cpf): string
     {
-        self::validateForFormatting('identifier', 11, $cpf);
+        parent::validateForFormatting('identifier', 11, $cpf);
         return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpf);
     }
 
@@ -126,7 +81,7 @@ class Format
 
     public static function zipCode(string $value): string
     {
-        self::validateForFormatting('zipCode', 8, $value);
+        parent::validateForFormatting('zipCode', 8, $value);
         return substr($value, 0, 5) . '-' . substr($value, 5, 3);
     }
 
@@ -160,29 +115,21 @@ class Format
     }
 
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    public static function currency($valor): string
+    public static function currency($value): string
     {
-        if (!is_numeric($valor)) {
-            throw new \Exception('currency precisa ser do tipo numérico!');
-        }
-
-        $valor = self::formatCurrencyForFloat($valor);
-        return ((float) $valor !== '') ? number_format((float) $valor, 2, ',', '.') : '';
+        $value = self::formatCurrencyForFloat($value);
+        return ((float) $value !== '') ? number_format((float) $value, 2, ',', '.') : '';
     }
 
     /**
-     * @param float|int|string $valor
+     * @param float|int|string $value
      */
-    public static function currencyUsd($valor): string
+    public static function currencyUsd($value): string
     {
-        if (!is_numeric($valor)) {
-            throw new \Exception('currencyUsd precisa ser do tipo numérico!');
-        }
-
-        $valor = self::formatCurrencyForFloat($valor);
-        return ((float) $valor !== '') ?  number_format((float) $valor, 2, '.', ',') : '';
+        $value = self::formatCurrencyForFloat($value);
+        return ((float) $value !== '') ?  number_format((float) $value, 2, '.', ',') : '';
     }
 
     /**
@@ -243,6 +190,21 @@ class Format
         return mb_strtolower($string, $charset);
     }
 
+    public static function maskStringHidden(string $string, int $qtdHidden, int $positionHidden, string $char): ?string
+    {
+        if (empty(trim($string))) {
+            return null;
+        }
+        if ($qtdHidden > strlen($string)) {
+            throw new \Exception('Quantidade de caracteres para ocultar não pode ser maior que a String!');
+        }
+        if ($qtdHidden < 1) {
+            throw new \Exception('Quantidade de caracteres para ocultar não pode ser menor que 1!');
+        }
+        $chars = str_repeat($char, $qtdHidden);
+        return substr_replace($string, $chars, $positionHidden, strlen($chars));
+    }
+
     public static function reverse(string $string, string $charSet = 'UTF-8'): string
     {
         if (!extension_loaded('iconv')) {
@@ -256,8 +218,11 @@ class Format
         return $value === false ? null : $value;
     }
 
-    public static function removeAccent(string $string): string
+    public static function removeAccent(?string $string): ?string
     {
+        if (empty($string)) {
+            return null;
+        }
         return preg_replace(
             [
                 '/(á|à|ã|â|ä)/',
@@ -278,5 +243,25 @@ class Format
             explode(' ', 'a A e E i I o O u U n N c C'),
             $string
         );
+    }
+
+    public static function writeDateExtensive(string $date): string
+    {
+        if (strpos($date, '/') > -1) {
+            $date = implode('-', array_reverse(explode('/', $date)));
+        }
+
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        return strftime('%A, %d de %B de %Y', strtotime($date));
+    }
+
+    public static function writeCurrencyExtensive(float $numeral): string
+    {
+        if ($numeral <= 0) {
+            throw new \Exception('O valor numeral deve ser maior que zero!');
+        } else {
+            return parent::extensive($numeral);
+        }
     }
 }

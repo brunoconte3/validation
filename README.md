@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.18.1"
+"brunoconte3/validation": "4.25.1"
 ```
 
 via composer.
@@ -193,6 +193,7 @@ echo Format::falseToNull(false) . '<br>'; //Retorna ==> null
 echo Format::lower('CArrO') . '<br>'; //Minusculo ==> carro - o segundo parametro escolhe o charset, UTF-8 default
 //[Aplicar qualquer tipo de Mascara, aceita espaço, pontos e outros]
 echo Format::mask('#### #### #### ####', '1234567890123456') . '<br>'; //Mascara ==> 1234 5678 9012 3456
+echo Format::maskStringHidden('065.775.009.96', 3, 4, '*'); //Marcarar uma string ==> 065.***.009.96
 echo Format::onlyNumbers('548Abc87@') . '<br>'; //Retorna apenas números ==> 54887;
 echo Format::onlyLettersNumbers('548Abc87@') . '<br>'; //Retorna apenas letras e números ==> 548Abc87;
 echo Format::pointOnlyValue('1.350,45') . '<br>'; //Moeda para gravação no BD ==>  1350.45
@@ -204,6 +205,8 @@ echo Format::telephone('44999998888') . '<br>';  //Telefone ==> (44) 99999-8888
 echo Format::ucwordsCharset('aÇafrÃo maCaRRão') . '<br>'; //Primeira letra maiuscula ==> Açafrão Macarrão
 echo Format::upper('Moto') . '<br>'; //Mauiusculo ==> MOTO - o segundo parametro escolhe o charset, UTF-8 default
 echo Format::zipCode('87030585') . '<br>'; //CEP ==>  87030-585
+echo Format::writeDateExtensive('06/11/2020') . '<br>'; //Data por Extenso ==> sexta-feira, 06 de novembro de 2020
+echo Format::writeCurrencyExtensive(1.97) . '<br>'; //Moeda por Extenso ==> um real e noventa e sete centavos
 
 $array = [
     0 => '1',
@@ -242,24 +245,27 @@ require 'vendor/autoload.php';
 
 use brunoconte3\Validation\Compare;
 
-// Retorna +30 (+30 dias de diferença)
+//Retorna +30 (+30 dias de diferença)
 echo Compare::daysDifferenceBetweenData('31/05/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
-// Compara se a data inicial é menor que a data final => Retorna [bool]
+//Compara se a data inicial é menor que a data final => Retorna [bool]
 echo Compare::startDateLessThanEnd('30/07/2020', '30/06/2020') . '<br>'; //Aceita data Americana também
 
 //Diferença entre horas ==> 01:36:28 [Horas exibe negativo e positivo a diferença]
 echo Compare::differenceBetweenHours('10:41:55', '12:18:23') . '<br>';
 
-// Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
+//Compara se a hora inicial é menor que a hora final (3º parâmetro, aceita mensagem customizada)
 echo Compare::startHourLessThanEnd('12:05:01', '10:20:01') . '<br>';
 
-//Compada a data com a data atual, e retorna a idade da pessoa
+//Compara a data com a data atual, e retorna a idade da pessoa
 echo Compare::calculateAgeInYears('20/05/1989');
 
-//echo 'Compara igualdade dos campos, retorna booleano <br>';
+//Compara igualdade dos campos, retorna booleano;
 //terceiro parametro opcional, false para não comparar caseSensitive, default true
 var_dump(Compare::checkDataEquality('AçaFrão', 'Açafrão'));
+
+//Compara se o conteudo desejado existe na String, retorna booleano
+var_dump(Compare::contains('AçaFrão', 'çaF'));
 
 ```
 
@@ -311,13 +317,38 @@ $array = [
 Arrays::convertJsonIndexToArray($array);
 var_dump($array);
 
+$array = [
+            'pessoa' => [
+                'pedidos' => ['pedido1', 'pedido2'],
+                'categorias' => [
+                    'subcategorias' => [
+                        'subcategoria1' => 'valor teste'
+                    ]
+                ]
+            ]
+        ];
+
+// Verifica se existe um índice específico em um array multinível
+var_dump(Arrays::checkExistIndexArrayRecursive($array, 'subcategoria1')); // Retorna true
+
+```
+
+# Utilidades
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use brunoconte3\Validation\Utility;
+
+echo Utility::captureClientIp(); //Retorna o IP do usuário, captura por camada disponível, Ex: 201.200.25.40
+
 ```
 
 # Arquivo com exemplos de Testes
 
 - /Test/UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!
-- O que ainda não estiver no teste unitário acima, execute o arquivo que está no caminho: /Test/Index.php
-  preparamos para facilitar seu entendimento!
 
 # Licença
 

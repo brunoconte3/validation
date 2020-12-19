@@ -37,8 +37,16 @@
             "name": "Rafael Henrique Barbosa Pereira",
             "email": "rafael@agenciab33.com.br",
             "role": "Developer"
+        },
+        {
+            "name": "Rafael Gomes de Souza",
+            "email": "gomes.webads@gmail.com",
+            "role": "Developer"
         }
     ],
+    "suggest": {
+		"ext-mbstring": "to use Format::lower() etc..."
+	},
     "require": {
         "php": "^7.2"
     },

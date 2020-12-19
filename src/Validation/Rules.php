@@ -45,7 +45,7 @@ class Rules
         return ($bom ? $bomchar : '') . $string;
     }
 
-    public static function functionsValidatade(): array
+    public static function functionsValidation(): array
     {
         return [
             'optional' => 'validateOptional',
@@ -95,9 +95,14 @@ class Rules
 
     protected function validateFieldMandatory($rule = '', $field = '', $value = null, $message = null)
     {
-        $value = is_array($value) ? $value : trim($value);
-        if (empty($value)) {
-            $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
+        if (is_array($value)) {
+            if (count($value) <= 0) {
+                $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
+            }
+        } else {
+            if (empty(trim($value))) {
+                $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
+            }
         }
     }
 
@@ -107,7 +112,7 @@ class Rules
             return;
         }
 
-        $method = trim(self::functionsValidatade()[trim(strtolower($rule))] ?? 'invalidRule');
+        $method = trim(self::functionsValidation()[trim(strtolower($rule))] ?? 'invalidRule');
         $call = [$this, $method];
         //chama há função de validação, de cada parametro json
         if (is_callable($call, true, $method)) {
@@ -218,7 +223,7 @@ class Rules
                     if (in_array(trim(strtolower($key)), self::RULES_WITHOUT_FUNCS)) {
                         continue;
                     }
-                    $method = trim(Rules::functionsValidatade()[trim($key)] ?? 'invalidRule');
+                    $method = trim(Rules::functionsValidation()[trim($key)] ?? 'invalidRule');
                     $call = [$this, $method];
                     //chama a função de validação, de cada parametro json
                     if (is_callable($call, true, $method)) {

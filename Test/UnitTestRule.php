@@ -284,12 +284,28 @@ class UnitTestRule extends TestCase
 
     public function testRequired(): void
     {
-        $array = ['a' => '', 'b' => null, 'c' => false];
-        $rules = ['a' => 'required', 'b' => 'required', 'c' => 'required'];
+        $array = [
+            'a' => '',
+            'b' => null,
+            'c' => false,
+            'd' => [],
+            'e' => '   ',
+            'f' => 'abc',
+            'g' => 123
+        ];
+        $rules = [
+            'a' => 'required',
+            'b' => 'required',
+            'c' => 'required',
+            'd' => 'required',
+            'e' => 'required',
+            'f' => 'required',
+            'g' => 'required'
+        ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(3, $validator->getErros());
+        $this->assertCount(5, $validator->getErros());
     }
 
     public function testUpper(): void
