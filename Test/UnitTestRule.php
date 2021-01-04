@@ -81,12 +81,23 @@ class UnitTestRule extends TestCase
 
     public function testCompanyIdentification(): void
     {
-        $array = ['testError' => '52186923000120', 'testValid' => '21111527000163'];
-        $rules = ['testError' => 'companyIdentification', 'testValid' => 'companyIdentification'];
+        $array = [
+            'testError' => '52186923000120',
+            'testValid' => '21111527000163',
+            'testExceptionError' => '12123456000712',
+            'testExceptionValid' => '00000000000000'
+        ];
+
+        $rules = [
+            'testError' => 'companyIdentification',
+            'testValid' => 'companyIdentification',
+            'testExceptionError' => 'companyIdentification:12123456000712',
+            'testExceptionValid' => 'companyIdentification:00000000000000;22222222222222'
+        ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 
     public function testDateAmerican(): void
@@ -392,12 +403,23 @@ class UnitTestRule extends TestCase
 
     public function testValidateIdentifierOrCompany(): void
     {
-        $array = ['cpfOuCnpnError' => '96.284.092.0001/59', 'cpfOuCnpnValid' => '96.284.092/0001-58'];
-        $rules = ['cpfOuCnpnError' => 'identifierOrCompany', 'cpfOuCnpnValid' => 'identifierOrCompany'];
+        $array = [
+            'cpfOuCnpnError' => '96.284.092.0001/59',
+            'cpfOuCnpnValid' => '96.284.092/0001-58',
+            'cpfOuCnpnExceptionError' => '12.123.456/0007-12',
+            'cpfOuCnpnExceptionValid' => '00.000.000/0000-00'
+        ];
+
+        $rules = [
+            'cpfOuCnpnError' => 'identifierOrCompany',
+            'cpfOuCnpnValid' => 'identifierOrCompany',
+            'cpfOuCnpnExceptionError' => 'identifierOrCompany:12123456000712',
+            'cpfOuCnpnExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222'
+        ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
 
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 }

@@ -197,6 +197,10 @@ class Rules
                             $conf = explode(',', trim($valueRuleConf));
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
 
+                            if (isset($ruleArrayConf[1]) && (strpos($valueRuleConf, ';') > 0)) {
+                                $ruleArrayConf[1] = explode(';', $ruleArrayConf[1]);
+                            }
+
                             if (array_key_exists(1, $conf) && !empty($conf[1])) {
                                 $rulesArray['mensagem'] = trim(strip_tags($conf[1]));
                             }
@@ -364,7 +368,7 @@ class Rules
         if (is_numeric($value) && strlen($value) === 14) {
             $value = Format::mask('##.###.###/####-##', $value);
         }
-        if (empty($value) ||  !ValidateCnpj::validateCnpj($value)) {
+        if (empty($value) || !ValidateCnpj::validateCnpj($value, $rule)) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field é inválido!";
         }
@@ -436,13 +440,13 @@ class Rules
             $value = Format::mask('##.###.###/####-##', $value);
         }
         if (strlen($value) === 14) {
-            if (!ValidateCpf::validateCpf($value)) {
+            if (!ValidateCpf::validateCpf($value, $rule)) {
                 $this->errors[$field] = !empty($message) ?
                     $message : "O campo $field é inválido!";
             }
         }
         if (strlen($value) === 18) {
-            if (empty($value) ||  !ValidateCnpj::validateCnpj($value)) {
+            if (empty($value) || !ValidateCnpj::validateCnpj($value, $rule)) {
                 $this->errors[$field] = !empty($message) ?
                     $message : "O campo $field é inválido!";
             }

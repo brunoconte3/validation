@@ -66,8 +66,18 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                     <?php
                     echo '<p>Aqui vem os seus testes!</p>';
 
-                    $array = ['cpfOuCnpj' => '04764334879'];
-                    $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
+                    $array = [
+                        'testError' => '52186923000120',
+                        'testValid' => '21111527000163',
+                        'cpfOuCnpnExceptionError' => '12.123.456/0007-12',
+                        'cpfOuCnpnExceptionValid' => '00.000.000/0000-00'
+                    ];
+                    $rules = [
+                        'testError' => 'companyIdentification',
+                        'testValid' => 'companyIdentification',
+                        'cpfOuCnpnExceptionError' => 'identifierOrCompany:12123456000712',
+                        'cpfOuCnpnExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222'
+                    ];
 
                     $validator = new Validator();
                     $validator->set($array, $rules);
