@@ -7,8 +7,87 @@ namespace brunoconte3\Test;
 use brunoconte3\Validation\Format;
 use PHPUnit\Framework\TestCase;
 
+use function PHPUnit\Framework\assertIsFloat;
+
 class UnitTestFormat extends TestCase
 {
+    public function testCompanyIdentification(): void
+    {
+        $this->assertEquals('76.027.484/0001-24', Format::companyIdentification('76027484000124'));
+    }
+
+    public function testConvertTypes(): void
+    {
+        $data = [
+            'tratandoTipoInt' => '12',
+            'tratandoTipoFloat' => '9.63',
+            'tratandoTipoBoolean' => 'true',
+            'tratandoTipoNumeric' => '11',
+        ];
+
+        $rules = [
+            'tratandoTipoInt' => 'convert|int',
+            'tratandoTipoFloat' => 'convert|float',
+            'tratandoTipoBoolean' => 'convert|bool',
+            'tratandoTipoNumeric' => 'convert|numeric',
+        ];
+
+        Format::convertTypes($data, $rules);
+        $this->assertIsInt($data['tratandoTipoInt']);
+        $this->assertIsFloat($data['tratandoTipoFloat']);
+        $this->assertIsBool($data['tratandoTipoBoolean']);
+        $this->assertIsNumeric($data['tratandoTipoNumeric']);
+    }
+
+    public function testIdentifier(): void
+    {
+        $this->assertEquals('894.213.600-10', Format::identifier('89421360010'));
+    }
+
+    public function testIdentifierOrCompany(): void
+    {
+        $this->assertEquals('307.208.700-89', Format::identifierOrCompany('30720870089'));
+        $this->assertEquals('12.456.571/0001-14', Format::identifierOrCompany('12456571000114'));
+    }
+
+    public function testTelephone(): void
+    {
+        $this->assertEquals('(44) 99999-8888', Format::telephone('44999998888'));
+    }
+
+    public function testZipCode(): void
+    {
+        $this->assertEquals('87047-590', Format::zipCode('87047590'));
+    }
+
+    public function testDateBrazil(): void
+    {
+        $this->assertEquals('10/10/2020', Format::dateBrazil('2020-10-10'));
+    }
+
+    public function testDateAmerican(): void
+    {
+        $this->assertEquals('2020-10-10', Format::dateAmerican('10/10/2020'));
+    }
+
+    public function testArrayToIntReference(): void
+    {
+        $arrayProcessed = [
+            0 => 1,
+            1 => 123,
+            'a' => 222,
+            'b' => 333,
+            'c' => 0
+        ];
+        $this->assertEquals($arrayProcessed, Format::arrayToInt([
+            0 => '1',
+            1 => '123',
+            'a' => '222',
+            'b' => 333,
+            'c' => ''
+        ]));
+    }
+
     public function testArrayToInt(): void
     {
         $arrayProcessed = [
@@ -27,11 +106,6 @@ class UnitTestFormat extends TestCase
         ]));
     }
 
-    public function testCompanyIdentification(): void
-    {
-        $this->assertEquals('76.027.484/0001-24', Format::companyIdentification('76027484000124'));
-    }
-
     public function testCurrency(): void
     {
         $this->assertEquals('1.123,45', Format::currency('1123.45'));
@@ -42,14 +116,20 @@ class UnitTestFormat extends TestCase
         $this->assertEquals('1,123.45', Format::currencyUsd('1123.45'));
     }
 
-    public function testDateAmerican(): void
+    public function testReturnPhoneOrAreaCode(): void
     {
-        $this->assertEquals('2020-10-10', Format::dateAmerican('10/10/2020'));
+        $this->assertEquals('44', Format::returnPhoneOrAreaCode('44999998888', true));
+        $this->assertEquals('999998888', Format::returnPhoneOrAreaCode('44999998888'));
     }
 
-    public function testDateBrazil(): void
+    public function testUcwordsCharset(): void
     {
-        $this->assertEquals('10/10/2020', Format::dateBrazil('2020-10-10'));
+        $this->assertEquals('Açafrão Macarrão', Format::ucwordsCharset('aÇafrÃo maCaRRão'));
+    }
+
+    public function testPointOnlyValue(): void
+    {
+        $this->assertEquals('1350.45', Format::pointOnlyValue('1.350,45'));
     }
 
     public function testEmptyToNull(): void
@@ -71,27 +151,6 @@ class UnitTestFormat extends TestCase
         ]));
     }
 
-    public function testFalseToNull(): void
-    {
-        $this->assertEquals(null, Format::falseToNull(false));
-    }
-
-    public function testIdentifier(): void
-    {
-        $this->assertEquals('894.213.600-10', Format::identifier('89421360010'));
-    }
-
-    public function testIdentifierOrCompany(): void
-    {
-        $this->assertEquals('307.208.700-89', Format::identifierOrCompany('30720870089'));
-        $this->assertEquals('12.456.571/0001-14', Format::identifierOrCompany('12456571000114'));
-    }
-
-    public function testLower(): void
-    {
-        $this->assertEquals('carro', Format::lower('CArrO'));
-    }
-
     public function testMask(): void
     {
         $this->assertEquals('1234 5678 9012 3456', Format::mask('#### #### #### ####', '1234567890123456'));
@@ -107,21 +166,20 @@ class UnitTestFormat extends TestCase
         $this->assertEquals('548Abc87', Format::onlyLettersNumbers('548Abc87@'));
     }
 
-    public function testPointOnlyValue(): void
+    public function testUpper(): void
     {
-        $this->assertEquals('1350.45', Format::pointOnlyValue('1.350,45'));
+        $this->assertEquals('CARRO', Format::upper('CArrO'));
     }
 
-    public function testRemoveAccent(): void
+    public function testLower(): void
     {
-        $this->assertEquals('Acafrao', Format::removeAccent('Açafrão'));
-        $this->assertNull(Format::removeAccent(''));
+        $this->assertEquals('carro', Format::lower('CArrO'));
     }
 
-    public function testReturnPhoneOrAreaCode(): void
+    public function testMaskStringHidden(): void
     {
-        $this->assertEquals('44', Format::returnPhoneOrAreaCode('44999998888', true));
-        $this->assertEquals('999998888', Format::returnPhoneOrAreaCode('44999998888'));
+        $this->assertEquals('065.***.009.96', Format::maskStringHidden('065.775.009.96', 3, 4, '*'));
+        $this->assertNull(Format::maskStringHidden('', 3, 4, '*'));
     }
 
     public function testReverse(): void
@@ -129,24 +187,15 @@ class UnitTestFormat extends TestCase
         $this->assertEquals('ixacabA', Format::reverse('Abacaxi'));
     }
 
-    public function testTelephone(): void
+    public function testFalseToNull(): void
     {
-        $this->assertEquals('(44) 99999-8888', Format::telephone('44999998888'));
+        $this->assertEquals(null, Format::falseToNull(false));
     }
 
-    public function testUcwordsCharset(): void
+    public function testRemoveAccent(): void
     {
-        $this->assertEquals('Açafrão Macarrão', Format::ucwordsCharset('aÇafrÃo maCaRRão'));
-    }
-
-    public function testUpper(): void
-    {
-        $this->assertEquals('CARRO', Format::upper('CArrO'));
-    }
-
-    public function testZipCode(): void
-    {
-        $this->assertEquals('87047-590', Format::zipCode('87047590'));
+        $this->assertEquals('Acafrao', Format::removeAccent('Açafrão'));
+        $this->assertNull(Format::removeAccent(''));
     }
 
     public function testWriteDateExtensive(): void
@@ -157,11 +206,5 @@ class UnitTestFormat extends TestCase
     public function testWriteCurrencyExtensive(): void
     {
         $this->assertEquals('um real e noventa e sete centavos', Format::writeCurrencyExtensive(1.97));
-    }
-
-    public function testMaskStringHidden(): void
-    {
-        $this->assertEquals('065.***.009.96', Format::maskStringHidden('065.775.009.96', 3, 4, '*'));
-        $this->assertNull(Format::maskStringHidden('', 3, 4, '*'));
     }
 }

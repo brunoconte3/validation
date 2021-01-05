@@ -112,7 +112,8 @@ class Rules
             return;
         }
 
-        $method = trim(self::functionsValidation()[trim(strtolower($rule))] ?? 'invalidRule');
+        $method = trim(self::functionsValidation()[trim($rule)] ?? 'invalidRule');
+
         $call = [$this, $method];
         //chama há função de validação, de cada parametro json
         if (is_callable($call, true, $method)) {
@@ -196,8 +197,9 @@ class Rules
                         foreach ($rulesConf as $valueRuleConf) {
                             $conf = explode(',', trim($valueRuleConf));
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
+                            $regEx = (trim(strtolower($ruleArrayConf[0])) == 'regex') ? true : false;
 
-                            if (isset($ruleArrayConf[1]) && (strpos($valueRuleConf, ';') > 0)) {
+                            if (isset($ruleArrayConf[1]) && (strpos($valueRuleConf, ';') > 0) && !$regEx) {
                                 $ruleArrayConf[1] = explode(';', $ruleArrayConf[1]);
                             }
 
@@ -305,12 +307,7 @@ class Rules
 
     protected function validateAlphaNoSpecial($rule = '', $field = '', $value = null, $message = null)
     {
-        if (
-            !preg_match(
-                '/^([a-zA-Z\s])+$/',
-                $value
-            ) !== false
-        ) {
+        if (!preg_match('/^([a-zA-Z\s])+$/', $value) !== false) {
             $this->errors[$field] = !empty($message) ?
                 $message : "O campo $field só pode conter caracteres alfabéticos regular, não pode ter ascentos!";
         }

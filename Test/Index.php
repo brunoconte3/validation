@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
+use brunoconte3\Validation\Format;
 use brunoconte3\Validation\Validator;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -64,20 +65,11 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
             <div class="item-section-class">
                 <div>
                     <?php
+
                     echo '<p>Aqui vem os seus testes!</p>';
 
-                    $array = [
-                        'testError' => '52186923000120',
-                        'testValid' => '21111527000163',
-                        'cpfOuCnpnExceptionError' => '12.123.456/0007-12',
-                        'cpfOuCnpnExceptionValid' => '00.000.000/0000-00'
-                    ];
-                    $rules = [
-                        'testError' => 'companyIdentification',
-                        'testValid' => 'companyIdentification',
-                        'cpfOuCnpnExceptionError' => 'identifierOrCompany:12123456000712',
-                        'cpfOuCnpnExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222'
-                    ];
+                    $array = [];
+                    $rules = [];
 
                     $validator = new Validator();
                     $validator->set($array, $rules);

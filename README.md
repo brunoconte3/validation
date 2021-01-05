@@ -74,6 +74,8 @@ use brunoconte3\Validation\Validator;
     'sexo' => '',
     'telefone' => '44999696',
     'cpf' => '12547845874',
+    'cnpj' => '34060696000163',
+    'cnpjException' => '00000000000000',
     'nome' => 'a',
     'numero' => 12345678,
     'email' => 'bruno.com',
@@ -86,13 +88,16 @@ use brunoconte3\Validation\Validator;
     'validarValores' => 'SA',
     'validaJson' => '{
         "nome": "Bruno"
-    }'
+    }',
+    'placaVeiculo' => 'AXI-3668'
 ];
 
 $rules = [
     'sexo' => 'required',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
+    'cnpj' => '34060696000163',
+    'cnpjException' => 'CompanyIdentification:00000000000000;11111111111111;22222222222222',
     'nome' => 'required|min:2',
     'numero' => 'max:5',
     'email' => 'email',
@@ -103,7 +108,8 @@ $rules = [
     'tratandoTipoBoolean' => 'convert|bool',
     'tratandoTipoNumeric' => 'numeric|convert',
     'validarValores' => 'arrayValues:S-N-T',  //Opções aceitas [S,N,T]
-    'validaJson' => 'type:json'
+    'validaJson' => 'type:json',
+    'placaVeiculo' => 'plate'
 ];
 
 $validator = new Validator();
