@@ -81,12 +81,23 @@ class UnitTestRule extends TestCase
 
     public function testCompanyIdentification(): void
     {
-        $array = ['testError' => '52186923000120', 'testValid' => '21111527000163'];
-        $rules = ['testError' => 'companyIdentification', 'testValid' => 'companyIdentification'];
+        $array = [
+            'testError' => '52186923000120',
+            'testValid' => '21111527000163',
+            'testExceptionError' => '12123456000712',
+            'testExceptionValid' => '00000000000000'
+        ];
+
+        $rules = [
+            'testError' => 'companyIdentification',
+            'testValid' => 'companyIdentification',
+            'testExceptionError' => 'companyIdentification:12123456000712',
+            'testExceptionValid' => 'companyIdentification:00000000000000;22222222222222'
+        ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 
     public function testDateAmerican(): void
@@ -282,6 +293,26 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
+    public function testPlate(): void
+    {
+        $array = ['testError' => 'aXI3668', 'testValid' => 'AXI-3668'];
+        $rules = ['testError' => 'plate', 'testValid' => 'plate'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testRegEx(): void
+    {
+        $array = ['testError' => 'bruno_conte3', 'testValid' => 'Bruno Conte'];
+        $rules = ['testError' => 'regex:/^[a-zA-Z\s]+$/', 'testValid' => 'regex:/^[a-zA-Z\s]+$/'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
     public function testRequired(): void
     {
         $array = [
@@ -306,6 +337,34 @@ class UnitTestRule extends TestCase
         $validator = new Validator();
         $validator->set($array, $rules);
         $this->assertCount(5, $validator->getErros());
+    }
+
+    public function testType(): void
+    {
+        $array = [
+            'testAlphaError'             => 'Ele usa um dicionário com mais de 200 palavras!',
+            'testAlphaNoSpecialError'    => 'Ele usa um dicionário com mais de 200 palavras!',
+            'testAlphaNumError'          => 'Ele usa um dicionário com mais de 200 palavras!',
+            'testAlphaNumNoSpecialError' => 'Ele usa um dicionário com mais de 200 palavras!',
+            'testAlphaValid'             => 'Ele usa um dicionário com mais de X palavras',
+            'testAlphaNoSpecialValid'    => 'Ele usa um dicionario com mais de X palavras',
+            'testAlphaNumValid'          => 'Ele usa um dicionário com mais de 200 palavras',
+            'testAlphaNumNoSpecialValid' => 'Ele usa um dicionario com mais de 200 palavras'
+        ];
+        $rules = [
+            'testAlphaError'             => 'type:alpha',
+            'testAlphaNoSpecialError'    => 'type:alphaNoSpecial',
+            'testAlphaNumError'          => 'type:alphaNum',
+            'testAlphaNumNoSpecialError' => 'type:alphaNumNoSpecial',
+            'testAlphaValid'             => 'type:alpha',
+            'testAlphaNoSpecialValid'    => 'type:alphaNoSpecial',
+            'testAlphaNumValid'          => 'type:alphaNum',
+            'testAlphaNumNoSpecialValid' => 'type:alphaNumNoSpecial'
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(4, $validator->getErros());
     }
 
     public function testUpper(): void
@@ -357,7 +416,7 @@ class UnitTestRule extends TestCase
         $this->assertEquals($msg, $validator->getErros()['textoError']);
     }
 
-    public function testValidateSpace(): void
+    public function testNotSpace(): void
     {
         $array = ['validarEspacoError' => 'BRU C', 'validarEspacoValid' => 'BRUC'];
         $rules = ['validarEspacoError' => 'notSpace', 'validarEspacoValid' => 'notSpace'];
@@ -368,7 +427,7 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
-    public function testValidateJson(): void
+    public function testJson(): void
     {
         $array = ['validaJsonError' => '"nome": "Bruno"}', 'validaJsonValid' => '{"nome": "Bruno"}'];
         $rules = ['validaJsonError' => 'type:json', 'validaJsonValid' => 'type:json'];
@@ -379,7 +438,7 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
-    public function testValidateNumMonth(): void
+    public function testNumMonth(): void
     {
         $array = ['validaMesError' => 13, 'validaMesValid' => 10];
         $rules = ['validaMesError' => 'numMonth', 'validaMesValid' => 'numMonth'];
@@ -390,14 +449,25 @@ class UnitTestRule extends TestCase
         $this->assertCount(1, $validator->getErros());
     }
 
-    public function testValidateIdentifierOrCompany(): void
+    public function testIdentifierOrCompany(): void
     {
-        $array = ['cpfOuCnpnError' => '96.284.092.0001/59', 'cpfOuCnpnValid' => '96.284.092/0001-58'];
-        $rules = ['cpfOuCnpnError' => 'identifierOrCompany', 'cpfOuCnpnValid' => 'identifierOrCompany'];
+        $array = [
+            'cpfOuCnpnError' => '96.284.092.0001/59',
+            'cpfOuCnpnValid' => '96.284.092/0001-58',
+            'cpfOuCnpnExceptionError' => '12.123.456/0007-12',
+            'cpfOuCnpnExceptionValid' => '00.000.000/0000-00'
+        ];
+
+        $rules = [
+            'cpfOuCnpnError' => 'identifierOrCompany',
+            'cpfOuCnpnValid' => 'identifierOrCompany',
+            'cpfOuCnpnExceptionError' => 'identifierOrCompany:12123456000712',
+            'cpfOuCnpnExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222'
+        ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
 
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 }
