@@ -92,12 +92,20 @@ use brunoconte3\Validation\Validator;
     'placaVeiculo' => 'AXI-3668'
 ];
 
-$rules = [
+/**
+ * Validação 'CompanyIdentification'
+ * Para passar um array com a(s) exceção(ões) permitida(s), basta usar o delimitador ';' entre os valores.
+ * São permitidos números iguais de 0 até 9, conforme exemplos abaixo.
+ *
+ * 'CompanyIdentification:00000000000000' -> Será aceito CNPJ 00.000.000/0000-00
+ * 'CompanyIdentification:00000000000000;11111111111111;22222222222222' -> Serão aceitos os CNPJ's 00.000.000/0000-00, 11.111.111/1111-11 e 22.222.222/2222-22
+ */
+ $rules = [
     'sexo' => 'required',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
     'cnpj' => '34060696000163',
-    'cnpjException' => 'CompanyIdentification:00000000000000',
+    'cnpjException' => 'CompanyIdentification:00000000000000;11111111111111;22222222222222',
     'nome' => 'required|min:2',
     'numero' => 'max:5',
     'email' => 'email',
@@ -160,23 +168,6 @@ if (!$validator->getErros()) {
 - upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
-
-# Passando array com parâmetro
-
-Para passar um array em uma determinada validação, você pode usar o delimitador ';' entre os valores.
-
-`Exemplo:`
-
-```php
-<?php
-    /**
-     * CompanyIdentification
-     * São permitidos números iguais de 0 até 9, conforme exemplo abaixo.
-     */
-    $validator->set($datas, [
-        'cnpjException' => 'CompanyIdentification:00000000000000;11111111111111;22222222222222'
-    ]);
-```
 
 # Definindo mensagem personalizada
 
