@@ -25,7 +25,7 @@ abstract class FormatAux
     {
         switch ($type) {
             case 'bool':
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? (bool) $value : (bool) $value;
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN) ? (bool) $value : $value;
             case 'int':
                 return filter_var($value, FILTER_VALIDATE_INT) ? (int) $value : $value;
             case 'float':

@@ -92,7 +92,15 @@ use brunoconte3\Validation\Validator;
     'placaVeiculo' => 'AXI-3668'
 ];
 
-$rules = [
+/**
+ * Validação 'CompanyIdentification'
+ * Para passar um array com a(s) exceção(ões) permitida(s), basta usar o delimitador ';' entre os valores.
+ * São permitidos números iguais de 0 até 9, conforme exemplos abaixo.
+ *
+ * 'CompanyIdentification:00000000000000' -> Será aceito CNPJ 00.000.000/0000-00
+ * 'CompanyIdentification:00000000000000;11111111111111;22222222222222' -> Serão aceitos os CNPJ's 00.000.000/0000-00, 11.111.111/1111-11 e 22.222.222/2222-22
+ */
+ $rules = [
     'sexo' => 'required',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
@@ -159,7 +167,7 @@ if (!$validator->getErros()) {
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
-- zip_code: `Verifica se o valor corresponde ao formato de um CEP.`
+- zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
 
 # Definindo mensagem personalizada
 

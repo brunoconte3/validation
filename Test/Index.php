@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
-use brunoconte3\Validation\Format;
 use brunoconte3\Validation\Validator;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -68,8 +67,8 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
 
                     echo '<p>Aqui vem os seus testes!</p>';
 
-                    $array = [];
-                    $rules = [];
+                    $array = ['cpfOuCnpj' => '04764334879'];
+                    $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
 
                     $validator = new Validator();
                     $validator->set($array, $rules);
