@@ -64,17 +64,53 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
             <div class="item-section-class">
                 <div>
                     <?php
+                    echo '<hr/>';
+                    $file = null;
+                    if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+                        $file = $_FILES['fileUpload'];
+                    }
+                    echo '<hr/>';
 
-                    echo '<p>Aqui vem os seus testes!</p>';
-
-                    $array = ['cpfOuCnpj' => '04764334879'];
-                    $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
+                    $array = [
+                        'fileUpload' => $file,
+                    ];
+                    $rules = [
+                        'fileUpload' => 'mimeType:jpeg|maxUploadSize:10|minUploadSize:100973',
+                    ];
 
                     $validator = new Validator();
                     $validator->set($array, $rules);
 
                     echo '<pre>';
                     print_r($validator->getErros());
+                    ?>
+
+                    <div style="background-color: #eee; padding: 15px; margin-top: 30px;">
+                        <form name="formFileUpload" id="form-file-upload" method="POST" enctype="multipart/form-data">
+                            <div>
+                                <input type="file" name="fileUpload[]" id="file-upload" placeholder="Selec" multiple="multiple">
+                            </div>
+                            <hr>
+                            <div>
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <?php
+
+                    // echo '<p>Aqui vem os seus testes!</p>';
+
+                    // $array = ['cpfOuCnpj' => '04764334879'];
+                    // $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
+
+                    // $validator = new Validator();
+                    // $validator->set($array, $rules);
+
+                    // echo '<pre>';
+                    // print_r($validator->getErros());
                     ?>
                 </div>
             </div>

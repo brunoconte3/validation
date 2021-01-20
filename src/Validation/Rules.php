@@ -6,7 +6,8 @@ use brunoconte3\Validation\{
     ValidateCpf,
     ValidateCnpj,
     ValidatePhone,
-    ValidateHour
+    ValidateHour,
+    ValidateFile
 };
 
 class Rules
@@ -84,7 +85,10 @@ class Rules
             'url' => 'validateUrl',
             'noWeekend' => 'validateWeekend',
             'zipcode' => 'validateZipCode',
-            'json' => 'validateJson'
+            'json' => 'validateJson',
+            'maxUploadSize' => 'validateFileMaxUploadSize',
+            'minUploadSize' => 'validateFileMinUploadSize',
+            'mimeType' => 'validateFileMimeType'
         ];
     }
 
@@ -606,6 +610,61 @@ class Rules
             }
         } else {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field não contém um json válido!";
+        }
+    }
+
+    protected function validateFileMaxUploadSize($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = trim($rule);
+
+        if (!is_numeric($rule) || ($rule < 0)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field deve ter o valor mínimo de 0 bytes!";
+        }
+
+        $retorno = ValidateFile::validateMaxUploadSize(intval($rule), $value);
+
+        if (is_array($this->errors) && array_key_exists($field, $this->errors)) {
+            foreach ($retorno as $error) {
+                array_push($this->errors[$field], $error);
+            }
+        } else {
+            $this->errors[$field] = $retorno;
+        }
+    }
+
+    protected function validateFileMinUploadSize($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = trim($rule);
+
+        if (!is_numeric($rule) || ($rule < 0)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field deve ter o valor mínimo de 0 bytes!";
+        }
+
+        $retorno = ValidateFile::validateMinUploadSize(intval($rule), $value);
+
+        if (is_array($this->errors) && array_key_exists($field, $this->errors)) {
+            foreach ($retorno as $error) {
+                array_push($this->errors[$field], $error);
+            }
+        } else {
+            $this->errors[$field] = $retorno;
+        }
+    }
+
+    protected function validateFileMimeType($rule = '', $field = '', $value = null, $message = null): void
+    {
+        if (empty($rule)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field deve ter o valor mínimo de 0 bytes!";
+        }
+
+        $retorno = ValidateFile::validateMimeType($rule, $value);
+
+        if (is_array($this->errors) && array_key_exists($field, $this->errors)) {
+            foreach ($retorno as $error) {
+                array_push($this->errors[$field], $error);
+            }
+        } else {
+            $this->errors[$field] = $retorno;
         }
     }
 }
