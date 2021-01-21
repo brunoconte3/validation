@@ -67,14 +67,21 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                     <?php
                     $file = [];
                     if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
-                        $file = $_FILES['fileUpload'];
+                        $fileUpload = $_FILES['fileUpload'];
+                        $fileUploadMultiple = $_FILES['fileUploadMultiple'];
 
                         echo '<hr/>';
+
                         $array = [
-                            'fileUpload' => $file,
+                            'fileUpload' => $fileUpload,
+                            'fileUploadMultiple' => $fileUploadMultiple,
+                            // 'numero' => '77289436752836'
                         ];
+
                         $rules = [
-                            'fileUpload' => 'mimeType:jpeg;jpg|minUploadSize:15155454|maxUploadSize:10|fileName',
+                            'fileUpload' => 'mimeType:jpeg,',
+                            'fileUploadMultiple' => 'maxUploadSize:10',
+                            // 'numero' => 'max:5|min:1023, Eita'
                         ];
 
                         $validator = new Validator();
@@ -85,7 +92,7 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
 
                         echo '<hr/>';
 
-                        // var_dump(Format::restructFileArray($file));
+                        var_dump(Format::restructFileArray($file));
                     }
 
                     ?>
@@ -93,7 +100,10 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                     <div style="background-color: #eee; padding: 15px; margin-top: 30px;">
                         <form name="formFileUpload" id="form-file-upload" method="POST" enctype="multipart/form-data">
                             <div>
-                                <input type="file" name="fileUpload[]" placeholder="Selec" multiple="multiple">
+                                <input type="file" name="fileUpload" placeholder="Selec">
+                            </div>
+                            <div>
+                                <input type="file" name="fileUploadMultiple[]" placeholder="Selec" multiple="multiple">
                             </div>
                             <hr>
                             <div>

@@ -290,14 +290,11 @@ class Format extends FormatAux
 
     public static function restructFileArray(array $file = []): array
     {
-        var_dump($file);
-        echo '<hr>';
+        $fileError = ValidateFile::validateFileErrorPhp($file);
 
-        // $fileError = ValidateFile::validateFileErrorPhp($file);
-
-        // if (count($fileError) > 0) {
-        //     return $fileError;
-        // }
+        if (count($fileError) > 0) {
+            return $fileError;
+        }
 
         $arrayFile = [];
         foreach ($file['name'] as $key => $name) {

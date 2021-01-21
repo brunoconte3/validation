@@ -21,15 +21,16 @@ class Rules
         $this->errors[$field] = $msg;
     }
 
-    private function validateFileFormatErrors(array $retorno = [], string $field = ''): void
+    private function validateHandleErrorsFile(array $errorList = [], string $field = ''): void
     {
-        if (count($retorno) > 0) {
+        if (count($errorList) > 0) {
             if ((is_array($this->errors) && array_key_exists($field, $this->errors))) {
-                foreach ($retorno as $error) {
+                foreach ($errorList as $error) {
                     array_push($this->errors[$field], $error);
                 }
+                $this->errors[$field] = array_unique($this->errors[$field]);
             } else {
-                $this->errors[$field] = $retorno;
+                $this->errors[$field] = $errorList;
             }
         }
     }
@@ -632,16 +633,18 @@ class Rules
         $rule = trim($rule);
 
         if (!is_numeric($rule) || ($rule < 0)) {
-            $this->errors[$field] = !empty($message) ? $message : "O campo $field deve ter o valor mínimo de 0 bytes!";
+            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
+            $this->errors[$field] = $text;
+            return;
         }
 
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value);
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
 
         if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMaxUploadSize(intval($rule), $value);
-            $this->validateFileFormatErrors($validateResult, $field);
+            $validateResult = ValidateFile::validateMaxUploadSize(intval($rule), $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
         } else {
-            $this->validateFileFormatErrors($validateErrorPhp, $field);
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
         }
     }
 
@@ -650,46 +653,47 @@ class Rules
         $rule = trim($rule);
 
         if (!is_numeric($rule) || ($rule < 0)) {
-            $this->errors[$field] = !empty($message) ? $message : "O campo $field deve ter o valor mínimo de 0 bytes!";
+            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
+            $this->errors[$field] = $text;
             return;
         }
 
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value);
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
 
         if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMinUploadSize(intval($rule), $value);
-            $this->validateFileFormatErrors($validateResult, $field);
+            $validateResult = ValidateFile::validateMinUploadSize(intval($rule), $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
         } else {
-            $this->validateFileFormatErrors($validateErrorPhp, $field);
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
         }
     }
 
     protected function validateFileName($rule = '', $field = '', $value = null, $message = null): void
     {
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value);
+        if (empty($value) || (count($value) <= 0)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não pode ser vazio!";
+            return;
+        }
+
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
 
         if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateFileName($value);
-            $this->validateFileFormatErrors($validateResult, $field);
+            $validateResult = ValidateFile::validateFileName($value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
         } else {
-            $this->validateFileFormatErrors($validateErrorPhp, $field);
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
         }
     }
 
     protected function validateFileMimeType($rule = '', $field = '', $value = null, $message = null): void
     {
-        if (empty($value)) {
-            $this->errors[$field] = !empty($message) ? $message : "O campo $field não contém um arquivo válido!";
-            return;
-        }
-
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value);
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
 
         if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMimeType($rule, $value);
-            $this->validateFileFormatErrors($validateResult, $field);
+            $validateResult = ValidateFile::validateMimeType($rule, $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
         } else {
-            $this->validateFileFormatErrors($validateErrorPhp, $field);
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
         }
     }
 }
