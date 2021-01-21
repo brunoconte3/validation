@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
+use brunoconte3\Validation\Format;
 use brunoconte3\Validation\Validator;
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -64,31 +65,35 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
             <div class="item-section-class">
                 <div>
                     <?php
-                    echo '<hr/>';
-                    $file = null;
+                    $file = [];
                     if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
                         $file = $_FILES['fileUpload'];
+
+                        echo '<hr/>';
+                        $array = [
+                            'fileUpload' => $file,
+                        ];
+                        $rules = [
+                            'fileUpload' => 'mimeType:jpeg;jpg|minUploadSize:15155454|maxUploadSize:10|fileName',
+                        ];
+
+                        $validator = new Validator();
+                        $validator->set($array, $rules);
+
+                        echo '<pre>';
+                        print_r($validator->getErros());
+
+                        echo '<hr/>';
+
+                        // var_dump(Format::restructFileArray($file));
                     }
-                    echo '<hr/>';
 
-                    $array = [
-                        'fileUpload' => $file,
-                    ];
-                    $rules = [
-                        'fileUpload' => 'mimeType:jpeg|maxUploadSize:10|minUploadSize:100973',
-                    ];
-
-                    $validator = new Validator();
-                    $validator->set($array, $rules);
-
-                    echo '<pre>';
-                    print_r($validator->getErros());
                     ?>
 
                     <div style="background-color: #eee; padding: 15px; margin-top: 30px;">
                         <form name="formFileUpload" id="form-file-upload" method="POST" enctype="multipart/form-data">
                             <div>
-                                <input type="file" name="fileUpload[]" id="file-upload" placeholder="Selec" multiple="multiple">
+                                <input type="file" name="fileUpload[]" placeholder="Selec" multiple="multiple">
                             </div>
                             <hr>
                             <div>

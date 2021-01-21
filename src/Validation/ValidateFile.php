@@ -4,53 +4,22 @@ declare(strict_types=1);
 
 namespace brunoconte3\Validation;
 
-use brunoconte3\Validation\{
-    Format,
-};
-
 class ValidateFile
 {
-    private static function validateFormatFileName(string $fileName = ''): string
+    private static function validateFileNoEmpty(array $file = [])
     {
-        $dataName = explode('.', strtolower(trim($fileName)));
-        $ext  = end($dataName);
+        $arrayFileError = [];
 
-        if (count($dataName) > 1) {
-            unset($dataName[count($dataName) - 1]);
+        if (empty($file) || (count($file) <= 0)) {
+            array_push($arrayFileError, 'Arquivo inválido!');
+            return $arrayFileError;
         }
-
-        $dataName = implode('_', $dataName);
-        $dataName = preg_replace('/\W/', '_', Format::removeAccent($dataName));
-
-        return "{$dataName}.{$ext}";
     }
 
-    private static function validateGenerateFileName(string $nameFile = ''): string
+    public static function validateFileErrorPhp(array $file = []): array
     {
-        return date("d-m-Y_s_") . sha1(uniqid("", true)) . '_' . $nameFile;
-    }
+        self::validateFileNoEmpty($file);
 
-    public static function validateRestructFileArray(array $file = []): array
-    {
-        $arrayFile = [];
-        foreach ($file['name'] as $key => $name) {
-            $name = self::validateFormatFileName($name);
-
-            $params = [
-                'name'     => $name,
-                'type'     => $file['type'][$key],
-                'tmp_name' => $file['tmp_name'][$key],
-                'error'    => $file['error'][$key],
-                'size'     => $file['size'][$key],
-                'name_upload' => self::validateGenerateFileName($name)
-            ];
-            array_push($arrayFile, $params);
-        }
-        return $arrayFile;
-    }
-
-    public static function validateFileError(array $file = []): array
-    {
         $phpFileErrors = [
             UPLOAD_ERR_OK         => 'Não houve erro, o arquivo foi enviado com sucesso!',
             UPLOAD_ERR_INI_SIZE   => 'O arquivo enviado excede o limite definido na diretiva upload_max_filesize
@@ -66,8 +35,11 @@ class ValidateFile
         $arrayFileError = [];
 
         foreach ($file['error'] as $key => $codeError) {
+            $codeError = 8;
+            $file['name'][$key] = 'nomeArquivo';
             if (($codeError > 0) && (array_key_exists($codeError, $phpFileErrors))) {
-                $message = $file['name'][$key] . ': ' . $phpFileErrors[$codeError];
+                $nameFile = empty($file['name'][$key]) ? '' : '[' . $file['name'][$key] . '] - ';
+                $message =  $nameFile . $phpFileErrors[$codeError];
                 array_push($arrayFileError, $message);
             }
         }
@@ -76,12 +48,13 @@ class ValidateFile
 
     public static function validateMaxUploadSize(int $rule = 0, array $file = []): array
     {
-        $file = self::validateRestructFileArray($file);
+        self::validateFileNoEmpty($file);
+
         $arrayFileError = [];
 
-        foreach ($file as $arquivo) {
-            if ($arquivo['size'] > $rule) {
-                $message = 'O arquivo ' . $arquivo['name'] . ' deve conter, no máximo ' . $rule . ' bytes!';
+        foreach ($file['size'] as $key => $size) {
+            if ($size > $rule) {
+                $message = 'O arquivo ' . $file['name'][$key] . ' deve conter, no máximo ' . $rule . ' bytes!';
                 array_push($arrayFileError, $message);
             }
         }
@@ -90,12 +63,30 @@ class ValidateFile
 
     public static function validateMinUploadSize(int $rule = 0, array $file = []): array
     {
-        $file = self::validateRestructFileArray($file);
+        self::validateFileNoEmpty($file);
+
         $arrayFileError = [];
 
-        foreach ($file as $arquivo) {
-            if ($arquivo['size'] < $rule) {
-                $message = 'O arquivo ' . $arquivo['name'] . ' deve conter, no mínimo ' . $rule . ' bytes!';
+        foreach ($file['size'] as $key => $size) {
+            if ($size < $rule) {
+                $message = 'O arquivo ' . $file['name'][$key] . ' deve conter, no mínimo ' . $rule . ' bytes!';
+                array_push($arrayFileError, $message);
+            }
+        }
+        return $arrayFileError;
+    }
+
+    public static function validateFileName(array $file = []): array
+    {
+        self::validateFileNoEmpty($file);
+
+        $arrayFileError = [];
+
+        foreach ($file['name'] as $fileName) {
+            $dataName = explode('.', strtolower(trim($fileName)));
+
+            if (preg_match('/\W/', reset($dataName))) {
+                $message = "O nome do arquivo {$fileName}, não pode conter caracteres especiais e ascentos!";
                 array_push($arrayFileError, $message);
             }
         }
@@ -107,12 +98,13 @@ class ValidateFile
      */
     public static function validateMimeType($rule = '', array $file = []): array
     {
-        $file = self::validateRestructFileArray($file);
+        self::validateFileNoEmpty($file);
+
         $arrayFileError = [];
 
-        foreach ($file as $arquivo) {
-            $ext = explode('.', $arquivo['name']);
-            $message = 'O arquivo ' . $arquivo['name'] . ', contém uma extensão inválida!';
+        foreach ($file['name'] as $fileName) {
+            $ext = explode('.', $fileName);
+            $message = 'O arquivo ' . $fileName . ', contém uma extensão inválida!';
 
             if (is_string($rule) && (strtolower(end($ext)) != strtolower($rule))) {
                 array_push($arrayFileError, $message);

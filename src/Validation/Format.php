@@ -2,7 +2,10 @@
 
 namespace brunoconte3\Validation;
 
-use brunoconte3\Validation\ValidatePhone;
+use brunoconte3\Validation\{
+    ValidatePhone,
+    ValidateFile
+};
 
 class Format extends FormatAux
 {
@@ -20,6 +23,26 @@ class Format extends FormatAux
             };
         }
         return (float) $value;
+    }
+
+    private static function formatFileName(string $fileName = ''): string
+    {
+        $dataName = explode('.', trim($fileName));
+        $ext  = end($dataName);
+
+        if (count($dataName) > 1) {
+            unset($dataName[count($dataName) - 1]);
+        }
+
+        $dataName = implode('_', $dataName);
+        $dataName = preg_replace('/\W/', '_', strtolower(self::removeAccent($dataName)));
+
+        return "{$dataName}.{$ext}";
+    }
+
+    private static function generateFileName(string $nameFile = ''): string
+    {
+        return date("d-m-Y_s_") . uniqid(rand() . rand() . rand() . time()) . '_' . $nameFile;
     }
 
     public static function convertTypes(array &$data, array $rules)
@@ -263,5 +286,33 @@ class Format extends FormatAux
         } else {
             return parent::extensive($numeral);
         }
+    }
+
+    public static function restructFileArray(array $file = []): array
+    {
+        var_dump($file);
+        echo '<hr>';
+
+        // $fileError = ValidateFile::validateFileErrorPhp($file);
+
+        // if (count($fileError) > 0) {
+        //     return $fileError;
+        // }
+
+        $arrayFile = [];
+        foreach ($file['name'] as $key => $name) {
+            $name = self::formatFileName($name);
+
+            $params = [
+                'name'     => $name,
+                'type'     => $file['type'][$key],
+                'tmp_name' => $file['tmp_name'][$key],
+                'error'    => $file['error'][$key],
+                'size'     => $file['size'][$key],
+                'name_upload' => self::generateFileName($name)
+            ];
+            array_push($arrayFile, $params);
+        }
+        return $arrayFile;
     }
 }
