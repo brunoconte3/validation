@@ -104,7 +104,7 @@ use brunoconte3\Validation\Validator;
     'sexo' => 'required',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
-    'cnpj' => '34060696000163',
+    'cnpj' => 'CompanyIdentification',
     'cnpjException' => 'CompanyIdentification:00000000000000;11111111111111;22222222222222',
     'nome' => 'required|min:2',
     'numero' => 'max:5',
@@ -132,88 +132,11 @@ if (!$validator->getErros()) {
 }
 ```
 
-# Tipos de validação (validators)
+# Validando Upload de Arquivo(s)
 
-- required: `Define o campo como obrigatório.`
-- min: `Define o tamanho mínimo do valor.`
-- max: `Define o tamanho máximo do valor.`
-- alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
-- alphaNoSpecial: `Verifica se o campo contém caracteres texto regular, não pode ter ascentos.`
-- alphaNum: `Verifica se o campo contém caracteres alfanuméricos.`
-- alphaNumNoSpecial: `Verifica se o campo contém letras sem ascentos, números, não pode carácter especial.`
-- array: `Verifica se a variável é um array.`
-- arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
-- bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
-- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
-- dateBrazil `Valida se a data brasileira é valida.`
-- dateAmerican `Valida se a data americana é valida.`
-- email: `Verifica se é um email válido.`
-- float: `Verifica se o valor é do tipo flutuante(valor real).`
-- identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
-- identifierOrCompany: `Valida se o CPF ou CNPJ é válido, passando CPF ou CNPJ com ou sem mascara`
-- hour `Valida se a hora é valida.`
-- int: `Verifica se o valor é do tipo inteiro.`
-- ip: `Verifica se o valor é um endereço de IP válido.`
-- json `Verifica se o valor é um json válido.`
-- lower: `Verifica se todos os caracteres são minúsculos.`
-- mac: `Verifica se o valor é um endereço de MAC válido.`
-- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
-- numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
-- numMonth `Verifica se o valor é um mês válido (1 a 12).`
-- notSpace: `Verifica se a string contém espaços.`
-- optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
-- phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
-- plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
-- regex: `Define uma regra para o valor através de uma expressão regular.`
-- upper: `Verifica se todos os caracteres são maiúsculas.`
-- url: `Verifica se o valor é um endereço de URL válida.`
-- zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
-
-- minUploadSize: `Define o tamanho (bytes) mínimo do arquivo. **Novo**`
-- maxUploadSize: `Define o tamanho (bytes) máximo do arquivo. **Novo**`
-- mimeType: `Define a(s) extensão(ões) permitida(s) para upload. **Novo**`
-- fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos. **Novo**`
-
-# Definindo mensagem personalizada
-
-Após definir algumas de nossas regras aos dados você também pode adicionar uma mensagem personalizada usando o delimitador ',' em alguma regra específica ou usar a mensagem padrão.
+Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será possível definir o tamanho (bytes) mínimo e máximo do arquivo; extensões permitidas e validar o nome do arquivo.
 
 `Exemplo:`
-
-```php
-<?php
-
-    $validator->set($datas, [
-        'nome'  => 'required, O campo nome não pode ser vazio.',
-        'email' => 'email, O campo email esta incorreto.|max:50',
-        'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.',
-    ]);
-```
-
-# Validando Upload de Arquivos
-
-Após definir algumas de nossas regras aos dados e personalizar as mensagens, você pode validar
-
-`Exemplo:`
-
-```php
-<?php
-
-    if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
-        $fileUploadSingle = $_FILES['fileUploadSingle'];
-        $fileUploadMultiple = $_FILES['fileUploadMultiple'];
-
-        $datas = [
-            'fileUploadSingle' => $fileUploadSingle,
-            'fileUploadMultiple' => $fileUploadMultiple,
-        ];
-
-        $rules = [
-            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUpload:10|maxUpload:100',
-            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUpload:10|maxUpload:100, Mensagem personalizada aqui!',
-        ];
-    }
-```
 
 ```html
 <!DOCTYPE html>
@@ -233,6 +156,90 @@ Após definir algumas de nossas regras aos dados e personalizar as mensagens, vo
     </form>
   </body>
 </html>
+```
+
+```php
+<?php
+    /**
+     * Observações
+     *
+     * minUploadSize: Deve ser um valor do tipo inteiro.
+     * maxUploadSize: Deve ser um valor do tipo inteiro.
+     * mimeType: Para passar um array com as extensões permitidas, basta utilizar o delimitador ';' entre os valores.
+     */
+    if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+        $fileUploadSingle = $_FILES['fileUploadSingle'];
+        $fileUploadMultiple = $_FILES['fileUploadMultiple'];
+
+        $datas = [
+            'fileUploadSingle' => $fileUploadSingle,
+            'fileUploadMultiple' => $fileUploadMultiple,
+        ];
+
+        $rules = [
+            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|maxUploadSize:100',
+            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Mensagem personalizada aqui!',
+        ];
+    }
+```
+
+# Tipos de validação (validators)
+
+- alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
+- alphaNoSpecial: `Verifica se o campo contém caracteres texto regular, não pode ter ascentos.`
+- alphaNum: `Verifica se o campo contém caracteres alfanuméricos.`
+- alphaNumNoSpecial: `Verifica se o campo contém letras sem ascentos, números, não pode carácter especial.`
+- array: `Verifica se a variável é um array.`
+- arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
+- bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
+- companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
+- dateBrazil `Valida se a data brasileira é valida.`
+- dateAmerican `Valida se a data americana é valida.`
+- email: `Verifica se é um email válido.`
+- fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos.`
+- float: `Verifica se o valor é do tipo flutuante(valor real).`
+- hour `Valida se a hora é valida.`
+- ip: `Verifica se o valor é um endereço de IP válido.`
+- identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
+- identifierOrCompany: `Valida se o CPF ou CNPJ é válido, passando CPF ou CNPJ com ou sem mascara`
+- int: `Verifica se o valor é do tipo inteiro.`
+- json `Verifica se o valor é um json válido.`
+- lower: `Verifica se todos os caracteres são minúsculos.`
+- mac: `Verifica se o valor é um endereço de MAC válido.`
+- max: `Define o tamanho máximo do valor.`
+- maxUploadSize: `Define o tamanho (bytes) máximo do arquivo.`
+- min: `Define o tamanho mínimo do valor.`
+- mimeType: `Define a(s) extensão(ões) permitida(s) para upload.`
+- minUploadSize: `Define o tamanho (bytes) mínimo do arquivo.`
+- numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
+- numMax: `Define um valor máximo.`
+- numMin: `Define um valor mínimo.`
+- numMonth `Verifica se o valor é um mês válido (1 a 12).`
+- notSpace: `Verifica se a string contém espaços.`
+- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
+- optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
+- plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
+- phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
+- regex: `Define uma regra para o valor através de uma expressão regular.`
+- required: `Define o campo como obrigatório.`
+- upper: `Verifica se todos os caracteres são maiúsculas.`
+- url: `Verifica se o valor é um endereço de URL válida.`
+- zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
+
+# Definindo mensagem personalizada
+
+Após definir algumas de nossas regras aos dados você também pode adicionar uma mensagem personalizada usando o delimitador ',' em alguma regra específica ou usar a mensagem padrão.
+
+`Exemplo:`
+
+```php
+<?php
+
+    $validator->set($datas, [
+        'nome'  => 'required, O campo nome não pode ser vazio.',
+        'email' => 'email, O campo email esta incorreto.|max:50',
+        'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.',
+    ]);
 ```
 
 # Formatação Exemplos
@@ -307,7 +314,6 @@ Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
  * de se trabalhar.
  *
  * Com o Format::restructFileArray(), este array será normalizado.
- *
  * ---------------------------------------------------------------------------------------------------------------------
  */
 

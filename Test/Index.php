@@ -51,6 +51,43 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
             padding: 15px;
             min-height: 400px;
         }
+
+        div#bd-form-upload {
+            position: relative;
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+        }
+
+        div#bd-form-upload>form {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        div#bd-form-upload>form>div {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+        }
+
+        div#bd-form-upload>form>div:last-child {
+            align-items: flex-end !important;
+        }
+
+        div#bd-form-upload>form>div>label {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        div#bd-form-upload>form>div>input[type='file'] {
+            width: 100%;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 
@@ -66,6 +103,23 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                 <div>
                     <?php
 
+                    echo '<p>Aqui vem os seus testes!</p>';
+
+                    $array = ['cpfOuCnpj' => '04764334879'];
+                    $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
+
+                    $validator = new Validator();
+                    $validator->set($array, $rules);
+
+                    echo '<pre>';
+                    print_r($validator->getErros());
+                    ?>
+                    <hr />
+                </div>
+
+                <div>
+                    <?php
+
                     if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
                         $fileUploadSingle = $_FILES['fileUploadSingle'];
                         $fileUploadMultiple = $_FILES['fileUploadMultiple'];
@@ -76,8 +130,8 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                         ];
 
                         $rules = [
-                            'fileUploadSingle' => 'mimeType:txt;',
-                            'fileUploadMultiple' => 'maxUploadSize:10'
+                            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg|minUploadSize:10|maxUploadSize:100',
+                            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Msg',
                         ];
 
                         $validator = new Validator();
@@ -86,44 +140,32 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                         echo '<pre>';
                         print_r($validator->getErros());
 
-                        // var_dump(Format::restructFileArray($fileUploadSingle));
-                        // var_dump(Format::restructFileArray($fileUploadMultiple));
+                        echo '<hr>';
+
+                        echo '<pre>';
+                        print_r(Format::restructFileArray($fileUploadSingle));
+                        print_r(Format::restructFileArray($fileUploadMultiple));
                     }
 
                     ?>
 
-                    <div style="background-color: #eee; padding: 15px; margin-top: 30px;">
+                    <div id="bd-form-upload">
                         <form method="POST" enctype="multipart/form-data">
                             <!-- Upload de um único arquivo. -->
                             <div>
+                                <label for="fileUploadSingle">Upload de um arquivo</label>
                                 <input type="file" name="fileUploadSingle" />
                             </div>
                             <!-- Upload de um ou multiplos arquivos. -->
                             <div>
+                                <label for="fileUploadSingle">Upload de multiplos arquivo</label>
                                 <input type="file" name="fileUploadMultiple[]" multiple="multiple">
                             </div>
                             <div>
-                                <hr>
                                 <button type="submit">Upload</button>
                             </div>
                         </form>
                     </div>
-                </div>
-
-                <div>
-                    <?php
-
-                    // echo '<p>Aqui vem os seus testes!</p>';
-
-                    // $array = ['cpfOuCnpj' => '04764334879'];
-                    // $rules = ['cpfOuCnpj' => 'identifierOrCompany'];
-
-                    // $validator = new Validator();
-                    // $validator->set($array, $rules);
-
-                    // echo '<pre>';
-                    // print_r($validator->getErros());
-                    ?>
                 </div>
             </div>
         </section>
