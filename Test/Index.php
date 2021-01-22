@@ -65,23 +65,19 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
             <div class="item-section-class">
                 <div>
                     <?php
-                    $file = [];
+
                     if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
-                        $fileUpload = $_FILES['fileUpload'];
+                        $fileUploadSingle = $_FILES['fileUploadSingle'];
                         $fileUploadMultiple = $_FILES['fileUploadMultiple'];
 
-                        echo '<hr/>';
-
                         $array = [
-                            'fileUpload' => $fileUpload,
-                            'fileUploadMultiple' => $fileUploadMultiple,
-                            // 'numero' => '77289436752836'
+                            'fileUploadSingle' => $fileUploadSingle,
+                            'fileUploadMultiple' => $fileUploadMultiple
                         ];
 
                         $rules = [
-                            'fileUpload' => 'mimeType:jpeg,',
-                            'fileUploadMultiple' => 'maxUploadSize:10',
-                            // 'numero' => 'max:5|min:1023, Eita'
+                            'fileUploadSingle' => 'mimeType:txt;',
+                            'fileUploadMultiple' => 'maxUploadSize:10'
                         ];
 
                         $validator = new Validator();
@@ -90,23 +86,24 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                         echo '<pre>';
                         print_r($validator->getErros());
 
-                        echo '<hr/>';
-
-                        var_dump(Format::restructFileArray($file));
+                        // var_dump(Format::restructFileArray($fileUploadSingle));
+                        // var_dump(Format::restructFileArray($fileUploadMultiple));
                     }
 
                     ?>
 
                     <div style="background-color: #eee; padding: 15px; margin-top: 30px;">
-                        <form name="formFileUpload" id="form-file-upload" method="POST" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data">
+                            <!-- Upload de um único arquivo. -->
                             <div>
-                                <input type="file" name="fileUpload" placeholder="Selec">
+                                <input type="file" name="fileUploadSingle" />
+                            </div>
+                            <!-- Upload de um ou multiplos arquivos. -->
+                            <div>
+                                <input type="file" name="fileUploadMultiple[]" multiple="multiple">
                             </div>
                             <div>
-                                <input type="file" name="fileUploadMultiple[]" placeholder="Selec" multiple="multiple">
-                            </div>
-                            <hr>
-                            <div>
+                                <hr>
                                 <button type="submit">Upload</button>
                             </div>
                         </form>

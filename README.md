@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.26.0"
+"brunoconte3/validation": "4.27.0"
 ```
 
 via composer.
@@ -169,6 +169,11 @@ if (!$validator->getErros()) {
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
 
+- minUploadSize: `Define o tamanho (bytes) mínimo do arquivo. **Novo**`
+- maxUploadSize: `Define o tamanho (bytes) máximo do arquivo. **Novo**`
+- mimeType: `Define a(s) extensão(ões) permitida(s) para upload. **Novo**`
+- fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos. **Novo**`
+
 # Definindo mensagem personalizada
 
 Após definir algumas de nossas regras aos dados você também pode adicionar uma mensagem personalizada usando o delimitador ',' em alguma regra específica ou usar a mensagem padrão.
@@ -183,6 +188,51 @@ Após definir algumas de nossas regras aos dados você também pode adicionar um
         'email' => 'email, O campo email esta incorreto.|max:50',
         'senha' => 'min:8, no mínimo 8 caracteres.|max:12, no máximo 12 caracteres.',
     ]);
+```
+
+# Validando Upload de Arquivos
+
+Após definir algumas de nossas regras aos dados e personalizar as mensagens, você pode validar
+
+`Exemplo:`
+
+```php
+<?php
+
+    if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+        $fileUploadSingle = $_FILES['fileUploadSingle'];
+        $fileUploadMultiple = $_FILES['fileUploadMultiple'];
+
+        $datas = [
+            'fileUploadSingle' => $fileUploadSingle,
+            'fileUploadMultiple' => $fileUploadMultiple,
+        ];
+
+        $rules = [
+            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUpload:10|maxUpload:100',
+            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUpload:10|maxUpload:100, Mensagem personalizada aqui!',
+        ];
+    }
+```
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    ...
+  </head>
+  <body>
+    <form method="POST" enctype="multipart/form-data">
+      <!-- Upload de um único arquivo. -->
+      <input type="file" name="fileUploadSingle" />
+
+      <!-- Upload de um ou multiplos arquivos. -->
+      <input type="file" name="fileUploadMultiple[]" multiple="multiple" />
+
+      <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>
 ```
 
 # Formatação Exemplos
@@ -248,6 +298,100 @@ Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
   'b' => 333,
   'c' => 0,
 ]
+
+/**
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Upload de Arquivos
+ *
+ * Para o upload de multiplos arquivos, a forma que a váriavel global $_FILES estrutura o array, é um pouco complicado
+ * de se trabalhar.
+ *
+ * Com o Format::restructFileArray(), este array será normalizado.
+ *
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
+
+// Single File - HTTP $_FILES
+$fileUploadSingle = [
+    'name' => 'JPG - Validação upload v.1.jpg',
+    'type' => 'image/jpeg',
+    'tmp_name' => '/tmp/phpODnLGo',
+    'error' => 0,
+    'size' => 8488,
+];
+
+// Multiple Files - HTTP $_FILES
+$fileUploadMultiple = [
+	'name' => [
+		'0' => 'JPG - Validação upload v.1.jpg',
+		'1' => 'PDF - Validação upload v.1.pdf',
+		'2' => 'PNG - Validação upload v.1.png',
+	],
+	'type' => [
+		'0' => 'image/jpeg',
+		'1' => 'application/pdf',
+		'2' => 'image/png',
+	],
+	'tmp_name' => [
+		'0' => '/tmp/phpODnLGo',
+		'1' => '/tmp/phpfmb0tL',
+		'2' => '/tmp/phpnoejk8',
+	],
+	'error' => [
+		'0' => 0,
+		'1' => 0,
+		'2' => 0,
+	],
+	'size' => [
+		'0' => 8488,
+		'1' => 818465,
+		'2' => 1581312,
+	],
+];
+
+// Chamada do método responsável por normalizar o array.
+Format::restructFileArray($array);
+
+// Retorno, array com um único arquivo.
+[
+	0 => [
+		'name' => 'jpg___validacao_upload_v_1.jpg',
+		'type' => 'image/jpeg',
+		'tmp_name' => '/tmp/phpBmqX1i',
+		'error' => 0,
+		'size' => 8488,
+		'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
+	],
+]
+
+// Retorno, array com multiplos arquivos.
+[
+	0 => [
+		'name' => 'jpg___validacao_upload_v_1.jpg',
+		'type' => 'image/jpeg',
+		'tmp_name' => '/tmp/phpBmqX1i',
+		'error' => 0,
+		'size' => 8488,
+		'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
+	],
+	1 => [
+		'name' => 'pdf___validacao_upload_v_1.pdf',
+		'type' => 'application/pdf',
+		'tmp_name' => '/tmp/phpYo0w7c',
+		'error' => 0,
+		'size' => 818465,
+		'name_upload' => '22-01-2021_13_170624609160164419213582611971611322393600ad41961a5a_pdf___validacao_upload_v_1.pdf',
+	],
+	2 => [
+		'name' => 'png___validacao_upload_v_1.png',
+		'type' => 'image/png',
+		'tmp_name' => '/tmp/phpme7Yf7',
+		'error' => 0,
+		'size' => 1581312,
+		'name_upload' => '22-01-2021_13_8675237129330338531328755051611322393600ad41961ac8_png___validacao_upload_v_1.png',
+	],
+]
+
 ```
 
 # Comparações Exemplos

@@ -8,8 +8,7 @@ class ValidateFile
 {
     private static function validateFileTransformSingleToMultiple(array &$file = []): void
     {
-        var_dump($file);
-        if (!is_array($file['name'])) {
+        if (isset($file['name']) && !is_array($file['name'])) {
             foreach ($file as $paramFile => $value) {
                 $file[$paramFile] = [$value];
             }

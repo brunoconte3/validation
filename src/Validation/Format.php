@@ -290,25 +290,27 @@ class Format extends FormatAux
 
     public static function restructFileArray(array $file = []): array
     {
-        $fileError = ValidateFile::validateFileErrorPhp($file);
-
-        if (count($fileError) > 0) {
-            return $fileError;
-        }
-
         $arrayFile = [];
-        foreach ($file['name'] as $key => $name) {
-            $name = self::formatFileName($name);
 
-            $params = [
-                'name'     => $name,
-                'type'     => $file['type'][$key],
-                'tmp_name' => $file['tmp_name'][$key],
-                'error'    => $file['error'][$key],
-                'size'     => $file['size'][$key],
-                'name_upload' => self::generateFileName($name)
-            ];
-            array_push($arrayFile, $params);
+        if (count($file) > 0) {
+            $fileError = ValidateFile::validateFileErrorPhp($file);
+
+            if (count($fileError) > 0) {
+                return $fileError;
+            }
+
+            foreach ($file['name'] as $key => $name) {
+                $name = self::formatFileName($name);
+                $params = [
+                    'name'     => $name,
+                    'type'     => $file['type'][$key],
+                    'tmp_name' => $file['tmp_name'][$key],
+                    'error'    => $file['error'][$key],
+                    'size'     => $file['size'][$key],
+                    'name_upload' => self::generateFileName($name)
+                ];
+                array_push($arrayFile, $params);
+            }
         }
         return $arrayFile;
     }
