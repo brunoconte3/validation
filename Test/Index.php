@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace brunoconte3\Test;
 
-use brunoconte3\Validation\Format;
-use brunoconte3\Validation\Validator;
+use brunoconte3\Validation\{
+    Validator,
+    Format
+};
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 ?>
@@ -156,7 +158,7 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                                 <label for="fileUploadSingle">Upload de um arquivo</label>
                                 <input type="file" name="fileUploadSingle" />
                             </div>
-                            <!-- Upload de um ou multiplos arquivos. -->
+                            <!-- Upload de um ou múltiplos arquivos. -->
                             <div>
                                 <label for="fileUploadSingle">Upload de multiplos arquivo</label>
                                 <input type="file" name="fileUploadMultiple[]" multiple="multiple">

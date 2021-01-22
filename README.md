@@ -149,7 +149,7 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
       <!-- Upload de um único arquivo. -->
       <input type="file" name="fileUploadSingle" />
 
-      <!-- Upload de um ou multiplos arquivos. -->
+      <!-- Upload de um ou múltiplos arquivos. -->
       <input type="file" name="fileUploadMultiple[]" multiple="multiple" />
 
       <button type="submit">Upload</button>
@@ -193,8 +193,8 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
-- dateBrazil `Valida se a data brasileira é valida.`
 - dateAmerican `Valida se a data americana é valida.`
+- dateBrazil `Valida se a data brasileira é valida.`
 - email: `Verifica se é um email válido.`
 - fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
@@ -218,8 +218,8 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - notSpace: `Verifica se a string contém espaços.`
 - noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
-- plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
+- plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - required: `Define o campo como obrigatório.`
 - upper: `Verifica se todos os caracteres são maiúsculas.`
@@ -310,7 +310,7 @@ Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
  * ---------------------------------------------------------------------------------------------------------------------
  * Upload de Arquivos
  *
- * Para o upload de multiplos arquivos, a forma que a váriavel global $_FILES estrutura o array, é um pouco complicado
+ * Para o upload de múltiplos arquivos, a forma que a váriavel global $_FILES estrutura o array, é um pouco complicado
  * de se trabalhar.
  *
  * Com o Format::restructFileArray(), este array será normalizado.
@@ -370,7 +370,7 @@ Format::restructFileArray($array);
 	],
 ]
 
-// Retorno, array com multiplos arquivos.
+// Retorno, array com múltiplos arquivos.
 [
 	0 => [
 		'name' => 'jpg___validacao_upload_v_1.jpg',

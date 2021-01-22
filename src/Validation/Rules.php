@@ -145,7 +145,7 @@ class Rules
     protected function levelSubLevelsArrayReturnJson(array $data, bool $recursive = false)
     {
         //funcao recurssiva para tratar array e retornar json valido
-        //essa função serve para validar dados com json_encode multiplos, e indices quebrados na estrutura
+        //essa função serve para validar dados com json_encode múltiplos, e indices quebrados na estrutura
         foreach ($data as $key => $val) {
             $key = $this->prepareCharset($key, 'UTF-8');
             if (is_string($val) && !empty($val)) {
