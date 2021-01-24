@@ -180,6 +180,17 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
             'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|maxUploadSize:100',
             'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Mensagem personalizada aqui!',
         ];
+
+        $validator = new Validator();
+        Format::convertTypes($datas, $rules);
+        $validator->set($datas, $rules);
+
+        if (!$validator->getErros()) {
+            echo 'Dados válidados com sucesso!';
+        } else {
+            echo '<pre>';
+            print_r($validator->getErros());
+        }
     }
 ```
 
@@ -193,17 +204,17 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
-- dateAmerican `Valida se a data americana é valida.`
-- dateBrazil `Valida se a data brasileira é valida.`
+- dateAmerican: `Valida se a data americana é valida.`
+- dateBrazil: `Valida se a data brasileira é valida.`
 - email: `Verifica se é um email válido.`
 - fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
-- hour `Valida se a hora é valida.`
-- ip: `Verifica se o valor é um endereço de IP válido.`
+- hour: `Valida se a hora é valida.`
 - identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
 - identifierOrCompany: `Valida se o CPF ou CNPJ é válido, passando CPF ou CNPJ com ou sem mascara`
 - int: `Verifica se o valor é do tipo inteiro.`
-- json `Verifica se o valor é um json válido.`
+- ip: `Verifica se o valor é um endereço de IP válido.`
+- json: `Verifica se o valor é um json válido.`
 - lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - max: `Define o tamanho máximo do valor.`
@@ -214,9 +225,9 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
 - numMax: `Define um valor máximo.`
 - numMin: `Define um valor mínimo.`
-- numMonth `Verifica se o valor é um mês válido (1 a 12).`
+- numMonth: `Verifica se o valor é um mês válido (1 a 12).`
 - notSpace: `Verifica se a string contém espaços.`
-- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
+- noWeekend: `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
@@ -306,18 +317,15 @@ Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
   'c' => 0,
 ]
 
-/**
- * ---------------------------------------------------------------------------------------------------------------------
- * Upload de Arquivos
- *
- * Para o upload de múltiplos arquivos, a forma que a váriavel global $_FILES estrutura o array, é um pouco complicado
- * de se trabalhar.
- *
- * Com o Format::restructFileArray(), este array será normalizado.
- * ---------------------------------------------------------------------------------------------------------------------
- */
+```
 
-// Single File - HTTP $_FILES
+# Formatação Upload de Arquivo(s)
+
+`Exemplo: Upload de um único arquivo.`
+
+```php
+<?php
+
 $fileUploadSingle = [
     'name' => 'JPG - Validação upload v.1.jpg',
     'type' => 'image/jpeg',
@@ -326,7 +334,25 @@ $fileUploadSingle = [
     'size' => 8488,
 ];
 
-// Multiple Files - HTTP $_FILES
+Format::restructFileArray($fileUploadSingle); // Chamada do método responsável por normalizar o array.
+[
+    0 => [
+        'name' => 'jpg___validacao_upload_v_1.jpg',
+        'type' => 'image/jpeg',
+        'tmp_name' => '/tmp/phpBmqX1i',
+        'error' => 0,
+        'size' => 8488,
+        'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
+    ]
+]
+
+```
+
+`Exemplo: Upload de múltiplos arquivos.`
+
+```php
+<?php
+
 $fileUploadMultiple = [
 	'name' => [
 		'0' => 'JPG - Validação upload v.1.jpg',
@@ -355,22 +381,7 @@ $fileUploadMultiple = [
 	],
 ];
 
-// Chamada do método responsável por normalizar o array.
-Format::restructFileArray($array);
-
-// Retorno, array com um único arquivo.
-[
-	0 => [
-		'name' => 'jpg___validacao_upload_v_1.jpg',
-		'type' => 'image/jpeg',
-		'tmp_name' => '/tmp/phpBmqX1i',
-		'error' => 0,
-		'size' => 8488,
-		'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
-	],
-]
-
-// Retorno, array com múltiplos arquivos.
+Format::restructFileArray($fileUploadMultiple); // Chamada do método responsável por normalizar o array.
 [
 	0 => [
 		'name' => 'jpg___validacao_upload_v_1.jpg',
