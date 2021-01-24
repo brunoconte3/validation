@@ -6,7 +6,8 @@ use brunoconte3\Validation\{
     ValidateCpf,
     ValidateCnpj,
     ValidatePhone,
-    ValidateHour
+    ValidateHour,
+    ValidateFile
 };
 
 class Rules
@@ -18,6 +19,20 @@ class Rules
     {
         $msg = "Uma regra inválida está sendo aplicada no campo $field!";
         $this->errors[$field] = $msg;
+    }
+
+    private function validateHandleErrorsFile(array $errorList = [], string $field = ''): void
+    {
+        if (count($errorList) > 0) {
+            if ((is_array($this->errors) && array_key_exists($field, $this->errors))) {
+                foreach ($errorList as $error) {
+                    array_push($this->errors[$field], $error);
+                }
+                $this->errors[$field] = array_unique($this->errors[$field]);
+            } else {
+                $this->errors[$field] = $errorList;
+            }
+        }
     }
 
     protected function prepareCharset(string $string = '', string $convert = 'UTF-8', bool $bom = false): string
@@ -84,7 +99,11 @@ class Rules
             'url' => 'validateUrl',
             'noWeekend' => 'validateWeekend',
             'zipcode' => 'validateZipCode',
-            'json' => 'validateJson'
+            'json' => 'validateJson',
+            'maxUploadSize' => 'validateFileMaxUploadSize',
+            'minUploadSize' => 'validateFileMinUploadSize',
+            'fileName' => 'validateFileName',
+            'mimeType' => 'validateFileMimeType'
         ];
     }
 
@@ -126,7 +145,7 @@ class Rules
     protected function levelSubLevelsArrayReturnJson(array $data, bool $recursive = false)
     {
         //funcao recurssiva para tratar array e retornar json valido
-        //essa função serve para validar dados com json_encode multiplos, e indices quebrados na estrutura
+        //essa função serve para validar dados com json_encode múltiplos, e indices quebrados na estrutura
         foreach ($data as $key => $val) {
             $key = $this->prepareCharset($key, 'UTF-8');
             if (is_string($val) && !empty($val)) {
@@ -606,6 +625,75 @@ class Rules
             }
         } else {
             $this->errors[$field] = !empty($message) ? $message : "O campo $field não contém um json válido!";
+        }
+    }
+
+    protected function validateFileMaxUploadSize($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = trim($rule);
+
+        if (!is_numeric($rule) || ($rule < 0)) {
+            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
+            $this->errors[$field] = $text;
+            return;
+        }
+
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
+
+        if (empty($validateErrorPhp)) {
+            $validateResult = ValidateFile::validateMaxUploadSize(intval($rule), $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
+        } else {
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+        }
+    }
+
+    protected function validateFileMinUploadSize($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = trim($rule);
+
+        if (!is_numeric($rule) || ($rule < 0)) {
+            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
+            $this->errors[$field] = $text;
+            return;
+        }
+
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
+
+        if (empty($validateErrorPhp)) {
+            $validateResult = ValidateFile::validateMinUploadSize(intval($rule), $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
+        } else {
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+        }
+    }
+
+    protected function validateFileName($rule = '', $field = '', $value = null, $message = null): void
+    {
+        if (empty($value) || (count($value) <= 0)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não pode ser vazio!";
+            return;
+        }
+
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
+
+        if (empty($validateErrorPhp)) {
+            $validateResult = ValidateFile::validateFileName($value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
+        } else {
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+        }
+    }
+
+    protected function validateFileMimeType($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
+
+        if (empty($validateErrorPhp)) {
+            $validateResult = ValidateFile::validateMimeType($rule, $value, $message);
+            $this->validateHandleErrorsFile($validateResult, $field);
+        } else {
+            $this->validateHandleErrorsFile($validateErrorPhp, $field);
         }
     }
 }

@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.26.0"
+"brunoconte3/validation": "4.27.0"
 ```
 
 via composer.
@@ -104,7 +104,7 @@ use brunoconte3\Validation\Validator;
     'sexo' => 'required',
     'telefone' => 'required|phone',
     'cpf' => 'required|identifier',
-    'cnpj' => '34060696000163',
+    'cnpj' => 'CompanyIdentification',
     'cnpjException' => 'CompanyIdentification:00000000000000;11111111111111;22222222222222',
     'nome' => 'required|min:2',
     'numero' => 'max:5',
@@ -132,11 +132,59 @@ if (!$validator->getErros()) {
 }
 ```
 
+# Validando Upload de Arquivo(s)
+
+Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será possível definir o tamanho (bytes) mínimo e máximo do arquivo; extensões permitidas e validar o nome do arquivo.
+
+`Exemplo:`
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    ...
+  </head>
+  <body>
+    <form method="POST" enctype="multipart/form-data">
+      <!-- Upload de um único arquivo. -->
+      <input type="file" name="fileUploadSingle" />
+
+      <!-- Upload de um ou múltiplos arquivos. -->
+      <input type="file" name="fileUploadMultiple[]" multiple="multiple" />
+
+      <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>
+```
+
+```php
+<?php
+    /**
+     * Observações
+     *
+     * minUploadSize: Deve ser um valor do tipo inteiro.
+     * maxUploadSize: Deve ser um valor do tipo inteiro.
+     * mimeType: Para passar um array com as extensões permitidas, basta utilizar o delimitador ';' entre os valores.
+     */
+    if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+        $fileUploadSingle = $_FILES['fileUploadSingle'];
+        $fileUploadMultiple = $_FILES['fileUploadMultiple'];
+
+        $datas = [
+            'fileUploadSingle' => $fileUploadSingle,
+            'fileUploadMultiple' => $fileUploadMultiple,
+        ];
+
+        $rules = [
+            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|maxUploadSize:100',
+            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Mensagem personalizada aqui!',
+        ];
+    }
+```
+
 # Tipos de validação (validators)
 
-- required: `Define o campo como obrigatório.`
-- min: `Define o tamanho mínimo do valor.`
-- max: `Define o tamanho máximo do valor.`
 - alpha: `Verifica se o campo contém somentes caracteres alfabéticos.`
 - alphaNoSpecial: `Verifica se o campo contém caracteres texto regular, não pode ter ascentos.`
 - alphaNum: `Verifica se o campo contém caracteres alfanuméricos.`
@@ -145,26 +193,35 @@ if (!$validator->getErros()) {
 - arrayValues: `Verifica se a variável possui uma das opções do array especificado.`
 - bool: `Valores do tipo lógico.` `Ex: true ou false, 1 ou 0, yes ou no.`
 - companyIdentification: `Valida se o CNPJ é válido, passando CNPJ com ou sem mascara`
-- dateBrazil `Valida se a data brasileira é valida.`
 - dateAmerican `Valida se a data americana é valida.`
+- dateBrazil `Valida se a data brasileira é valida.`
 - email: `Verifica se é um email válido.`
+- fileName: `Verifica se o nome do arquivo contém caracteres regular, não pode ter ascentos.`
 - float: `Verifica se o valor é do tipo flutuante(valor real).`
+- hour `Valida se a hora é valida.`
+- ip: `Verifica se o valor é um endereço de IP válido.`
 - identifier: `Valida se o CPF é válido, passando CPF com ou sem mascara`
 - identifierOrCompany: `Valida se o CPF ou CNPJ é válido, passando CPF ou CNPJ com ou sem mascara`
-- hour `Valida se a hora é valida.`
 - int: `Verifica se o valor é do tipo inteiro.`
-- ip: `Verifica se o valor é um endereço de IP válido.`
 - json `Verifica se o valor é um json válido.`
 - lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
-- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
+- max: `Define o tamanho máximo do valor.`
+- maxUploadSize: `Define o tamanho (bytes) máximo do arquivo.`
+- min: `Define o tamanho mínimo do valor.`
+- mimeType: `Define a(s) extensão(ões) permitida(s) para upload.`
+- minUploadSize: `Define o tamanho (bytes) mínimo do arquivo.`
 - numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
+- numMax: `Define um valor máximo.`
+- numMin: `Define um valor mínimo.`
 - numMonth `Verifica se o valor é um mês válido (1 a 12).`
 - notSpace: `Verifica se a string contém espaços.`
+- noWeekend `Verifica se a data (Brasileira ou Americada não é um Final de Semana).`
 - optional: `Se inserido, só valida se o valor vier diferente de vazio, null ou false.`
 - phone: `Verifica se o valor corresponde a um telefone válido. (DDD + NÚMEROS) 10 ou 11 dígitos`
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
+- required: `Define o campo como obrigatório.`
 - upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zipCode: `Verifica se o valor corresponde ao formato de um CEP.`
@@ -248,6 +305,99 @@ Format::arrayToIntReference($array); //Formata valores do array em inteiro ==>
   'b' => 333,
   'c' => 0,
 ]
+
+/**
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Upload de Arquivos
+ *
+ * Para o upload de múltiplos arquivos, a forma que a váriavel global $_FILES estrutura o array, é um pouco complicado
+ * de se trabalhar.
+ *
+ * Com o Format::restructFileArray(), este array será normalizado.
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
+
+// Single File - HTTP $_FILES
+$fileUploadSingle = [
+    'name' => 'JPG - Validação upload v.1.jpg',
+    'type' => 'image/jpeg',
+    'tmp_name' => '/tmp/phpODnLGo',
+    'error' => 0,
+    'size' => 8488,
+];
+
+// Multiple Files - HTTP $_FILES
+$fileUploadMultiple = [
+	'name' => [
+		'0' => 'JPG - Validação upload v.1.jpg',
+		'1' => 'PDF - Validação upload v.1.pdf',
+		'2' => 'PNG - Validação upload v.1.png',
+	],
+	'type' => [
+		'0' => 'image/jpeg',
+		'1' => 'application/pdf',
+		'2' => 'image/png',
+	],
+	'tmp_name' => [
+		'0' => '/tmp/phpODnLGo',
+		'1' => '/tmp/phpfmb0tL',
+		'2' => '/tmp/phpnoejk8',
+	],
+	'error' => [
+		'0' => 0,
+		'1' => 0,
+		'2' => 0,
+	],
+	'size' => [
+		'0' => 8488,
+		'1' => 818465,
+		'2' => 1581312,
+	],
+];
+
+// Chamada do método responsável por normalizar o array.
+Format::restructFileArray($array);
+
+// Retorno, array com um único arquivo.
+[
+	0 => [
+		'name' => 'jpg___validacao_upload_v_1.jpg',
+		'type' => 'image/jpeg',
+		'tmp_name' => '/tmp/phpBmqX1i',
+		'error' => 0,
+		'size' => 8488,
+		'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
+	],
+]
+
+// Retorno, array com múltiplos arquivos.
+[
+	0 => [
+		'name' => 'jpg___validacao_upload_v_1.jpg',
+		'type' => 'image/jpeg',
+		'tmp_name' => '/tmp/phpBmqX1i',
+		'error' => 0,
+		'size' => 8488,
+		'name_upload' => '22-01-2021_13_1830117018768373446425980271611322393600ad419619ec_jpg___validacao_upload_v_1.jpg',
+	],
+	1 => [
+		'name' => 'pdf___validacao_upload_v_1.pdf',
+		'type' => 'application/pdf',
+		'tmp_name' => '/tmp/phpYo0w7c',
+		'error' => 0,
+		'size' => 818465,
+		'name_upload' => '22-01-2021_13_170624609160164419213582611971611322393600ad41961a5a_pdf___validacao_upload_v_1.pdf',
+	],
+	2 => [
+		'name' => 'png___validacao_upload_v_1.png',
+		'type' => 'image/png',
+		'tmp_name' => '/tmp/phpme7Yf7',
+		'error' => 0,
+		'size' => 1581312,
+		'name_upload' => '22-01-2021_13_8675237129330338531328755051611322393600ad41961ac8_png___validacao_upload_v_1.png',
+	],
+]
+
 ```
 
 # Comparações Exemplos

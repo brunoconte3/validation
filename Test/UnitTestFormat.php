@@ -207,4 +207,27 @@ class UnitTestFormat extends TestCase
     {
         $this->assertEquals('um real e noventa e sete centavos', Format::writeCurrencyExtensive(1.97));
     }
+
+    public function testRestructFileArray(): void
+    {
+        $fileUploadSingle = [
+            'name' => 'JPG - Validação upload v.1.jpg',
+            'type' => 'image/jpeg',
+            'tmp_name' => '/tmp/phpODnLGo',
+            'error' => 0,
+            'size' => 8488,
+        ];
+
+        $fileUploadMultiple = [
+            'name'     => ['0' => 'JPG - Validação upload v.1.jpg', '1' => 'PDF - Validação upload v.1.pdf'],
+            'type'     => ['0' => 'image/jpeg', '1' => 'application/pdf'],
+            'tmp_name' => ['0' => '/tmp/phpODnLGo', '1' => '/tmp/phpfmb0tL'],
+            'error'    => ['0' => 0, '1' => 0],
+            'size'     => ['0' => 8488, '1' => 818465],
+        ];
+
+        $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadSingle)[0]);
+        $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadMultiple)[0]);
+        $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadMultiple)[1]);
+    }
 }
