@@ -90,7 +90,7 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                             </div>
                             <!-- Upload de um ou múltiplos arquivos. -->
                             <div>
-                                <label for="fileUploadSingle">Upload de multiplos arquivo</label>
+                                <label for="fileUploadSingle">Upload de múltiplos arquivo</label>
                                 <input type="file" name="fileUploadMultiple[]" multiple="multiple">
                             </div>
                             <div>
