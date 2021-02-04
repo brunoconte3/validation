@@ -15,7 +15,7 @@ Aplicado padrão das PSR.
 via composer.json
 
 ```
-"brunoconte3/validation": "4.27.1"
+"brunoconte3/validation": "4.28.0"
 ```
 
 via composer.
@@ -163,8 +163,10 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
     /**
      * Observações
      *
-     * minUploadSize: Deve ser um valor do tipo inteiro.
+     * maxFile: Deve ser um valor do tipo inteiro.
+     * minFile: Deve ser um valor do tipo inteiro.
      * maxUploadSize: Deve ser um valor do tipo inteiro.
+     * minUploadSize: Deve ser um valor do tipo inteiro.
      * mimeType: Para passar um array com as extensões permitidas, basta utilizar o delimitador ';' entre os valores.
      */
     if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
@@ -177,8 +179,8 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
         ];
 
         $rules = [
-            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|maxUploadSize:100',
-            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Mensagem personalizada aqui!',
+            'fileUploadSingle' => 'requiredFile|fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|maxUploadSize:100',
+            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minFile:1|maxFile:3|minUploadSize:10|maxUploadSize:100, Mensagem personalizada aqui!',
         ];
 
         $validator = new Validator();
@@ -218,8 +220,10 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - lower: `Verifica se todos os caracteres são minúsculos.`
 - mac: `Verifica se o valor é um endereço de MAC válido.`
 - max: `Define o tamanho máximo do valor.`
+- maxFile: `Define a quantidade máxima de arquivos para upload.`
 - maxUploadSize: `Define o tamanho (bytes) máximo do arquivo.`
 - min: `Define o tamanho mínimo do valor.`
+- minFile: `Define a quantidade mínima de arquivos para upload.`
 - mimeType: `Define a(s) extensão(ões) permitida(s) para upload.`
 - minUploadSize: `Define o tamanho (bytes) mínimo do arquivo.`
 - numeric: `Verifica se o valor contém apenas valores numéricos (Aceita zero a esquerda).`
@@ -233,6 +237,7 @@ Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será poss
 - plate: `Verifica se o valor corresponde ao formato de uma placa de carro.`
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - required: `Define o campo como obrigatório.`
+- requiredFile: `Define o campo do tipo 'File', como obrigatório.`
 - upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zipCode: `Verifica se o valor corresponde ao formato de um CEP.`

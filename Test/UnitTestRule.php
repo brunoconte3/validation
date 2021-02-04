@@ -602,4 +602,88 @@ class UnitTestRule extends TestCase
         $validator->set($array, $rules);
         $this->assertCount(2, $validator->getErros());
     }
+
+    public function testRequiredFile(): void
+    {
+        $fileUploadSingle = [
+            'name' => '',
+            'type' => '',
+            'tmp_name' => '',
+            'error' => 4,
+            'size' => 0,
+        ];
+
+        $fileUploadMultiple = [
+            'name'     => ['0' => ''],
+            'type'     => ['0' => ''],
+            'tmp_name' => ['0' => ''],
+            'error'    => ['0' => 4],
+            'size'     => ['0' => 0],
+        ];
+
+        $array = [
+            'fileUploadSingle' => $fileUploadSingle,
+            'fileUploadMultiple' => $fileUploadMultiple,
+        ];
+
+        $rules = [
+            'fileUploadSingle' => 'requiredFile',
+            'fileUploadMultiple' => 'requiredFile',
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(2, $validator->getErros());
+    }
+
+    public function testMaxFile(): void
+    {
+        $fileUploadMultiple = [
+            'name'     => ['0' => 'JPG - Validação upload v.1.jpg', '1' => 'PDF - Validação upload v.1.pdf'],
+            'type'     => ['0' => 'image/jpeg', '1' => 'application/pdf'],
+            'tmp_name' => ['0' => '/tmp/phpODnLGo', '1' => '/tmp/phpfmb0tL'],
+            'error'    => ['0' => 0, '1' => 0],
+            'size'     => ['0' => 8488, '1' => 818465],
+        ];
+
+        $array = ['fileUploadMultiple' => $fileUploadMultiple];
+        $rules = ['fileUploadMultiple' => 'maxFile:1'];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(1, $validator->getErros());
+    }
+
+    public function testMinFile(): void
+    {
+        $fileUploadSingle = [
+            'name' => '',
+            'type' => '',
+            'tmp_name' => '',
+            'error' => 4,
+            'size' => 0,
+        ];
+
+        $fileUploadMultiple = [
+            'name'     => ['0' => 'JPG - Validação upload v.1.jpg'],
+            'type'     => ['0' => 'image/jpeg'],
+            'tmp_name' => ['0' => '/tmp/phpODnLGo'],
+            'error'    => ['0' => 0],
+            'size'     => ['0' => 8488],
+        ];
+
+        $array = [
+            'fileUploadSingle' => $fileUploadSingle,
+            'fileUploadMultiple' => $fileUploadMultiple,
+        ];
+
+        $rules = [
+            'fileUploadSingle' => 'minFile:1',
+            'fileUploadMultiple' => 'minFile:2',
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+        $this->assertCount(2, $validator->getErros());
+    }
 }

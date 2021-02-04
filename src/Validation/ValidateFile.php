@@ -19,8 +19,21 @@ class ValidateFile
 
     private static function validateFileCount(array $file = []): int
     {
-        if (count($file) > 0) {
+        if ((count($file) > 0) && (isset($file['name']))) {
+            switch (is_array($file['name'])) {
+                case 1:
+                    if ((count($file['name']) == 1) && empty($file['name'][0])) {
+                        return (count($file['name']) - 1);
+                    }
+                    return count($file['name']);
+                    break;
+
+                case 0:
+                    return (is_string($file['name']) && !empty($file['name'])) ? 1 : 0;
+                    break;
+            }
         }
+
         return 0;
     }
 
@@ -143,8 +156,11 @@ class ValidateFile
         return $arrayFileError;
     }
 
-    public static function validateFileUploadMandatory(string $field = '', array $file = [], $message = null): array
-    {
+    public static function validateFileUploadMandatory(
+        string $field = '',
+        array $file = [],
+        $message = null
+    ): array {
         $arrayFileError = [];
         $message = (!empty($message)) ? $message : "O campo {$field} é obrigatório!";
 
@@ -161,6 +177,38 @@ class ValidateFile
                     }
                     break;
             }
+        }
+
+        return $arrayFileError;
+    }
+
+    public static function validateMaximumFileNumbers(
+        $rule = 0,
+        $field = '',
+        array $file = [],
+        $message = null
+    ): array {
+        $arrayFileError = [];
+        $message = (!empty($message)) ? $message : "O campo {$field} deve conter, no máximo {$rule} arquivo(s)!";
+
+        if (validateFile::validateFileCount($file) > $rule) {
+            array_push($arrayFileError, $message);
+        }
+
+        return $arrayFileError;
+    }
+
+    public static function validateMinimumFileNumbers(
+        $rule = 0,
+        $field = '',
+        array $file = [],
+        $message = null
+    ): array {
+        $arrayFileError = [];
+        $message = (!empty($message)) ? $message : "O campo {$field} deve conter, no mínimo {$rule} arquivo(s)!";
+
+        if (validateFile::validateFileCount($file) < $rule) {
+            array_push($arrayFileError, $message);
         }
 
         return $arrayFileError;
