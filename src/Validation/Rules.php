@@ -21,7 +21,7 @@ class Rules
         $this->errors[$field] = $msg;
     }
 
-    private function validateHandleErrorsFile(array $errorList = [], string $field = ''): void
+    private function validateHandleErrorsInArray(array $errorList = [], string $field = ''): void
     {
         if (count($errorList) > 0) {
             if ((is_array($this->errors) && array_key_exists($field, $this->errors))) {
@@ -65,6 +65,7 @@ class Rules
         return [
             'optional' => 'validateOptional',
             'required' => 'validateFieldMandatory',
+            'requiredFile' => 'validateFileUploadMandatory',
             'type' => 'validateFieldType',
             'min' => 'validateMinimumField',
             'max' => 'validateMaximumField',
@@ -642,9 +643,9 @@ class Rules
 
         if (empty($validateErrorPhp)) {
             $validateResult = ValidateFile::validateMaxUploadSize(intval($rule), $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
+            $this->validateHandleErrorsInArray($validateResult, $field);
         } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+            $this->validateHandleErrorsInArray($validateErrorPhp, $field);
         }
     }
 
@@ -662,9 +663,9 @@ class Rules
 
         if (empty($validateErrorPhp)) {
             $validateResult = ValidateFile::validateMinUploadSize(intval($rule), $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
+            $this->validateHandleErrorsInArray($validateResult, $field);
         } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+            $this->validateHandleErrorsInArray($validateErrorPhp, $field);
         }
     }
 
@@ -679,9 +680,9 @@ class Rules
 
         if (empty($validateErrorPhp)) {
             $validateResult = ValidateFile::validateFileName($value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
+            $this->validateHandleErrorsInArray($validateResult, $field);
         } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+            $this->validateHandleErrorsInArray($validateErrorPhp, $field);
         }
     }
 
@@ -691,9 +692,17 @@ class Rules
 
         if (empty($validateErrorPhp)) {
             $validateResult = ValidateFile::validateMimeType($rule, $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
+            $this->validateHandleErrorsInArray($validateResult, $field);
         } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+            $this->validateHandleErrorsInArray($validateErrorPhp, $field);
         }
+    }
+
+    protected function validateFileUploadMandatory($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $this->validateHandleErrorsInArray(
+            ValidateFile::validateFileUploadMandatory($field, $value, $message),
+            $field
+        );
     }
 }

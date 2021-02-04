@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace brunoconte3\Validation;
 
+use PhpParser\Node\Stmt\Break_;
+
 class ValidateFile
 {
     private static function validateFileTransformSingleToMultiple(array &$file = []): void
@@ -13,6 +15,13 @@ class ValidateFile
                 $file[$paramFile] = [$value];
             }
         }
+    }
+
+    private static function validateFileCount(array $file = []): int
+    {
+        if (count($file) > 0) {
+        }
+        return 0;
     }
 
     public static function validateFileErrorPhp(array &$file = [], string $message = null): array
@@ -131,6 +140,29 @@ class ValidateFile
                 array_push($arrayFileError, $messageMimeType);
             }
         }
+        return $arrayFileError;
+    }
+
+    public static function validateFileUploadMandatory(string $field = '', array $file = [], $message = null): array
+    {
+        $arrayFileError = [];
+        $message = (!empty($message)) ? $message : "O campo {$field} é obrigatório!";
+
+        if ((count($file) > 0) && (isset($file['error']))) {
+            switch (is_array($file['error'])) {
+                case 1:
+                    if (isset($file['error'][0]) && ($file['error'][0] === UPLOAD_ERR_NO_FILE)) {
+                        array_push($arrayFileError, $message);
+                    }
+                    break;
+                case 0:
+                    if ($file['error'] === UPLOAD_ERR_NO_FILE) {
+                        array_push($arrayFileError, $message);
+                    }
+                    break;
+            }
+        }
+
         return $arrayFileError;
     }
 }

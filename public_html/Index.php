@@ -61,9 +61,14 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                             'fileUploadMultiple' => $fileUploadMultiple
                         ];
 
+                        // $rules = [
+                        //     'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg|minUploadSize:10|maxUploadSize:100',
+                        //     'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Msg',
+                        // ];
+
                         $rules = [
-                            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg|minUploadSize:10|maxUploadSize:100',
-                            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Msg',
+                            'fileUploadSingle' => 'requiredFile',
+                            'fileUploadMultiple' => 'requiredFile',
                         ];
 
                         $validator = new Validator();
@@ -75,8 +80,8 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                         echo '<hr>';
 
                         echo '<pre>';
-                        print_r(Format::restructFileArray($fileUploadSingle));
-                        print_r(Format::restructFileArray($fileUploadMultiple));
+                        // print_r(Format::restructFileArray($fileUploadSingle));
+                        // print_r(Format::restructFileArray($fileUploadMultiple));
                     }
 
                     ?>
