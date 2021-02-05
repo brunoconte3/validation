@@ -69,16 +69,18 @@ class ValidateFile
         array $file = [],
         string $message = null
     ): array {
-        self::validateFileTransformSingleToMultiple($file);
-
         $arrayFileError = [];
 
-        foreach ($file['size'] as $key => $size) {
-            if ($size > $rule) {
-                $messageMaxSize = 'O arquivo ' . $file['name'][$key] . ' deve conter, no máximo ' . $rule . ' bytes!';
-                $messageMaxSize = (!empty($message)) ? $message : $messageMaxSize;
+        if (validateFile::validateFileCount($file) > 0) {
+            self::validateFileTransformSingleToMultiple($file);
 
-                array_push($arrayFileError, $messageMaxSize);
+            foreach ($file['size'] as $key => $size) {
+                if ($size > $rule) {
+                    $msgMaxSize = 'O arquivo ' . $file['name'][$key] . ' deve conter, no máximo ' . $rule . ' bytes!';
+                    $msgMaxSize = (!empty($message)) ? $message : $msgMaxSize;
+
+                    array_push($arrayFileError, $msgMaxSize);
+                }
             }
         }
         return $arrayFileError;
@@ -89,16 +91,18 @@ class ValidateFile
         array $file = [],
         string $message = null
     ): array {
-        self::validateFileTransformSingleToMultiple($file);
-
         $arrayFileError = [];
 
-        foreach ($file['size'] as $key => $size) {
-            if ($size < $rule) {
-                $messageMinSize = 'O arquivo ' . $file['name'][$key] . ' deve conter, no máximo ' . $rule . ' bytes!';
-                $messageMinSize = (!empty($message)) ? $message : $messageMinSize;
+        if (validateFile::validateFileCount($file) > 0) {
+            self::validateFileTransformSingleToMultiple($file);
 
-                array_push($arrayFileError, $messageMinSize);
+            foreach ($file['size'] as $key => $size) {
+                if ($size < $rule) {
+                    $msgMinSize = 'O arquivo ' . $file['name'][$key] . ' deve conter, no máximo ' . $rule . ' bytes!';
+                    $msgMinSize = (!empty($message)) ? $message : $msgMinSize;
+
+                    array_push($arrayFileError, $msgMinSize);
+                }
             }
         }
         return $arrayFileError;
@@ -106,18 +110,20 @@ class ValidateFile
 
     public static function validateFileName(array $file = [], string $message = null): array
     {
-        self::validateFileTransformSingleToMultiple($file);
-
         $arrayFileError = [];
 
-        foreach ($file['name'] as $fileName) {
-            $dataName = explode('.', strtolower(trim($fileName)));
+        if (validateFile::validateFileCount($file) > 0) {
+            self::validateFileTransformSingleToMultiple($file);
 
-            if (preg_match('/\W/', reset($dataName))) {
-                $messageFileName = "O nome do arquivo {$fileName}, não pode conter caracteres especiais e ascentos!";
-                $messageFileName = (!empty($message)) ? $message : $messageFileName;
+            foreach ($file['name'] as $fileName) {
+                $dataName = explode('.', strtolower(trim($fileName)));
 
-                array_push($arrayFileError, $messageFileName);
+                if (preg_match('/\W/', reset($dataName))) {
+                    $msgFileName = "O nome do arquivo {$fileName}, não pode conter caracteres especiais e ascentos!";
+                    $msgFileName = (!empty($message)) ? $message : $msgFileName;
+
+                    array_push($arrayFileError, $msgFileName);
+                }
             }
         }
         return $arrayFileError;
@@ -131,24 +137,27 @@ class ValidateFile
         array $file = [],
         string $message = null
     ): array {
-        self::validateFileTransformSingleToMultiple($file);
-
         $arrayFileError = [];
-        $rule = (is_array($rule)) ? array_map('trim', $rule) : trim($rule);
 
-        foreach ($file['name'] as $fileName) {
-            $ext = explode('.', $fileName);
+        if (validateFile::validateFileCount($file) > 0) {
+            self::validateFileTransformSingleToMultiple($file);
 
-            $messageMimeType = 'O arquivo ' . $fileName . ', contém uma extensão inválida!';
-            $messageMimeType = (!empty($message)) ? $message : $messageMimeType;
+            $rule = (is_array($rule)) ? array_map('trim', $rule) : trim($rule);
 
-            if (is_string($rule) && (strtolower(end($ext)) != strtolower($rule))) {
-                array_push($arrayFileError, $messageMimeType);
-                continue;
-            }
+            foreach ($file['name'] as $fileName) {
+                $ext = explode('.', $fileName);
 
-            if (is_array($rule) && (!in_array(end($ext), $rule))) {
-                array_push($arrayFileError, $messageMimeType);
+                $messageMimeType = 'O arquivo ' . $fileName . ', contém uma extensão inválida!';
+                $messageMimeType = (!empty($message)) ? $message : $messageMimeType;
+
+                if (is_string($rule) && (strtolower(end($ext)) != strtolower($rule))) {
+                    array_push($arrayFileError, $messageMimeType);
+                    continue;
+                }
+
+                if (is_array($rule) && (!in_array(end($ext), $rule))) {
+                    array_push($arrayFileError, $messageMimeType);
+                }
             }
         }
         return $arrayFileError;

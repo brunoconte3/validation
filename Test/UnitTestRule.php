@@ -242,12 +242,12 @@ class UnitTestRule extends TestCase
 
     public function testNumMax(): void
     {
-        $array = ['testError' => 32, 'testValid' => 31];
-        $rules = ['testError' => 'numMax:31', 'testValid' => 'numMax:31'];
+        $array = ['testError' => 32, 'testValid' => 31, 'testErrorMaxZero' => '2'];
+        $rules = ['testError' => 'numMax:31', 'testValid' => 'numMax:31', 'testErrorMaxZero' => 'numMax:0'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 
     public function testNumMin(): void
