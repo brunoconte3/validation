@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace brunoconte3\Validation;
 
-use PhpParser\Node\Stmt\Break_;
-
 class ValidateFile
 {
     private static function validateFileTransformSingleToMultiple(array &$file = []): void
