@@ -134,7 +134,7 @@ if (!$validator->getErros()) {
 
 # Validando Upload de Arquivo(s)
 
-Com os validadores minUploadSize, maxUploadSize, mimeType e fileName, será possível definir o tamanho (bytes) mínimo e máximo do arquivo; extensões permitidas e validar o nome do arquivo.
+Com os validadores fileName, maxFile, maxUploadSize, mimeType, minFile, minUploadSize e requiredFile, será possível definir o tamanho (bytes) mínimo e máximo do arquivo; quantidade mínima e máxima de arquivos; extensões permitidas; validar o nome do arquivo e definir se o campo do tipo "File" é obrigatório.
 
 `Exemplo:`
 
