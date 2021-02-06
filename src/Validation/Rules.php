@@ -21,7 +21,7 @@ class Rules
         $this->errors[$field] = $msg;
     }
 
-    private function validateHandleErrorsFile(array $errorList = [], string $field = ''): void
+    private function validateHandleErrorsInArray(array $errorList = [], string $field = ''): void
     {
         if (count($errorList) > 0) {
             if ((is_array($this->errors) && array_key_exists($field, $this->errors))) {
@@ -103,7 +103,10 @@ class Rules
             'maxUploadSize' => 'validateFileMaxUploadSize',
             'minUploadSize' => 'validateFileMinUploadSize',
             'fileName' => 'validateFileName',
-            'mimeType' => 'validateFileMimeType'
+            'mimeType' => 'validateFileMimeType',
+            'requiredFile' => 'validateFileUploadMandatory',
+            'maxFile' => 'validateMaximumFileNumbers',
+            'minFile' => 'validateMinimumFileNumbers'
         ];
     }
 
@@ -244,7 +247,8 @@ class Rules
                 unset($rulesArray['mensagem']);
             }
             foreach ($rulesArray as $key => $val) {
-                if (!in_array('optional', $rulesArray) || (in_array('optional', $rulesArray) && !empty($val))) {
+                $ruleValue = (!empty($val) || (intval($val) == 0)) ? true : false;
+                if (!in_array('optional', $rulesArray) || (in_array('optional', $rulesArray) && $ruleValue)) {
                     if (in_array(trim(strtolower($key)), self::RULES_WITHOUT_FUNCS)) {
                         continue;
                     }
@@ -632,68 +636,89 @@ class Rules
     {
         $rule = trim($rule);
 
-        if (!is_numeric($rule) || ($rule < 0)) {
-            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
-            $this->errors[$field] = $text;
+        if (!is_numeric($rule) || ($rule <= 0)) {
+            $text = "O parâmetro do validador 'maxUploadSize', deve ser numérico e maior que zero!";
+            $text = !empty($message) ? $message : $text;
+            $this->errors[$field][0] = $text;
             return;
         }
 
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
-
-        if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMaxUploadSize(intval($rule), $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
-        } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
-        }
+        $this->validateHandleErrorsInArray(
+            ValidateFile::validateMaxUploadSize(intval($rule), $value, $message),
+            $field
+        );
     }
 
     protected function validateFileMinUploadSize($rule = '', $field = '', $value = null, $message = null): void
     {
         $rule = trim($rule);
 
-        if (!is_numeric($rule) || ($rule < 0)) {
-            $text = !empty($message) ? $message : "O campo $field deve ser numérico e maior ou igual a zero!";
-            $this->errors[$field] = $text;
+        if (!is_numeric($rule) || ($rule <= 0)) {
+            $text = "O parâmetro do validador 'minUploadSize', deve ser numérico e maior ou igual a zero!";
+            $text = !empty($message) ? $message : $text;
+            $this->errors[$field][0] = $text;
             return;
         }
 
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
-
-        if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMinUploadSize(intval($rule), $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
-        } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
-        }
+        $this->validateHandleErrorsInArray(
+            ValidateFile::validateMinUploadSize(intval($rule), $value, $message),
+            $field
+        );
     }
 
     protected function validateFileName($rule = '', $field = '', $value = null, $message = null): void
     {
         if (empty($value) || (count($value) <= 0)) {
-            $this->errors[$field] = !empty($message) ? $message : "O campo $field não pode ser vazio!";
+            $this->errors[$field][0] = !empty($message) ? $message : "O campo $field não pode ser vazio!";
             return;
         }
 
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
-
-        if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateFileName($value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
-        } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
-        }
+        $this->validateHandleErrorsInArray(
+            ValidateFile::validateFileName($value, $message),
+            $field
+        );
     }
 
     protected function validateFileMimeType($rule = '', $field = '', $value = null, $message = null): void
     {
-        $validateErrorPhp = ValidateFile::validateFileErrorPhp($value, $message);
+        $this->validateHandleErrorsInArray(ValidateFile::validateMimeType($rule, $value, $message), $field);
+    }
 
-        if (empty($validateErrorPhp)) {
-            $validateResult = ValidateFile::validateMimeType($rule, $value, $message);
-            $this->validateHandleErrorsFile($validateResult, $field);
-        } else {
-            $this->validateHandleErrorsFile($validateErrorPhp, $field);
+    protected function validateFileUploadMandatory($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $this->validateHandleErrorsInArray(
+            ValidateFile::validateFileUploadMandatory($field, $value, $message),
+            $field
+        );
+    }
+
+    protected function validateMaximumFileNumbers($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = intval(trim($rule));
+
+        if (!is_numeric($rule) || ($rule <= 0)) {
+            $text = "O parâmetro do validador 'maxFile', deve ser numérico e maior que zero!";
+            $text = !empty($message) ? $message : $text;
+            $this->errors[$field][0] = $text;
+            return;
         }
+
+        $validateResult = ValidateFile::validateMaximumFileNumbers($rule, $field, $value, $message);
+        $this->validateHandleErrorsInArray($validateResult, $field);
+    }
+
+    protected function validateMinimumFileNumbers($rule = '', $field = '', $value = null, $message = null): void
+    {
+        $rule = trim($rule);
+
+        if (!is_numeric($rule) || ($rule < 0)) {
+            $text = "O parâmetro do validador 'minFile', deve ser numérico e maior ou igual a zero!";
+            $text = !empty($message) ? $message : $text;
+            $this->errors[$field][0] = $text;
+            return;
+        }
+
+        $validateResult = ValidateFile::validateMinimumFileNumbers($rule, $field, $value, $message);
+        $this->validateHandleErrorsInArray($validateResult, $field);
     }
 }

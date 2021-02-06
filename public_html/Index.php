@@ -61,9 +61,15 @@ require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR 
                             'fileUploadMultiple' => $fileUploadMultiple
                         ];
 
+                        $ruleSingle = 'requiredFile|fileName|mimeType:jpeg;png;jpg;txt;docx;xlsx;pdf|minUploadSize:10|';
+                        $ruleSingle .= 'maxUploadSize:100';
+
+                        $ruleMultiple = 'fileName|mimeType:jpeg|minFile:1|maxFile:3|minUploadSize:10|maxUploadSize:100';
+                        $ruleMultiple .= ', Mensagem personalizada aqui!';
+
                         $rules = [
-                            'fileUploadSingle' => 'fileName|mimeType:jpeg;png;jpg|minUploadSize:10|maxUploadSize:100',
-                            'fileUploadMultiple' => 'fileName|mimeType:jpeg|minUploadSize:10|maxUploadSize:100, Msg',
+                            'fileUploadSingle' => $ruleSingle,
+                            'fileUploadMultiple' => $ruleMultiple
                         ];
 
                         $validator = new Validator();
