@@ -83,6 +83,7 @@ class UnitTestRule extends TestCase
     {
         $array = [
             'testError' => '52186923000120',
+            'testErrorEmpty' => '',
             'testValid' => '21111527000163',
             'testExceptionError' => '12123456000712',
             'testExceptionValid' => '00000000000000'
@@ -90,6 +91,7 @@ class UnitTestRule extends TestCase
 
         $rules = [
             'testError' => 'companyIdentification',
+            'testErrorEmpty' => 'companyIdentification',
             'testValid' => 'companyIdentification',
             'testExceptionError' => 'companyIdentification:12123456000712',
             'testExceptionValid' => 'companyIdentification:00000000000000;22222222222222'
@@ -97,27 +99,27 @@ class UnitTestRule extends TestCase
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(2, $validator->getErros());
+        $this->assertCount(3, $validator->getErros());
     }
 
     public function testDateAmerican(): void
     {
-        $array = ['testError' => '1990-04-31', 'testValid' => '1990-04-30'];
-        $rules = ['testError' => 'dateAmerican', 'testValid' => 'dateAmerican'];
+        $array = ['testError' => '1990-04-31', 'testErrorEmpty' => '', 'testValid' => '1990-04-30'];
+        $rules = ['testError' => 'dateAmerican', 'testErrorEmpty' => 'dateAmerican', 'testValid' => 'dateAmerican'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 
     public function testDateBrazil(): void
     {
-        $array = ['testError' => '31042020', 'testValid' => '31052020'];
-        $rules = ['testError' => 'dateBrazil', 'testValid' => 'dateBrazil'];
+        $array = ['testError' => '31042020', 'testErrorEmpty' => '', 'testValid' => '31052020'];
+        $rules = ['testError' => 'dateBrazil', 'testErrorEmpty' => 'dateBrazil', 'testValid' => 'dateBrazil'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
-        $this->assertCount(1, $validator->getErros());
+        $this->assertCount(2, $validator->getErros());
     }
 
     public function testEmail(): void
@@ -252,8 +254,8 @@ class UnitTestRule extends TestCase
 
     public function testNumMin(): void
     {
-        $array = ['testError' => 2, 'testValid' => 8];
-        $rules = ['testError' => 'numMin:5', 'testValid' => 'numMin:5'];
+        $array = ['testError' => 2, 'testeErrorNoInt' => 'a', 'testValid' => 8];
+        $rules = ['testError' => 'numMin:5', 'testeErrorNoInt' => 'numMin:5', 'testValid' => 'numMin:5'];
 
         $validator = new Validator();
         $validator->set($array, $rules);
