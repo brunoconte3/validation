@@ -122,7 +122,7 @@ class Rules
                 $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
             }
         } else {
-            if (empty(trim($value))) {
+            if (empty(trim($value)) && (strval($value) !== '0')) {
                 $this->errors[$field] = !empty($message) ? $message : "O campo $field é obrigatório!";
             }
         }

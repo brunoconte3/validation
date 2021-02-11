@@ -324,7 +324,9 @@ class UnitTestRule extends TestCase
             'd' => [],
             'e' => '   ',
             'f' => 'abc',
-            'g' => 123
+            'g' => 123,
+            'h' => '0',
+            'i' => 0
         ];
         $rules = [
             'a' => 'required',
@@ -333,7 +335,9 @@ class UnitTestRule extends TestCase
             'd' => 'required',
             'e' => 'required',
             'f' => 'required',
-            'g' => 'required'
+            'g' => 'required',
+            'h' => 'required',
+            'i' => 'required'
         ];
 
         $validator = new Validator();
