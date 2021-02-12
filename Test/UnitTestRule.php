@@ -405,7 +405,7 @@ class UnitTestRule extends TestCase
 
     public function testCustomMessage(): void
     {
-        $msg = 'Mensagem customizada aqui!';
+        $msg = 'Mensagem customizada aqui, devendo conter no mínimo uma vírgula!';
         $array = [
             'textoError' => 'abc',
             'textoValid' => 'abcde'

@@ -209,15 +209,14 @@ class Rules
                 $rulesArray = json_decode($rules, true);
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $rulesArray = [];
-                    //suporte ao padrão PIPE
-                    //'int|required|min:14|max:14',
+                    // Suporte ao padrão PIPE, exemplo: 'int|required|min:14|max:14'.
                     $rulesConf = explode('|', trim($rules));
                     if (
                         !in_array('optional', $rulesConf)
                         || (in_array('optional', $rulesConf) && !empty($value) && $value !== 'null')
                     ) {
                         foreach ($rulesConf as $valueRuleConf) {
-                            $conf = explode(',', trim($valueRuleConf));
+                            $conf = preg_split('/[\,]/', trim($valueRuleConf), 2);
                             $ruleArrayConf = explode(':', $conf[0] ?? '');
                             $regEx = (trim(strtolower($ruleArrayConf[0])) == 'regex') ? true : false;
 
