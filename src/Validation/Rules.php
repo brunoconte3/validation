@@ -460,15 +460,16 @@ class Rules
         }
         if (strlen($value) === 14) {
             if (!ValidateCpf::validateCpf($value, $rule)) {
-                $this->errors[$field] = !empty($message) ?
-                    $message : "O campo $field é inválido!";
+                $this->errors[$field] = !empty($message) ? $message : "O campo $field é inválido!";
             }
         }
         if (strlen($value) === 18) {
             if (empty($value) || !ValidateCnpj::validateCnpj($value, $rule)) {
-                $this->errors[$field] = !empty($message) ?
-                    $message : "O campo $field é inválido!";
+                $this->errors[$field] = !empty($message) ? $message : "O campo $field é inválido!";
             }
+        }
+        if (!in_array(strlen($value), [11, 14, 18])) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field é inválido!";
         }
     }
 

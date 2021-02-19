@@ -458,23 +458,25 @@ class UnitTestRule extends TestCase
     public function testIdentifierOrCompany(): void
     {
         $array = [
-            'cpfOuCnpnError' => '96.284.092.0001/59',
-            'cpfOuCnpnValid' => '96.284.092/0001-58',
-            'cpfOuCnpnExceptionError' => '12.123.456/0007-12',
-            'cpfOuCnpnExceptionValid' => '00.000.000/0000-00'
+            'cpfOuCnpjerror' => '96.284.092.0001/59',
+            'cpfOuCnpjValid' => '96.284.092/0001-58',
+            'cpfOuCnpjExceptionError' => '12.123.456/0007-12',
+            'cpfOuCnpjExceptionValid' => '00.000.000/0000-00',
+            'cpfOuCnpjInvalid' => '0966894790',
         ];
 
         $rules = [
-            'cpfOuCnpnError' => 'identifierOrCompany',
-            'cpfOuCnpnValid' => 'identifierOrCompany',
-            'cpfOuCnpnExceptionError' => 'identifierOrCompany:12123456000712',
-            'cpfOuCnpnExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222'
+            'cpfOuCnpjerror' => 'identifierOrCompany',
+            'cpfOuCnpjValid' => 'identifierOrCompany',
+            'cpfOuCnpjExceptionError' => 'identifierOrCompany:12123456000712',
+            'cpfOuCnpjExceptionValid' => 'identifierOrCompany:00000000000000;22222222222222',
+            'cpfOuCnpjInvalid' => 'identifierOrCompany',
         ];
 
         $validator = new Validator();
         $validator->set($array, $rules);
 
-        $this->assertCount(2, $validator->getErros());
+        $this->assertCount(3, $validator->getErros());
     }
 
     public function testFileMaxUploadSize(): void
