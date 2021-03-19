@@ -238,6 +238,7 @@ Com os validadores fileName, maxFile, maxUploadSize, mimeType, minFile, minUploa
 - regex: `Define uma regra para o valor através de uma expressão regular.`
 - required: `Define o campo como obrigatório.`
 - requiredFile: `Define o campo do tipo 'File', como obrigatório.`
+- rgbColor: `Verifica se a string possui um RGB Color válido.`
 - upper: `Verifica se todos os caracteres são maiúsculas.`
 - url: `Verifica se o valor é um endereço de URL válida.`
 - zipCode: `Verifica se o valor corresponde ao formato de um CEP.`

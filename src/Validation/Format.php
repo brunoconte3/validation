@@ -4,7 +4,7 @@ namespace brunoconte3\Validation;
 
 use brunoconte3\Validation\{
     ValidatePhone,
-    ValidateFile
+    ValidateFile,
 };
 
 class Format extends FormatAux

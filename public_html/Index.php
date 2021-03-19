@@ -6,7 +6,7 @@ namespace brunoconte3\Test;
 
 use brunoconte3\Validation\{
     Validator,
-    Format
+    Format,
 };
 
 require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
