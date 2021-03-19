@@ -526,12 +526,11 @@ echo Utility::captureClientIp(); //Retorna o IP do usuário, captura por camada 
 
 ```
 
-# Arquivo com exemplos de Testes
-
-- /Test/UnitTest.php deixamos um arquivo com testes unitários para facilitar nosso controle, fique a vontade em rodar!
+# Rodar os testes unitários
+vendor/bin/phpunit
 
 # Licença
 
 O validator é uma aplicação open-source licenciado sob a [licença MIT](https://opensource.org/licenses/MIT).
 
-`Créditos a mammoth-php/validation que foi fork de lá`
+`Créditos a mammoth-php/validation que foi fork inicial de lá`
