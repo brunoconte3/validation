@@ -654,4 +654,26 @@ class UnitTestRule extends TestCase
         $validator->set($array, $rules);
         $this->assertCount(2, $validator->getErros());
     }
+
+    public function testTimestamp(): void
+    {
+        $array = [
+            'dateHourAmericanError' => '2021-04-15 21:01',
+            'dateHourAmericanValid' => '2021-04-15 21:01:04',
+            'dateHourBrasilError' => '15/04/2021 21:01',
+            'dateHourBrasilValid' => '15/04/2021 21:01:04',
+        ];
+
+        $rules = [
+            'dateHourAmericanError' => 'timestamp',
+            'dateHourAmericanValid' => 'timestamp',
+            'dateHourBrasilError' => 'timestamp',
+            'dateHourBrasilValid' => 'timestamp',
+        ];
+
+        $validator = new Validator();
+        $validator->set($array, $rules);
+
+        $this->assertCount(2, $validator->getErros());
+    }
 }

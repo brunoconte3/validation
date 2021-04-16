@@ -2,6 +2,8 @@
 
 namespace brunoconte3\Validation;
 
+use DateTime;
+
 class ValidateDate
 {
     private static function validateYear(string $ano, string $mes, string $dia): bool
@@ -50,5 +52,19 @@ class ValidateDate
             }
             return false;
         }
+    }
+
+    public static function validateTimeStamp($date): bool
+    {
+        $format = 'Y-m-d H:i:s';
+        $d = DateTime::createFromFormat($format, $date);
+        $return = $d && $d->format($format) === $date;
+
+        if (!$return) {
+            $format = 'd/m/Y H:i:s';
+            $d = DateTime::createFromFormat($format, $date);
+            $return = $d && $d->format($format) === $date;
+        }
+        return $return;
     }
 }

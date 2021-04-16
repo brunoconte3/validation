@@ -34,6 +34,13 @@ trait TraitRuleDate
         }
     }
 
+    protected function validateTimestamp($rule = '', $field = '', $value = null, $message = null)
+    {
+        if (!ValidateDate::validateTimeStamp($value)) {
+            $this->errors[$field] = !empty($message) ? $message : "O campo $field não é um timestamp válido!";
+        }
+    }
+
     protected function validateWeekend($rule = '', $field = '', $value = null, $message = null)
     {
         if (strpos($value, '/') > -1) {

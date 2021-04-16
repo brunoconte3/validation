@@ -102,6 +102,7 @@ class Rules
             'plate' => 'validatePlate',
             'regex' => 'validateRegex',
             'rgbColor' => 'validateRgbColor',
+            'timestamp' => 'validateTimestamp',
             'upper' => 'validateUpper',
             'url' => 'validateUrl',
             'noWeekend' => 'validateWeekend',

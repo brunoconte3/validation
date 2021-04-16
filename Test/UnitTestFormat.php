@@ -7,8 +7,6 @@ namespace brunoconte3\Test;
 use brunoconte3\Validation\Format;
 use PHPUnit\Framework\TestCase;
 
-use function PHPUnit\Framework\assertIsFloat;
-
 class UnitTestFormat extends TestCase
 {
     public function testCompanyIdentification(): void
@@ -109,11 +107,13 @@ class UnitTestFormat extends TestCase
     public function testCurrency(): void
     {
         $this->assertEquals('1.123,45', Format::currency('1123.45'));
+        $this->assertEquals('R$ 1.123,45', Format::currency('1123.45', 'R$ '));
     }
 
     public function testCurrencyUsd(): void
     {
         $this->assertEquals('1,123.45', Format::currencyUsd('1123.45'));
+        $this->assertEquals('Usd 1,123.45', Format::currencyUsd('1123.45', 'Usd '));
     }
 
     public function testReturnPhoneOrAreaCode(): void
@@ -229,5 +229,10 @@ class UnitTestFormat extends TestCase
         $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadSingle)[0]);
         $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadMultiple)[0]);
         $this->assertArrayHasKey('name', Format::restructFileArray($fileUploadMultiple)[1]);
+    }
+
+    public function testConvertTimestampBrazilToAmerican(): void
+    {
+        $this->assertEquals('2021-04-15 19:50:25', Format::convertTimestampBrazilToAmerican('15/04/2021 19:50:25'));
     }
 }

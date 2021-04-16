@@ -140,19 +140,19 @@ class Format extends FormatAux
     /**
      * @param float|int|string $value
      */
-    public static function currency($value): string
+    public static function currency($value, string $coinType = ''): string
     {
         $value = self::formatCurrencyForFloat($value);
-        return ((float) $value !== '') ? number_format((float) $value, 2, ',', '.') : '';
+        return ((float) $value !== '') ? $coinType . number_format((float) $value, 2, ',', '.') : '';
     }
 
     /**
      * @param float|int|string $value
      */
-    public static function currencyUsd($value): string
+    public static function currencyUsd($value, string $coinType = ''): string
     {
         $value = self::formatCurrencyForFloat($value);
-        return ((float) $value !== '') ?  number_format((float) $value, 2, '.', ',') : '';
+        return ((float) $value !== '') ?  $coinType . number_format((float) $value, 2, '.', ',') : '';
     }
 
     /**
@@ -313,5 +313,15 @@ class Format extends FormatAux
             }
         }
         return $arrayFile;
+    }
+
+    public static function convertTimestampBrazilToAmerican(string $dt): string
+    {
+        if (!ValidateDate::validateTimeStamp($dt)) {
+            throw new \Exception('Data não é um Timestamp!');
+        }
+
+        $dateTime = \DateTime::createFromFormat('d/m/Y H:i:s', $dt);
+        return $dateTime->format('Y-m-d H:i:s');
     }
 }
