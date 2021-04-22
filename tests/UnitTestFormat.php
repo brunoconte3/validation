@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace brunoconte3\Test;
+namespace brunoconte3\test;
 
 use brunoconte3\Validation\Format;
 use PHPUnit\Framework\TestCase;
